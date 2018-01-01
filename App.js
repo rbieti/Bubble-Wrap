@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -7,27 +7,27 @@ import {
   ScrollView,
   Text,
   Image
-} from "react-native";
+} from 'react-native';
 import {
   TabNavigator,
   StackNavigator,
   DrawerNavigator,
   DrawerItems
-} from "react-navigation";
-import { Divider } from "react-native-elements";
-import { Provider } from "react-redux";
-import firebase from "firebase";
+} from 'react-navigation';
+import { Divider } from 'react-native-elements';
+import { Provider } from 'react-redux';
+import firebase from 'firebase';
 
-import store from "./src/store";
-import SearchScreen from "./src/screens/SearchScreen";
-import SearchResultsScreen from "./src/screens/SearchResultsScreen";
-import VendorScreen from "./src/screens/VendorScreen";
-import WelcomeScreen from "./src/screens/WelcomeScreen";
-import AuthScreen from "./src/screens/AuthScreen";
-import SignoutScreen from "./src/screens/SignoutScreen";
+import store from './src/store';
+import SearchScreen from './src/screens/SearchScreen';
+import SearchResultsScreen from './src/screens/SearchResultsScreen';
+import VendorScreen from './src/screens/VendorScreen';
+import WelcomeScreen from './src/screens/WelcomeScreen';
+import AuthScreen from './src/screens/AuthScreen';
+import SignoutScreen from './src/screens/SignoutScreen';
 
-import { GOOGLE_FIREBASE_CONFIG } from "./src/constants/api_keys";
-import { PRIMARY_COLOR } from "./src/constants/style";
+import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
+import { PRIMARY_COLOR } from './src/constants/style';
 
 export default class App extends React.Component {
   //////////////////////////////////////////////////////////////////////////////
@@ -35,7 +35,7 @@ export default class App extends React.Component {
   // https://github.com/firebase/firebase-js-sdk/issues/97
   constructor() {
     super();
-    console.ignoredYellowBox = ["Setting a timer"];
+    console.ignoredYellowBox = ['Setting a timer'];
   }
   //////////////////////////////////////////////////////////////////////////////
   // Upon loading app, initialize firebase
@@ -64,9 +64,9 @@ export default class App extends React.Component {
       {
         navigationOptions: {
           headerStyle: { backgroundColor: PRIMARY_COLOR },
-          headerBackTitleStyle: { color: "#FFF" },
-          headerTitleStyle: { color: "#FFF" },
-          headerTintColor: "#FFF"
+          headerBackTitleStyle: { color: '#FFF' },
+          headerTitleStyle: { color: '#FFF' },
+          headerTintColor: '#FFF'
         }
       }
     );
@@ -79,18 +79,18 @@ export default class App extends React.Component {
           style={{
             flex: 1,
             backgroundColor: PRIMARY_COLOR,
-            alignItems: "center",
-            alignContent: "center"
+            alignItems: 'center',
+            alignContent: 'center'
           }}
         >
           <Image
             style={{ width: 150, height: 150 }}
-            source={require("./assets/logo.png")}
+            source={require('./assets/logo.png')}
           />
         </View>
 
         <View>
-          <Text h1 style={{ textAlign: "center", marginTop: 10 }}>
+          <Text h1 style={{ textAlign: 'center', marginTop: 10 }}>
             MENU
           </Text>
           <Divider style={{ backgroundColor: PRIMARY_COLOR }} />
@@ -126,7 +126,7 @@ export default class App extends React.Component {
         navigationOptions: {
           tabBarVisible: false
         },
-        tabBarPosition: "bottom",
+        tabBarPosition: 'bottom',
         swipeEnabled: false,
         lazy: true, // Each screen will not mount/load until user clicks on them
         animationEnabled: false
@@ -149,10 +149,10 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     //alignItems: 'center',
-    justifyContent: "center",
+    justifyContent: 'center',
     //marginTop: 25
-    marginTop: Platform.OS === "android" ? 24 : 0
+    marginTop: Platform.OS === 'android' ? 24 : 0
   }
 });
