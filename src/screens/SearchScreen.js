@@ -1,29 +1,29 @@
-import React, { Component } from "react";
-import { View } from "react-native";
-import { Icon, FormLabel, FormInput, Button } from "react-native-elements";
-import { connect } from "react-redux";
-import * as actions from "../actions";
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import { Icon, FormLabel, FormInput, Button } from 'react-native-elements';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
-import { PRIMARY_COLOR } from "../constants/style";
+import { PRIMARY_COLOR } from '../constants/style';
 
 class SearchScreen extends Component {
   //////////////////////////////////////////////////////////////////////////////////
   // Properties automatically referred to by react-navigation navigators
   static navigationOptions = ({ navigation }) => ({
     //tabBarVisible: false,
-    title: "MyApp",
-    tabBarLabel: "MyApp",
+    title: 'MyApp',
+    tabBarLabel: 'MyApp',
     headerTitleStyle: {
-      textAlign: "center",
-      alignSelf: "center"
+      textAlign: 'center',
+      alignSelf: 'center'
     },
     headerLeft: (
       <Button
         navigate={navigation.navigate}
         large
-        icon={{ name: "menu" }}
+        icon={{ name: 'menu' }}
         backgroundColor={PRIMARY_COLOR}
-        onPress={() => navigation.navigate("DrawerOpen")}
+        onPress={() => navigation.navigate('DrawerOpen')}
       />
     ),
     drawerIcon: ({ tintColor }) => (
@@ -33,7 +33,7 @@ class SearchScreen extends Component {
 
   //////////////////////////////////////////////////////////////////////////////////
   // State definition (ES7 syntax)
-  state = { place: "", location: "" };
+  state = { place: '', location: '' };
 
   //////////////////////////////////////////////////////////////////////////////////
   // Initialize the component
@@ -48,7 +48,7 @@ class SearchScreen extends Component {
   // Handler for the serach button
   onButtonPress = () => {
     this.props.fetchPlaces(this.state.place, this.state.location, () => {
-      this.props.navigation.navigate("searchResults"); // Passing a callback function
+      this.props.navigation.navigate('searchResults'); // Passing a callback function
     });
   };
 
@@ -77,7 +77,7 @@ class SearchScreen extends Component {
 
         <Button
           title="Search"
-          icon={{ name: "search" }}
+          icon={{ name: 'search' }}
           backgroundColor={PRIMARY_COLOR}
           onPress={this.onButtonPress}
         />

@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import { ScrollView, View, Text } from "react-native";
-import { Icon, List, ListItem } from "react-native-elements";
-import { connect } from "react-redux";
-import { MapView } from "expo";
-import * as actions from "../actions";
-import * as urlBuilder from "../utility/url_builder";
-import { PRIMARY_COLOR } from "../constants/style";
+import React, { Component } from 'react';
+import { ScrollView, View, Text } from 'react-native';
+import { Icon, List, ListItem } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { MapView } from 'expo';
+import * as actions from '../actions';
+import * as urlBuilder from '../utility/url_builder';
+import { PRIMARY_COLOR } from '../constants/style';
 
 class SearchResultsScreen extends Component {
   //////////////////////////////////////////////////////////////////////////////////
   // Properties automatically referred to by react-navigation navigators
   static navigationOptions = {
-    title: "Search Results",
-    tabBarLabel: "Places"
+    title: 'Search Results',
+    tabBarLabel: 'Places'
   };
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +34,7 @@ class SearchResultsScreen extends Component {
   // Handler for the button press on each list item
   onButtonPress = place => {
     this.props.loadPlaceDetails(place, () => {
-      this.props.navigation.navigate("vendor", { headerTitle: place.name });
+      this.props.navigation.navigate('vendor', { headerTitle: place.name });
     });
   };
 

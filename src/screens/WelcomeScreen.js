@@ -1,15 +1,15 @@
-import _ from "lodash";
-import React, { Component } from "react";
-import { View, Text, ActivityIndicator, AsyncStorage } from "react-native";
+import _ from 'lodash';
+import React, { Component } from 'react';
+import { View, Text, ActivityIndicator, AsyncStorage } from 'react-native';
 //import { AppLoading } from 'expo';
-import Slides from "../components/Slides";
+import Slides from '../components/Slides';
 
-import { PRIMARY_COLOR, SECONDARY_COLOR } from "../constants/style";
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/style';
 
 const SLIDE_DATA = [
-  { text: "Welcome to Your Starter Project.", color: SECONDARY_COLOR },
-  { text: "The more awesome you make this app...", color: PRIMARY_COLOR },
-  { text: "...the more awesome it will be.", color: SECONDARY_COLOR }
+  { text: 'Welcome to Your Starter Project.', color: SECONDARY_COLOR },
+  { text: 'The more awesome you make this app...', color: PRIMARY_COLOR },
+  { text: '...the more awesome it will be.', color: SECONDARY_COLOR }
 ];
 
 class WelcomeScreen extends Component {
@@ -22,10 +22,10 @@ class WelcomeScreen extends Component {
   async componentWillMount() {
     //AsyncStorage.removeItem("welcome_completed"); // Just used for testing to clear item
     try {
-      const welcomeCompleted = await AsyncStorage.getItem("welcome_completed");
+      const welcomeCompleted = await AsyncStorage.getItem('welcome_completed');
 
       if (welcomeCompleted) {
-        return this.props.navigation.navigate("auth");
+        return this.props.navigation.navigate('auth');
         //this.setState({ welcomeCompleted });
       }
       this.setState({ welcomeCompleted: false });
@@ -40,11 +40,11 @@ class WelcomeScreen extends Component {
   // is not critical.
   onSlidesComplete = () => {
     try {
-      AsyncStorage.setItem("welcome_completed", "true");
+      AsyncStorage.setItem('welcome_completed', 'true');
     } catch (err) {
       console.error(err);
     }
-    return this.props.navigation.navigate("auth");
+    return this.props.navigation.navigate('auth');
     //this.props.navigation.navigate('auth', { param: 'Param test!!' });
   };
 
@@ -64,8 +64,8 @@ class WelcomeScreen extends Component {
 const styles = {
   spinnerStyle: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 };
 

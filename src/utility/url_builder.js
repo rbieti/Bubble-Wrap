@@ -1,11 +1,11 @@
-import { Dimensions } from "react-native";
-import qs from "qs";
+import { Dimensions } from 'react-native';
+import qs from 'qs';
 import {
   GOOGLE_PLACES_ROOT_URL,
   GOOGLE_GEOCODE_ROOT_URL,
   GOOGLE_PLACES_PHOTO_ROOT_URL
-} from "../constants/google_api";
-import { GOOGLE_PLACES_API_KEY } from "../constants/api_keys";
+} from '../constants/google_api';
+import { GOOGLE_PLACES_API_KEY } from '../constants/api_keys';
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // Build Google Places URL according to: https://developers.google.com/maps/documentation/geocoding/start
@@ -31,8 +31,8 @@ export const buildPlacesUrl = (place, latLongCoords) => {
 };
 const PLACE_QUERY_PARAMS = {
   key: GOOGLE_PLACES_API_KEY,
-  types: "food",
-  radius: "10000" // In meters (max 50000)
+  types: 'food',
+  radius: '10000' // In meters (max 50000)
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -48,4 +48,4 @@ export const buildPlacesPhotoUrl = (photoRef, width = SCREEN_WIDTH) => {
 const PLACE_PHOTO_QUERY_PARAMS = {
   key: GOOGLE_PLACES_API_KEY
 };
-const SCREEN_WIDTH = Dimensions.get("window").width;
+const SCREEN_WIDTH = Dimensions.get('window').width;
