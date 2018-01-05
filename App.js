@@ -107,10 +107,14 @@ export default class App extends React.Component {
         signout: { screen: SignoutScreen }
       },
       {
-        contentComponent: customDrawerComponent
+        contentComponent: customDrawerComponent,
         // contentOptions: {
         //   activeTintColor: { color: '#F00' }
         // }
+        // TR: https://github.com/react-navigation/react-navigation/issues/3148
+        drawerOpenRoute: 'DrawerOpen',
+        drawerCloseRoute: 'DrawerClose',
+        drawerToggleRoute: 'DrawerToggle',
       }
     );
 
