@@ -85,7 +85,7 @@ export default class App extends React.Component {
         >
           <Image
             style={{ width: 150, height: 150 }}
-            source={require('./assets/logo.png')}
+            sonpmurce={require('./assets/logo.png')}
           />
         </View>
 

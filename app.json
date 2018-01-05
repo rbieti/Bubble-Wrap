@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "reactnativestarterproject",
-    "description": "An empty new project",
+    "name": "BubbleWrap",
+    "description": "Safest Buy and Sell App for Students",
     "slug": "reactnativestarterproject",
     "privacy": "public",
     "sdkVersion": "22.0.0",
