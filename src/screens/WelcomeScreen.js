@@ -7,9 +7,9 @@ import Slides from '../components/Slides';
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/style';
 
 const SLIDE_DATA = [
-  { text: 'Welcome to Your Starter Project.', color: SECONDARY_COLOR },
+  { text: 'Welcome to Your Starter Project.', color: PRIMARY_COLOR },
   { text: 'The more awesome you make this app...', color: PRIMARY_COLOR },
-  { text: '...the more awesome it will be.', color: SECONDARY_COLOR }
+  { text: '...the more awesome it will be.', color: PRIMARY_COLOR }
 ];
 
 class WelcomeScreen extends Component {
@@ -20,7 +20,7 @@ class WelcomeScreen extends Component {
   //////////////////////////////////////////////////////////////////////////////////
   // Check if logged in; if so, skip the welcome/login screens and jump to main page
   async componentWillMount() {
-    //AsyncStorage.removeItem("welcome_completed"); // Just used for testing to clear item
+    AsyncStorage.removeItem("welcome_completed"); // Just used for testing to clear item
     try {
       const welcomeCompleted = await AsyncStorage.getItem('welcome_completed');
 
@@ -45,7 +45,7 @@ class WelcomeScreen extends Component {
       console.error(err);
     }
     return this.props.navigation.navigate('auth');
-    //this.props.navigation.navigate('auth', { param: 'Param test!!' });
+    this.props.navigation.navigate('auth', { param: 'Param test!!' });
   };
 
   //////////////////////////////////////////////////////////////////////////////////

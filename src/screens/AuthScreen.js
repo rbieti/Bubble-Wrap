@@ -124,16 +124,7 @@ class AuthScreen extends Component {
             onPress={this.onStandardSignupButtonPress}
           />
 
-          <Text style={{ textAlign: 'center', marginTop: 10 }}>- OR -</Text>
-
-          <SocialIcon
-            type="facebook"
-            title="Sign Up With Facebook"
-            raised={false}
-            button
-            onPress={this.onFbButtonPress}
-          />
-
+        
           <View style={styles.detailWrapperStyle}>
             <Text style={{ textAlign: 'center' }}>Already have an account?&nbsp;</Text>
             <TouchableWithoutFeedback onPress={this.onSignupLoginToggle}>
@@ -154,15 +145,6 @@ class AuthScreen extends Component {
           onPress={this.onStandardLoginButtonPress}
         />
 
-        <Text style={{ textAlign: 'center', marginTop: 10 }}>- OR -</Text>
-
-        <SocialIcon
-          type="facebook"
-          title="Log In With Facebook"
-          raised={false}
-          button
-          onPress={this.onFbButtonPress}
-        />
 
         <View style={styles.detailWrapperStyle}>
           <Text style={{ textAlign: 'center' }}>Don't have an account?&nbsp;</Text>

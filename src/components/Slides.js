@@ -15,7 +15,7 @@ class Slides extends Component {
         <View style={{ marginTop: 15 }}>
           <Button
             buttonStyle={styles.buttonStyle}
-            title="Drink Soda!"
+            title="Buy and Sell!"
             raised
             onPress={this.props.onComplete}
           />
@@ -61,7 +61,7 @@ const styles = {
     color: '#FFF'
   },
   buttonStyle: {
-    backgroundColor: PRIMARY_COLOR
+    backgroundColor: SECONDARY_COLOR
     //marginTop: 15
   }
 };

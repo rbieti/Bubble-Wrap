@@ -107,11 +107,15 @@ export default class App extends React.Component {
         signout: { screen: SignoutScreen }
       },
       {
-        contentComponent: customDrawerComponent
+        contentComponent: customDrawerComponent,
         // contentOptions: {
         //   activeTintColor: { color: '#F00' }
         // }
+        drawerOpenRoute: 'DrawerOpen',
+        drawerCloseRoute: 'DrawerClose',
+        drawerToggleRoute: 'DrawerToggle',
       }
+      
     );
 
     //////////////////////////////////////////////////////////////////////////////
@@ -127,7 +131,7 @@ export default class App extends React.Component {
           tabBarVisible: false
         },
         tabBarPosition: 'bottom',
-        swipeEnabled: false,
+        swipeEnabled: true,
         lazy: true, // Each screen will not mount/load until user clicks on them
         animationEnabled: false
       }
