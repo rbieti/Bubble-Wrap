@@ -1,0 +1,15 @@
+Git Style Guide
+
+Branches:
+ - Branch names should start with a category; either feature, bugfix, hotfix, or release.
+ - Branch names should include a unique identifier, which will correspond to a GitHub issue number.
+ - Branch names should be concise and descriptive.
+ - Examples: 	feature/002-setup-facebook-authentication
+		hotfix/003-prevent-facebook-auth-null-error
+		bugfix/019-remove-git-access-from-Drone#2-for-breaking-the-entire-repository
+		release/release-v1.2.0
+
+Commits:
+ - Commit messages should be less than 50 characters.
+ - Commit messages should be in the imperative present tense.
+ - Commit messages should concisely explain what was accomplished in that commit.
