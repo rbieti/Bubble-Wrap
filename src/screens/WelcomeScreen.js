@@ -7,9 +7,9 @@ import Slides from '../components/Slides';
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/style';
 
 const SLIDE_DATA = [
-  { text: 'Welcome to Your Starter Project.', color: PRIMARY_COLOR },
-  { text: 'The more awesome you make this app...', color: PRIMARY_COLOR },
-  { text: '...the more awesome it will be.', color: PRIMARY_COLOR }
+  { text: 'Welcome to BubbleWrap.', color: PRIMARY_COLOR },
+  { text: 'The Safest Buy And Sell App', color: PRIMARY_COLOR },
+  { text: 'For College Students Created By College Students', color: PRIMARY_COLOR }
 ];
 
 class WelcomeScreen extends Component {

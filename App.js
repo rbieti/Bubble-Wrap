@@ -85,7 +85,7 @@ export default class App extends React.Component {
         >
           <Image
             style={{ width: 150, height: 150 }}
-            sonpmurce={require('./assets/logo.png')}
+            source={require('./assets/logo.png')}
           />
         </View>
 
@@ -111,6 +111,7 @@ export default class App extends React.Component {
         // contentOptions: {
         //   activeTintColor: { color: '#F00' }
         // }
+        // TR: https://github.com/react-navigation/react-navigation/issues/3148
         drawerOpenRoute: 'DrawerOpen',
         drawerCloseRoute: 'DrawerClose',
         drawerToggleRoute: 'DrawerToggle',

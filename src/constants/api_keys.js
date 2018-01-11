@@ -9,10 +9,10 @@
 
 // https://console.firebase.google.com/
 export const GOOGLE_FIREBASE_CONFIG = {
-  apiKey: "AIzaSyC7vzBCU5fbN9DGd4HF1RMrHwPUC4OpVx4",
-    authDomain: "bubble-wrap-8485d.firebaseapp.com",
-    databaseURL: "https://bubble-wrap-8485d.firebaseio.com",
-    projectId: "bubble-wrap-8485d",
-    storageBucket: "bubble-wrap-8485d.appspot.com",
-    messagingSenderId: "149081643013"
+  apiKey: 'AIzaSyC7vzBCU5fbN9DGd4HF1RMrHwPUC4OpVx4',
+    authDomain: 'bubble-wrap-8485d.firebaseapp.com',
+    databaseURL: 'https://bubble-wrap-8485d.firebaseio.com',
+    projectId: 'bubble-wrap-8485d',
+    storageBucket: 'bubble-wrap-8485d.appspot.com',
+    messagingSenderId: '149081643013'
 };
