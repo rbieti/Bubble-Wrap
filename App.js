@@ -17,6 +17,7 @@ import {
 import { Divider } from 'react-native-elements';
 import { Provider } from 'react-redux';
 import firebase from 'firebase';
+import { Font } from 'expo';
 
 import store from './src/store';
 import SearchScreen from './src/screens/SearchScreen';
@@ -35,6 +36,9 @@ export default class App extends React.Component {
   // https://github.com/firebase/firebase-js-sdk/issues/97
   constructor() {
     super();
+    this.state = {
+      fontLoaded: false
+    };
     console.ignoredYellowBox = ['Setting a timer'];
   }
   //////////////////////////////////////////////////////////////////////////////
@@ -50,9 +54,24 @@ export default class App extends React.Component {
     //firebase.auth().signOut();
   }
 
+  // TR: Make fonts work in Expo: https://github.com/oblador/react-native-vector-icons/issues/523
+  async componentDidMount() {
+    await Font.loadAsync({
+      Entypo:        require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
+      FontAwesome:   require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
+      MaterialIcons: require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
+    });
+    this.setState({ fontLoaded: true });
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   // Main render method
   render() {
+    // TR: Make sure fonts load
+    if (!this.state.fontLoaded) {
+      return null;
+    }
+
     //////////////////////////////////////////////////////////////////////////////
     // Inner StackNavigator for search results
     const HomeScene = StackNavigator(
