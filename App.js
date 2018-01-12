@@ -59,7 +59,7 @@ export default class App extends React.Component {
     await Font.loadAsync({
       Entypo:        require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
       FontAwesome:   require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
-      MaterialIcons: require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
+      'Material Icons': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
     });
     this.setState({ fontLoaded: true });
   }
