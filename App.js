@@ -142,12 +142,13 @@ export default class App extends React.Component {
     const MainNavigator = TabNavigator(
       {
         welcome: { screen: WelcomeScreen },
+        test: {screen:TestScreen},
         auth: { screen: AuthScreen },
         main: { screen: MainDrawer }
       },
       {
         navigationOptions: {
-          tabBarVisible: false
+          tabBarVisible: true
         },
         tabBarPosition: 'bottom',
         swipeEnabled: false,
