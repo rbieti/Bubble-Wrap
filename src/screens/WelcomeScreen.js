@@ -1,15 +1,15 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator, AsyncStorage } from 'react-native';
+import { View, Text, ActivityIndicator, AsyncStorage, TouchableHighlight,ScrollView } from 'react-native';
 //import { AppLoading } from 'expo';
 import Slides from '../components/Slides';
-
+import Header from "react-native-elements/src/header/Header";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/style';
-
+import { Card, CardImage, CardTitle, CardContent, CardAction, Icon, ListItem, Button } from 'react-native-elements';
 const SLIDE_DATA = [
-  { text: 'Welcome to Your Starter Project.', color: SECONDARY_COLOR },
-  { text: 'The more awesome you make this app...', color: PRIMARY_COLOR },
-  { text: '...the more awesome it will be.', color: SECONDARY_COLOR }
+  { text: 'Welcome to BubbleWrap.', color: PRIMARY_COLOR },
+  { text: 'The Safest Buy And Sell App', color: PRIMARY_COLOR },
+  { text: 'For College Students Created By College Students', color: PRIMARY_COLOR }
 ];
 
 class WelcomeScreen extends Component {
@@ -20,7 +20,7 @@ class WelcomeScreen extends Component {
   //////////////////////////////////////////////////////////////////////////////////
   // Check if logged in; if so, skip the welcome/login screens and jump to main page
   async componentWillMount() {
-    //AsyncStorage.removeItem("welcome_completed"); // Just used for testing to clear item
+    AsyncStorage.removeItem("welcome_completed"); // Just used for testing to clear item
     try {
       const welcomeCompleted = await AsyncStorage.getItem('welcome_completed');
 
@@ -45,7 +45,7 @@ class WelcomeScreen extends Component {
       console.error(err);
     }
     return this.props.navigation.navigate('auth');
-    //this.props.navigation.navigate('auth', { param: 'Param test!!' });
+    this.props.navigation.navigate('auth', { param: 'Param test!!' });
   };
 
   //////////////////////////////////////////////////////////////////////////////////
