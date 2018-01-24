@@ -26,6 +26,7 @@ import VendorScreen from './src/screens/VendorScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
+import BuyItemScreen from './src/screens/BuyItemScreen';
 
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
@@ -78,6 +79,7 @@ export default class App extends React.Component {
       {
         search: { screen: SearchScreen },
         searchResults: { screen: SearchResultsScreen },
+        buyItem: { screen: BuyItemScreen }, // TR: MEMEMEMEME
         vendor: { screen: VendorScreen }
       },
       {
