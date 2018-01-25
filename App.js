@@ -26,9 +26,11 @@ import VendorScreen from './src/screens/VendorScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
-import BuyItemScreen from './src/screens/BuyItemScreen';
+import BuyItemScreen from './src/artboards/BuyItemScreen';
+// import CreateItemScreen from './src/artboards/CreateItemScreen';
+// import EditItemScreen from './src/artboards/EditItemScreen';
 
-import TestScreen from './src/screens/TestScreen'
+import TestScreen from './src/screens/TestScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
@@ -81,8 +83,6 @@ export default class App extends React.Component {
       {
         search: { screen: SearchScreen },
         searchResults: { screen: SearchResultsScreen },
-        buyItem: { screen: BuyItemScreen }, // TR: MEMEMEMEME
-        
         vendor: { screen: VendorScreen }
       },
       {
@@ -97,7 +97,10 @@ export default class App extends React.Component {
     const ScaffoldingScene = StackNavigator(
       {
         locator: { screen: ScaffoldingScreen },
-        test: {screen:TestScreen}
+        test: { screen:TestScreen },
+        buyItem: { screen: BuyItemScreen }, // TR: MEMEMEMEME
+        // createItem: { screen: CreateItemScreen },
+        // editItem: { screen: EditItemScreen }
       },
       {
         navigationOptions: {

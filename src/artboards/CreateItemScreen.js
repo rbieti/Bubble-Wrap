@@ -1,16 +1,7 @@
-import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
-
-export default class BuyItemScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    //tabBarVisible: false,
-    title: 'BuyItemScreen',
-    tabBarLabel: 'BuyItemScreen',
-    headerTitleStyle: {
-      textAlign: 'center',
-      alignSelf: 'center'
-    }
-  });
+import React, { Component } from "react";
+import Icon from "react-native-vector-icons/Ionic";
+import { View, StyleSheet, Text, Image } from "react-native";
+export default class CreateItemScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
