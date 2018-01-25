@@ -28,6 +28,8 @@ import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
 import BuyItemScreen from './src/screens/BuyItemScreen';
 
+import TestScreen from './src/screens/TestScreen'
+import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
 
@@ -80,7 +82,22 @@ export default class App extends React.Component {
         search: { screen: SearchScreen },
         searchResults: { screen: SearchResultsScreen },
         buyItem: { screen: BuyItemScreen }, // TR: MEMEMEMEME
+        
         vendor: { screen: VendorScreen }
+      },
+      {
+        navigationOptions: {
+          headerStyle: { backgroundColor: PRIMARY_COLOR },
+          headerBackTitleStyle: { color: '#FFF' },
+          headerTitleStyle: { color: '#FFF' },
+          headerTintColor: '#FFF'
+        }
+      }
+    );
+    const ScaffoldingScene = StackNavigator(
+      {
+        locator: { screen: ScaffoldingScreen },
+        test: {screen:TestScreen}
       },
       {
         navigationOptions: {
@@ -144,12 +161,14 @@ export default class App extends React.Component {
     const MainNavigator = TabNavigator(
       {
         welcome: { screen: WelcomeScreen },
+        navigate: {screen:ScaffoldingScene},
+        
         auth: { screen: AuthScreen },
         main: { screen: MainDrawer }
       },
       {
         navigationOptions: {
-          tabBarVisible: false
+          tabBarVisible: true
         },
         tabBarPosition: 'bottom',
         swipeEnabled: false,
