@@ -13,36 +13,36 @@ export default class Untitled extends Component {
          
         <View style={styles.rect2}>
         
+        <Button //TEST SCREEN BUTTON
+          onPress={() => {navigate('test')} }
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button //HANDSHAKE SCREEN BUTTON
+          onPress={() => {navigate('shakenbake')} }
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
         <Button
-        onPress={() => {navigate('test')} }
-        title="Screen"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
-      />
-      <Button
-  //onPress={onPressLearnMore}
-  title="Screen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
-<Button
- // onPress={onPressLearnMore}
-  title="Screen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
-<Button
-  //onPress={onPressLearnMore}
-  title="Screen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
-<Button
-  //onPress={onPressLearnMore}
-  title="Screen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
+          onPress={() => {navigate('test')} }
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          onPress={() => {navigate('test')} }
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          onPress={() => {navigate('test')} }
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
          
         </View>
       </View>

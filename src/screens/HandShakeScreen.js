@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text, Button,TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, Button, TouchableOpacity, ScrollView} from "react-native";
 import { PRIMARY_COLOR } from '../constants/style';
 export default class Untitled extends Component {
     static navigationOptions = ({ navigation }) => ({
         //tabBarVisible: false,
-        title: 'TestScreen',
-        tabBarLabel: 'TestScreen',
+        title: 'HandShakeScreen',
+        tabBarLabel: 'HandShakeScreen',
         headerTitleStyle: {
           textAlign: 'center',
           alignSelf: 'center'
@@ -32,18 +32,18 @@ export default class Untitled extends Component {
       //ADD YOUR CODE HERE!!!!!
       //######################
       render() {
-        const { navigate } = this.props.navigation; // THIS IS NECESSARY FOR NAVIGATION
+          const { navigate } = this.props.navigation; // THIS IS NECESSARY FOR NAVIGATION
         return (
-          <View style={styles.root}>
-            <TouchableOpacity style={styles.button1}>
-              <Text style={styles.text1}>Call</Text>
-            </TouchableOpacity>
-            <View style={styles.rect1} />
-            <View style={styles.rect2} />
-            <Text style={styles.text2}>Contact Campus Safety</Text>
-            <Text style={styles.text3}>Contact Information</Text>
-            <Text style={styles.text4}>Phone Number: (555)555-5555</Text>
-          </View>
+            <ScrollView>
+                <View style={styles.root}>
+                    <TouchableOpacity style={styles.button1}>
+                        <Text style={styles.text1}>Confirm</Text>
+                    </TouchableOpacity>
+                    <View style={styles.rect1} />
+                    <View style={styles.rect2} />
+                    <Text style={styles.text2}>Map</Text>
+                </View>
+            </ScrollView>
         );
       }
     }
@@ -60,7 +60,8 @@ export default class Untitled extends Component {
       },
       text1: {
         top: 32.33,
-        left: 124.56,
+        flex:1,
+        alignItems: 'center',
         position: "absolute",
         backgroundColor: "transparent",
         fontSize: 70,
