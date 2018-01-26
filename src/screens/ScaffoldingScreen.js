@@ -5,14 +5,14 @@ import { PRIMARY_COLOR } from '../constants/style';
 import TestScreen from '../screens/TestScreen';
 export default class Untitled extends Component {
   render() {
-    const { navigate } = this.props.navigation;
+    const { navigate } = this.props.navigation;// THIS IS NECESSARY FOR NAVIGATION
     return (
       <View style={styles.root}>
         <View style={styles.rect1} />
         <ScrollView style={styles.scrollArea1} horizontal={false} />
          
         <View style={styles.rect2}>
-        
+        //add buttons herere
         <Button
         onPress={() => {navigate('test')} }
         title="Screen"
