@@ -3,6 +3,9 @@ import { View, StyleSheet, ScrollView, Button } from "react-native";
 import {navigate}  from"react-navigation";
 import { PRIMARY_COLOR } from '../constants/style';
 import TestScreen from '../screens/TestScreen';
+//
+import TransactionScreen from '../screens/TransactionScreen';
+
 export default class Untitled extends Component {
   render() {
     const { navigate } = this.props.navigation;
@@ -26,8 +29,9 @@ export default class Untitled extends Component {
   accessibilityLabel="Learn more about this purple button"
 />
 <Button
+  onPress={() => {navigate('Transaction')} }
  // onPress={onPressLearnMore}
-  title="Screen"
+  title="TransactionScreen"
   color="#841584"
   accessibilityLabel="Learn more about this purple button"
 />
