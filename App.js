@@ -26,7 +26,7 @@ import VendorScreen from './src/screens/VendorScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
-import TestScreen from './src/screens/TestScreen'
+import TestScreen from './src/screens/TestScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';

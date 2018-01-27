@@ -32,6 +32,7 @@ export default class Untitled extends Component {
       //ADD YOUR CODE HERE!!!!!
       //######################
       render() {
+        const { navigate } = this.props.navigation;
         return (
           <View style={styles.root}>
             <TouchableOpacity style={styles.button1}>
