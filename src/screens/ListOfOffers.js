@@ -40,9 +40,9 @@ export default class Untitled extends Component {
             </TouchableOpacity>
             <View style={styles.rect1} />
             <View style={styles.rect2} />
-            <Text style={styles.text2}></Text>
-            <Text style={styles.text3}>Contact Information</Text>
-            <Text style={styles.text4}>Phone Number: (555)555-5555</Text>
+            <Text style={styles.text2}>Image here ^^^ with list of offers for it</Text>
+            <Text style={styles.text3}>Another image for a different item above and list of offers</Text>
+            <Text style={styles.text4}></Text>
           </View>
         );
       }
@@ -93,12 +93,12 @@ export default class Untitled extends Component {
         top: 125.93,
         left: 112.39,
         position: "absolute",
-        height: 30.2,
+        height: 35,
         width: 197.08
       },
       text4: {
         backgroundColor: "transparent",
-        top: 179.14,
+        top: 190.14,
         left: 21.66,
         position: "absolute"
       }

@@ -33,7 +33,7 @@ export default class Untitled extends Component {
         />
         <Button
           onPress={() => {navigate('loo')} }
-          title="Screen"
+          title="List of Offers"
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
         />
