@@ -1,0 +1,17 @@
+{
+    "artboards": [
+        "/src/artboards/CreateItemScreen.js",
+        "/src/artboards/BuyItemScreen.js",
+        "/src/artboards/EditItemScreen.js"
+    ],
+    "symbols": [],
+    "assets": [],
+    "defaultArtboardDirectory": "/src/artboards",
+    "defaultSymbolDirectory": "/src/symbols",
+    "defaultAssetDirectory": "/src/assets",
+    "deviceName": "iPhone X",
+    "deviceOrientation": "portrait",
+    "basePath": "/Users/trinaroberts/repos/react-native/bubble-wrap",
+    "tempPath": "/var/folders/b5/c_xttm1x5rj_05p8y955__7w0000gn/T/BuilderV8WloTr",
+    "useStylesheet": true
+}

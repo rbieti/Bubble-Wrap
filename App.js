@@ -62,8 +62,8 @@ export default class App extends React.Component {
   // TR: Make fonts work in Expo: https://github.com/oblador/react-native-vector-icons/issues/523
   async componentDidMount() {
     await Font.loadAsync({
-      Entypo:        require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
-      FontAwesome:   require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
+      Entypo: require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
+      FontAwesome: require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
       'Material Icons': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
     });
     this.setState({ fontLoaded: true });
@@ -97,7 +97,7 @@ export default class App extends React.Component {
     const ScaffoldingScene = StackNavigator(
       {
         locator: { screen: ScaffoldingScreen },
-        test: { screen:TestScreen },
+        test: { screen: TestScreen },
         buyItem: { screen: BuyItemScreen }, // TR: MEMEMEMEME
         // createItem: { screen: CreateItemScreen },
         // editItem: { screen: EditItemScreen }
@@ -164,7 +164,7 @@ export default class App extends React.Component {
     const MainNavigator = TabNavigator(
       {
         welcome: { screen: WelcomeScreen },
-        navigate: {screen:ScaffoldingScene},
+        navigate: { screen: ScaffoldingScene },
         
         auth: { screen: AuthScreen },
         main: { screen: MainDrawer }

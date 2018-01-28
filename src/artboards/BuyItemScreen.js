@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
+import PRIMARY_COLOR from '../constants/style';
 
 export default class BuyItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    //tabBarVisible: false,
-    title: 'BuyItemScreen',
-    tabBarLabel: 'BuyItemScreen',
+    tabBarVisible: false,
+    title: 'Buy Item',
+    tabBarLabel: 'Buy Item',
     headerTitleStyle: {
       textAlign: 'center',
       alignSelf: 'center'
@@ -22,26 +23,20 @@ export default class BuyItemScreen extends Component {
           <View style={styles.rect7} />
           <View style={styles.rect8} />
         </View>
-        <Text style={styles.text1}>Create Offer</Text>
+        <Text style={styles.text1}>Buy Item</Text>
         <Image
           source={require("../assets/640x478_ac.jpg")}
           style={styles.image1}
         />
-        <Icon name="ios-camera-outline" size={40} style={styles.icon1} />
-        <Icon name="ios-add" size={40} style={styles.icon2} />
         <Text style={styles.text2}>Name</Text>
         <Text style={styles.text3}>Price</Text>
         <Text style={styles.text4}>Description</Text>
-        <Image
-          style={styles.image2}
-          source={require("../assets/640x478_ac.jpg")}
-        />
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  root: { backgroundColor: "white", flex: 1, flexDirection: "column" },
+  root: { backgroundColor: PRIMARY_COLOR, flex: 1, flexDirection: "column" },
   rect1: { flex: 0.52, backgroundColor: "rgb(227, 227, 227)" },
   rect2: { flex: 0.09, backgroundColor: "rgb(250, 250, 250)" },
   rect3: { flex: 0.09, backgroundColor: "rgb(231, 231, 231)", height: 0 },
@@ -57,13 +52,13 @@ const styles = StyleSheet.create({
     fontSize: 40,
     height: 71.83,
     bottom: -8.98,
-    color: "rgba(155,155,155,1)"
+    color: PRIMARY_COLOR
   },
   image1: {
     position: "absolute",
     width: 374.99,
     height: 382.06,
-    top: 37.08,
+    top: 0,
     left: 0
   },
   icon1: {
@@ -85,35 +80,35 @@ const styles = StyleSheet.create({
   rect6: { flex: 0.33, backgroundColor: "rgb(215, 215, 215)" },
   rect7: { flex: 0.33, backgroundColor: "rgb(227, 227, 227)" },
   rect8: { flex: 0.34, backgroundColor: "rgb(232, 232, 232)" },
-  text2: {
+  nameBox: {
     backgroundColor: "transparent",
-    top: 513.38,
+    top: 300.00,
     left: 29.87,
     position: "absolute",
-    fontSize: 32,
+    fontSize: 24,
     color: "rgba(155,155,155,1)"
   },
-  text3: {
-    top: 589.23,
+  priceBox: {
+    top: 325.00,
     left: 29.88,
     position: "absolute",
     backgroundColor: "transparent",
-    fontSize: 32,
+    fontSize: 24,
     color: "rgba(155,155,155,1)"
   },
-  text4: {
-    top: 671.33,
+  descriptionBox: {
+    top: 350.00,
     left: 29.88,
     position: "absolute",
     backgroundColor: "transparent",
-    fontSize: 32,
+    fontSize: 24,
     color: "rgba(155,155,155,1)"
   },
-  image2: {
-    top: 344.66,
-    left: 412.75,
-    width: 374.99,
-    height: 382.06,
-    position: "absolute"
-  }
+  // image2: {
+  //   top: 344.66,
+  //   left: 412.75,
+  //   width: 374.99,
+  //   height: 382.06,
+  //   position: "absolute"
+  // }
 });
