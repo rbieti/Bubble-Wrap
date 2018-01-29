@@ -27,6 +27,7 @@ import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
 import TestScreen from './src/screens/TestScreen';
+import MakeOfferScreen from './src/screens/MakeOfferScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
 //import
 import TransactionScreen from './src/screens/TransactionScreen';
@@ -98,7 +99,8 @@ export default class App extends React.Component {
       {
         locator: { screen: ScaffoldingScreen },
         test: {screen:TestScreen},
-        trans: {screen:TransactionScreen}
+        trans: {screen:TransactionScreen},
+        mos: {screen:MakeOfferScreen}
       },
       {
         navigationOptions: {

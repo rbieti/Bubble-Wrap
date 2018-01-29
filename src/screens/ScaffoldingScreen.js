@@ -17,42 +17,35 @@ export default class Untitled extends Component {
         <View style={styles.rect2}>
         
         <Button
-        onPress={() => {navigate('test')} }
-        title="Screen"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
-      />
-      <Button
-  //onPress={onPressLearnMore}
-  onPress={() => {navigate('trans')} }
-
-  title="Screen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
-<Button
-  onPress={() => {navigate('trans')} }
- // onPress={onPressLearnMore}
-  title="TransactionScreen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
-<Button
-  //onPress={onPressLearnMore}
-  onPress={() => {navigate('trans')} }
-
-  title="Screen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
-<Button
-  //onPress={onPressLearnMore}
-  onPress={() => {navigate('trans')} }
-
-  title="Screen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
+          onPress={() => {navigate('test')} }
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          onPress={() => {navigate('mos')} }
+          title="Make Offer Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          onPress={() => {navigate('trans')} }
+          title="Transaction Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          onPress={() => {navigate('test')} }
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          onPress={() => {navigate('test')} }
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
          
         </View>
       </View>
