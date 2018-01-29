@@ -27,8 +27,6 @@ import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
 import BuyItemScreen from './src/artboards/BuyItemScreen';
-// import CreateItemScreen from './src/artboards/CreateItemScreen';
-// import EditItemScreen from './src/artboards/EditItemScreen';
 
 import TestScreen from './src/screens/TestScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
@@ -65,6 +63,8 @@ export default class App extends React.Component {
       Entypo: require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
       FontAwesome: require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
       'Material Icons': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
+      MaterialIcons: require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
+      Ionicons: require('./node_modules/react-native-vector-icons/Fonts/Ionicons.ttf'),
     });
     this.setState({ fontLoaded: true });
   }
@@ -98,9 +98,7 @@ export default class App extends React.Component {
       {
         locator: { screen: ScaffoldingScreen },
         test: { screen: TestScreen },
-        buyItem: { screen: BuyItemScreen }, // TR: MEMEMEMEME
-        // createItem: { screen: CreateItemScreen },
-        // editItem: { screen: EditItemScreen }
+        buyItem: { screen: BuyItemScreen }
       },
       {
         navigationOptions: {

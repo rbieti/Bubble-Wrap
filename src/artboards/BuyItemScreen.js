@@ -15,100 +15,60 @@ export default class BuyItemScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
-        <View style={styles.rect1} />
-        <View style={styles.rect2} />
-        <View style={styles.rect3} />
-        <View style={styles.rect4}>
-          <View style={styles.rect6} />
-          <View style={styles.rect7} />
-          <View style={styles.rect8} />
+
+        <View style={styles.offerBox}>
+          <Text style={styles.text}>Offer John</Text>
+          <Text style={styles.text}>$12.00</Text>
         </View>
-        <Text style={styles.text1}>Buy Item</Text>
+
         <Image
-          source={require("../assets/640x478_ac.jpg")}
-          style={styles.image1}
+          source={require("../../assets/478x478-reeses.jpg")}
+          style={styles.image}
+          resizeMode="cover"
         />
-        <Text style={styles.text2}>Name</Text>
-        <Text style={styles.text3}>Price</Text>
-        <Text style={styles.text4}>Description</Text>
+        <View style={styles.fieldBox}>
+          <Text style={styles.text}>Reeses Pieces</Text>
+          <Text style={styles.text}>A delicious treat for you and me</Text>
+          <Text style={styles.text}>$115.00</Text>
+        </View>
+        <Text style={styles.buy}>Buy Item</Text>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  root: { backgroundColor: PRIMARY_COLOR, flex: 1, flexDirection: "column" },
-  rect1: { flex: 0.52, backgroundColor: "rgb(227, 227, 227)" },
-  rect2: { flex: 0.09, backgroundColor: "rgb(250, 250, 250)" },
-  rect3: { flex: 0.09, backgroundColor: "rgb(231, 231, 231)", height: 0 },
-  rect4: {
-    flex: 0.31,
-    backgroundColor: "rgb(253, 253, 253)",
-    flexDirection: "column"
+  root: { backgroundColor: "#0000ff", flex: 1, flexDirection: "column" },
+  offerBox: { 
+    flex: 0.10, 
+    flexDirection: "row",
+    backgroundColor: "rgb(227, 227, 227)",
+    alignSelf: "stretch",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
-  text1: {
-    backgroundColor: "transparent",
-    left: 85.04,
-    position: "absolute",
-    fontSize: 40,
-    height: 71.83,
-    bottom: -8.98,
-    color: PRIMARY_COLOR
-  },
-  image1: {
-    position: "absolute",
+  image: {
+    flex: 0.60,
     width: 374.99,
     height: 382.06,
-    top: 0,
-    left: 0
   },
-  icon1: {
-    backgroundColor: "transparent",
-    top: 433.51,
-    left: 100,
-    position: "absolute",
-    color: "grey",
-    fontSize: 50
+  fieldBox: {
+    flex: 0.2,
+    backgroundColor: "rgb(215, 215, 215)",
+    flexDirection: "column",
+    alignSelf: "stretch",
+    justifyContent: "space-around",
+    alignItems: "stretch",
   },
-  icon2: {
-    backgroundColor: "transparent",
-    top: 434,
-    left: 252.83,
-    position: "absolute",
-    color: "grey",
-    fontSize: 50
-  },
-  rect6: { flex: 0.33, backgroundColor: "rgb(215, 215, 215)" },
-  rect7: { flex: 0.33, backgroundColor: "rgb(227, 227, 227)" },
-  rect8: { flex: 0.34, backgroundColor: "rgb(232, 232, 232)" },
-  nameBox: {
-    backgroundColor: "transparent",
-    top: 300.00,
-    left: 29.87,
-    position: "absolute",
-    fontSize: 24,
-    color: "rgba(155,155,155,1)"
-  },
-  priceBox: {
-    top: 325.00,
-    left: 29.88,
-    position: "absolute",
+  text: {
     backgroundColor: "transparent",
     fontSize: 24,
-    color: "rgba(155,155,155,1)"
+    color: "#000000"
   },
-  descriptionBox: {
-    top: 350.00,
-    left: 29.88,
-    position: "absolute",
+  buy: {
+    flex: 0.15,
     backgroundColor: "transparent",
-    fontSize: 24,
-    color: "rgba(155,155,155,1)"
+    fontSize: 36,
+    color: '#ffffff',
+    textAlign: "center"
   },
-  // image2: {
-  //   top: 344.66,
-  //   left: 412.75,
-  //   width: 374.99,
-  //   height: 382.06,
-  //   position: "absolute"
-  // }
 });

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { View, StyleSheet, ScrollView, Button } from "react-native";
-import {navigate} from "react-navigation";
+import { navigate } from "react-navigation";
 import { PRIMARY_COLOR } from '../constants/style';
 import TestScreen from '../screens/TestScreen';
+import BuyItemScreen from '../artboards/BuyItemScreen';
+
 export default class Untitled extends Component {
   render() {
     const { navigate } = this.props.navigation;// THIS IS NECESSARY FOR NAVIGATION
@@ -21,8 +23,8 @@ export default class Untitled extends Component {
         />
         <Button
           onPress={() => { navigate('buyItem') }}
-          title="Screen"
-          color="#841584"
+          title="Buy Item"
+          color="#0000ff"
           accessibilityLabel="Learn more about this purple button"
         />
         <Button
