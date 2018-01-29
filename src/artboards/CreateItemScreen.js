@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Icon from "react-native-vector-icons/Ionic";
 import { View, StyleSheet, Text, Image } from "react-native";
+
 export default class CreateItemScreen extends Component {
   render() {
     return (
