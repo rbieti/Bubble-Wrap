@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text, Button,TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, Button,TouchableOpacity, Image } from "react-native";
 import { PRIMARY_COLOR } from '../constants/style';
 export default class Untitled extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -35,71 +35,67 @@ export default class Untitled extends Component {
         const { navigate } = this.props.navigation;
         return (
           <View style={styles.root}>
+            <Text style={styles.text1}>
+              Make an offer:
+            </Text>
+            <Text style={styles.text2}>
+              $99
+            </Text>
             <TouchableOpacity style={styles.button1}>
-              <Text style={styles.text1}>Call</Text>
+              <Text style={styles.text3}>
+                Message Seller...
+              </Text> 
             </TouchableOpacity>
-            <View style={styles.rect1} />
-            <View style={styles.rect2} />
-            <Text style={styles.text2}>Offer</Text>
-            <Text style={styles.text3}>Screen</Text>
-            <Text style={styles.text4}></Text>
+            <Image
+	            source={require("../../assets/icon.png")}
+              style={styles.image1}
+              resizeMode="cover"
+            />
+            <TouchableOpacity style={styles.button1}>
+              <Text style={styles.text3}>Make Offer</Text>
+            </TouchableOpacity>
           </View>
         );
       }
     }
     const styles = StyleSheet.create({
-      root: { backgroundColor: "white", flex: 1 },
-      button1: {
-        backgroundColor: "rgba(44,16,229,1)",
-        height: 133.46,
-        width: 360.84,
-        top: 541.07,
-        left: 7.08,
-        position: "absolute",
-        opacity: 1
+      root: { 
+        backgroundColor: "white",
+        flex: 1,
+        alignItems: "center"
       },
       text1: {
-        top: 32.33,
-        left: 124.56,
-        position: "absolute",
-        backgroundColor: "transparent",
-        fontSize: 70,
-        color: "rgba(245,236,236,1)"
-      },
-      rect1: {
-        backgroundColor: "rgb(230, 230, 230)",
-        height: 360.84,
-        width: 370.23,
-        top: 124.9,
-        left: 2.88,
-        position: "absolute"
-      },
-      rect2: {
-        backgroundColor: "rgb(230, 230, 230)",
-        height: 45.84,
-        width: 390.04,
-        top: 36.25,
-        left: -4.43,
-        position: "absolute"
+
       },
       text2: {
-        backgroundColor: "transparent",
-        top: 55.02,
-        left: 98.19,
-        position: "absolute"
+        fontSize: 50
+      },
+      rect1: {
+        backgroundColor: "blue",
+        height: 60
+      },
+      image1: {
+        height: 250,
+        width: 400,
+        left: 0,
+        right: 0
       },
       text3: {
-        backgroundColor: "transparent",
-        top: 125.93,
-        left: 112.39,
-        position: "absolute",
-        height: 30.2,
-        width: 197.08
+        color: "white",
       },
-      text4: {
-        backgroundColor: "transparent",
-        top: 179.14,
-        left: 21.66,
-        position: "absolute"
-      }
+      button1: {
+        backgroundColor: "blue",
+        height: 50,
+        width: 200,
+        left: 0,
+        right: 0,
+        opacity: 1,
+        alignItems: "center",
+        justifyContent: "center"
+      },
+
+
+
+
+
     });
