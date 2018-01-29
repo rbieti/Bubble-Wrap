@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text, Button,TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, Button,TouchableOpacity, Image, ScrollView } from "react-native";
 import { PRIMARY_COLOR } from '../constants/style';
 export default class Untitled extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -35,71 +35,85 @@ export default class Untitled extends Component {
         const { navigate } = this.props.navigation;
         return (
           <View style={styles.root}>
-            <TouchableOpacity style={styles.button1}>
-              <Text style={styles.text1}>Call</Text>
-            </TouchableOpacity>
-            <View style={styles.rect1} />
-            <View style={styles.rect2} />
-            <Text style={styles.text2}>Image here ^^^ with list of offers for it</Text>
-            <Text style={styles.text3}>Another image for a different item above and list of offers</Text>
-            <Text style={styles.text4}></Text>
+            <ScrollView 
+            style={styles.scroll1} 
+            automaticallyAdjustInsets={true}
+            horizontal={false}
+            pagingEnabled={false}
+            scrollEnabled={true}
+            decelerationRate={0.5}
+            scrollEventThrottle={16}
+            >
+              <Image
+                source={require("../../assets/icon.png")}
+                style={styles.image1}
+                resizeMode="cover"
+              />
+              <View style={styles.rect1}>
+                <Text style={styles.text1}>
+                  John offered: $100,000,000
+                </Text>
+              </View>
+              <View style={styles.rect1}>
+                <Text style={styles.text1}>
+                  Stacy offered: $15
+                </Text>
+              </View>
+              <View style={styles.rect1}>
+                <Text style={styles.text1}>
+                  Brian offered: $420
+                </Text>
+              </View>
+
+              <Image
+                source={require("../../assets/icon.png")}
+                style={styles.image1}
+                resizeMode="cover"
+              />
+              <View style={styles.rect1}>
+                <Text style={styles.text1}>
+                  John offered: $100,000,000
+                </Text>
+              </View>
+              <View style={styles.rect1}>
+                <Text style={styles.text1}>
+                  Stacy offered: $15
+                </Text>
+              </View>
+              <View style={styles.rect1}>
+                <Text style={styles.text1}>
+                  Brian offered: $420
+                </Text>
+              </View>
+            </ScrollView>
           </View>
         );
       }
     }
+
     const styles = StyleSheet.create({
-      root: { backgroundColor: "white", flex: 1 },
-      button1: {
-        backgroundColor: "rgba(44,16,229,1)",
-        height: 133.46,
-        width: 360.84,
-        top: 541.07,
-        left: 7.08,
-        position: "absolute",
-        opacity: 1
+      root: { 
+        flex: 1
+      },
+      image1: {
+        left: 0,
+        right: 0,
+        height: 200,
+        backgroundColor:"#fff"
       },
       text1: {
-        top: 32.33,
-        left: 124.56,
-        position: "absolute",
-        backgroundColor: "transparent",
-        fontSize: 70,
-        color: "rgba(245,236,236,1)"
+        
+      },
+      scroll1: {
+
       },
       rect1: {
-        backgroundColor: "rgb(230, 230, 230)",
-        height: 360.84,
-        width: 370.23,
-        top: 124.9,
-        left: 2.88,
-        position: "absolute"
-      },
-      rect2: {
-        backgroundColor: "rgb(230, 230, 230)",
-        height: 45.84,
-        width: 390.04,
-        top: 36.25,
-        left: -4.43,
-        position: "absolute"
-      },
-      text2: {
-        backgroundColor: "transparent",
-        top: 55.02,
-        left: 98.19,
-        position: "absolute"
-      },
-      text3: {
-        backgroundColor: "transparent",
-        top: 125.93,
-        left: 112.39,
-        position: "absolute",
-        height: 35,
-        width: 197.08
-      },
-      text4: {
-        backgroundColor: "transparent",
-        top: 190.14,
-        left: 21.66,
-        position: "absolute"
+        height: 50,
+        backgroundColor: "#fff",
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 20,
+        justifyContent: 'center',
+        paddingLeft: 12
       }
     });
