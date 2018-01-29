@@ -16,19 +16,9 @@ class SearchScreen extends Component {
     headerTitleStyle: {
       textAlign: 'center',
       alignSelf: 'center'
-    },
-    headerLeft: (
-      <Button
-        navigate={navigation.navigate}
-        large
-        icon={{ name: 'menu' }}
-        backgroundColor={PRIMARY_COLOR}
-        onPress={() => navigation.navigate('DrawerOpen')}
-      />
-    ),
-    drawerIcon: ({ tintColor }) => (
-      <Icon name="home" size={25} color={tintColor} />
-    )
+    }
+    
+    
   });
 
   //////////////////////////////////////////////////////////////////////////////////

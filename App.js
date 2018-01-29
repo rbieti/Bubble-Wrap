@@ -94,7 +94,11 @@ export default class App extends React.Component {
     const ScaffoldingScene = StackNavigator(
       {
         locator: { screen: ScaffoldingScreen },
-        test: {screen:TestScreen}
+        test: {screen:TestScreen},
+        search: {screen:SearchScreen},
+        searchRes:{screen:SearchResultsScreen}
+        //add more screens here
+        // name: {screen:"name of imported screen"}
       },
       {
         navigationOptions: {

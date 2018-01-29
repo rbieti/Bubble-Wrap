@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, StyleSheet, ScrollView, Button } from "react-native";
-import {navigate}  from"react-navigation";
+import {navigate}  from "react-navigation";
 import { PRIMARY_COLOR } from '../constants/style';
 import TestScreen from '../screens/TestScreen';
 export default class Untitled extends Component {
@@ -12,24 +12,22 @@ export default class Untitled extends Component {
         <ScrollView style={styles.scrollArea1} horizontal={false} />
          
         <View style={styles.rect2}>
-        //add buttons herere
+        //add buttons here
         <Button
         onPress={() => {navigate('test')} }
-        title="Screen"
+        title="Campus Safety"
         color="#841584"
-        accessibilityLabel="Learn more about this purple button"
       />
+      
       <Button
-  //onPress={onPressLearnMore}
-  title="Screen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
+  onPress={() => {navigate('search')} }  
+  title="Search"
+  color="#841584" 
 />
 <Button
- // onPress={onPressLearnMore}
-  title="Screen"
+ onPress={() => {navigate('searchRes')} }
+  title="Search Results"
   color="#841584"
-  accessibilityLabel="Learn more about this purple button"
 />
 <Button
   //onPress={onPressLearnMore}
