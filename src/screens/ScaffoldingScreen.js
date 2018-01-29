@@ -24,12 +24,14 @@ export default class Untitled extends Component {
       />
       <Button
   //onPress={onPressLearnMore}
+  onPress={() => {navigate('trans')} }
+
   title="Screen"
   color="#841584"
   accessibilityLabel="Learn more about this purple button"
 />
 <Button
-  onPress={() => {navigate('Transaction')} }
+  onPress={() => {navigate('trans')} }
  // onPress={onPressLearnMore}
   title="TransactionScreen"
   color="#841584"
@@ -37,12 +39,16 @@ export default class Untitled extends Component {
 />
 <Button
   //onPress={onPressLearnMore}
+  onPress={() => {navigate('trans')} }
+
   title="Screen"
   color="#841584"
   accessibilityLabel="Learn more about this purple button"
 />
 <Button
   //onPress={onPressLearnMore}
+  onPress={() => {navigate('trans')} }
+
   title="Screen"
   color="#841584"
   accessibilityLabel="Learn more about this purple button"

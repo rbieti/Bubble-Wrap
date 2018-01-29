@@ -97,8 +97,8 @@ export default class App extends React.Component {
     const ScaffoldingScene = StackNavigator(
       {
         locator: { screen: ScaffoldingScreen },
-        test: {screen:TestScreen}
-     
+        test: {screen:TestScreen},
+        trans: {screen:TransactionScreen}
       },
       {
         navigationOptions: {
