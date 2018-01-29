@@ -43,6 +43,18 @@ export default class Untitled extends Component {
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
         />
+        <Button
+          onPress={() => {navigate('loo')} }
+          title="List of Offers"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          onPress={() => {navigate('test')} }
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
          
         </View>
       </View>

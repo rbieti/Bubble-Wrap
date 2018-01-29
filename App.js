@@ -27,6 +27,7 @@ import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
 import TestScreen from './src/screens/TestScreen';
+import ListOfOffers from './src/screens/ListOfOffers';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
 import HandShakeScreen from './src/screens/HandShakeScreen';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
@@ -96,7 +97,8 @@ export default class App extends React.Component {
       {
         locator: { screen: ScaffoldingScreen },
         test: {screen:TestScreen},
-        shakenbake: {screen:HandShakeScreen}
+        shakenbake: {screen:HandShakeScreen},
+        loo: {screen:ListOfOffers}
       },
       {
         navigationOptions: {
