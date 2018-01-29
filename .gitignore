@@ -7,6 +7,5 @@
 /.expo
 .DS_Store
 Thumbs.db
-
 .eslintrc
-project.builderx
+*.builderx

@@ -1,130 +1,130 @@
 import React, { Component } from "react";
-import Icon from "react-native-vector-icons/Ionic";
-import { View, StyleSheet, Text, Image } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
+import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
+
 export default class EditItemScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    //tabBarVisible: false,
+    title: 'Edit Item',
+    tabBarLabel: 'Edit',
+    headerTitleStyle: {
+      textAlign: 'center',
+      alignSelf: 'center'
+    }
+  });
   render() {
     return (
-      <View style={styles.root}>
-        <View style={styles.rect5}>
-          <View style={styles.rect6} />
-          <View style={styles.rect7} />
-          <View style={styles.rect8} />
+      // <ScrollView 
+      //   //style={styles.scroll1} 
+      //   automaticallyAdjustInsets={true}
+      //   horizontal={false}
+      //   pagingEnabled={false}
+      //   scrollEnabled={true}
+      //   decelerationRate={0.5}
+      //   scrollEventThrottle={16}
+      // >
+        <View style={styles.root}>
+          <View style={styles.imageBox}>
+            <Image
+              style={styles.image}
+              source={require("../../assets/478x478-reeses.jpg")}
+              resizeMode="cover"
+            />
+          </View>
+
+          <View style={styles.iconBox}>
+            <Icon style={styles.cameraIcon} name="ios-camera-outline" size={40} />
+            <Icon style={styles.plusIcon} name="ios-add" size={40} />
+          </View>
+
+          <View style={styles.fieldBox}>
+            <Text style={styles.text}>Reeses Pieces</Text>
+            <Text style={styles.text}>A delicious treat for you and me</Text>
+            <Text style={styles.text}>$15.00</Text>
+          </View>
+
+          <Text style={styles.save}>Save</Text>
         </View>
-        <View style={styles.rect1} />
-        <Text style={styles.text1}>Description</Text>
-        <Text style={styles.text2}>Price</Text>
-        <View style={styles.rect2} />
-        <View style={styles.rect3} />
-        <View style={styles.rect4} />
-        <View style={styles.rect9} />
-        <View style={styles.rect10} />
-        <Image
-          style={styles.image1}
-          source={require("../assets/640x478_ac.jpg")}
-        />
-        <Icon style={styles.icon1} name="ios-add" size={40} />
-        <Text style={styles.text3}>Name</Text>
-        <Text style={styles.cYkOOA}>SAVE</Text>
-        <Icon style={styles.icon2} name="ios-camera-outline" size={40} />
-        <Text style={styles.text4}>Description</Text>
-        <Text style={styles.text5}>Price</Text>
-      </View>
+      // </ScrollView>
     );
   }
 }
+
 const styles = StyleSheet.create({
-  root: { backgroundColor: "white", flex: 1 },
-  rect1: { height: 0, flex: 0.16, backgroundColor: "rgb(231, 231, 231)" },
-  text1: {
-    top: 681.33,
-    left: 39.88,
-    position: "absolute",
-    backgroundColor: "transparent",
-    fontSize: 32,
-    color: "rgba(155,155,155,1)",
-    height: 30.78
+  root: {
+    backgroundColor: "#0000ff",
+    flex: 1,
+    alignItems: "center",
+    flexDirection: "column"
   },
-  text2: {
-    top: 599.23,
-    left: 39.88,
-    position: "absolute",
-    backgroundColor: "transparent",
-    fontSize: 32,
-    color: "rgba(155,155,155,1)",
-    height: 30.78
+
+  imageBox: {
+    flex: 0.64,
+    backgroundColor: "rgb(231, 231, 231)",
+    alignSelf: "stretch",
+    margin: 0,
+    minHeight: 0,
+    width: 374.98,
+    height: 3,
+    justifyContent: "flex-end",
+    alignItems: "center"
   },
-  rect2: { flex: 0.42, backgroundColor: "rgb(232, 232, 232)" },
-  rect3: { flex: 0.17, backgroundColor: "rgb(215, 215, 215)" },
-  rect4: { flex: 0.52, backgroundColor: "rgb(227, 227, 227)" },
-  rect9: { flex: 0.16, backgroundColor: "rgb(250, 250, 250)" },
-  rect10: { flex: -0.76, backgroundColor: "rgb(227, 227, 227)" },
-  image1: {
-    top: 40.67,
-    left: 0,
-    width: 374.99,
-    height: 382.06,
-    position: "absolute"
+
+  iconBox: {
+    backgroundColor: "rgb(232, 232, 232)",
+    alignSelf: "stretch",
+    height: 60,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: 374.98
   },
-  icon1: {
-    top: 438.84,
-    left: 258.96,
-    position: "absolute",
-    backgroundColor: "transparent",
-    color: "grey",
-    fontSize: 50,
-    height: 48.74
-  },
-  text3: {
-    top: 523.38,
-    left: 38.54,
-    position: "absolute",
-    backgroundColor: "transparent",
-    fontSize: 32,
-    color: "rgba(155,155,155,1)",
-    height: 30.78
-  },
-  cYkOOA: {
-    left: 117.18,
-    bottom: 5.13,
-    height: 71.83,
-    position: "absolute",
-    backgroundColor: "transparent",
-    fontSize: 60,
-    color: "rgba(155,155,155,1)"
-  },
-  icon2: {
-    top: 437.04,
-    left: 89.45,
-    position: "absolute",
-    backgroundColor: "transparent",
-    color: "grey",
-    fontSize: 50,
-    height: 48.74
-  },
-  rect5: {
-    flex: 0.34,
+
+  fieldBox: {
+    flex: 0.2,
+    backgroundColor: "rgb(215, 215, 215)",
     flexDirection: "column",
-    backgroundColor: "rgb(253, 253, 253)"
+    alignSelf: "stretch",
+    justifyContent: "space-around",
+    alignItems: "stretch",
+    width: 374.98,
+    height: 146.41
   },
-  rect6: { flex: 0.33, backgroundColor: "rgb(215, 215, 215)" },
-  rect7: { flex: 0.33, backgroundColor: "rgb(227, 227, 227)" },
-  rect8: { flex: 0.34, backgroundColor: "rgb(232, 232, 232)" },
-  text4: {
-    top: 651.83,
-    left: 41.13,
-    position: "absolute",
+  
+  save: {
+    height: 71.82,
+
     backgroundColor: "transparent",
-    fontSize: 32,
-    color: "rgba(155,155,155,1)",
-    height: 30.78
+    fontSize: 48,
+    color: "rgba(255,255,255,1)",
+    width: 359.12,
+    textAlign: "center"
   },
-  text5: {
-    top: 585.11,
-    left: 41.13,
-    position: "absolute",
+
+  plusIcon: {
     backgroundColor: "transparent",
-    fontSize: 32,
-    color: "rgba(155,155,155,1)",
-    height: 30.78
-  }
+    color: "grey",
+    fontSize: 50,
+    width: 25.01,
+    height: 48.94
+  },
+
+  cameraIcon: {
+    backgroundColor: "transparent",
+    color: "grey",
+    fontSize: 50,
+    textAlign: "left",
+    width: 37.52,
+    height: 48.94
+  },
+
+  text: {
+    backgroundColor: "transparent",
+    fontSize: 24,
+    color: "rgba(0,0,0,1)",
+    //width: 80.03
+    height: 30.75
+  },
+
+  image: { width: 374.99, height: 382.04 }
 });

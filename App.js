@@ -26,10 +26,11 @@ import VendorScreen from './src/screens/VendorScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
-import TestScreen from './src/screens/TestScreen'
+import TestScreen from './src/screens/TestScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
+import EditItemScreen from './src/artboards/EditItemScreen';
 
 export default class App extends React.Component {
   //////////////////////////////////////////////////////////////////////////////
@@ -58,9 +59,11 @@ export default class App extends React.Component {
   // TR: Make fonts work in Expo: https://github.com/oblador/react-native-vector-icons/issues/523
   async componentDidMount() {
     await Font.loadAsync({
-      Entypo:        require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
-      FontAwesome:   require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
+      Entypo: require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
+      FontAwesome: require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
       'Material Icons': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
+      MaterialIcons: require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
+      Ionicons: require('./node_modules/react-native-vector-icons/Fonts/Ionicons.ttf'),
     });
     this.setState({ fontLoaded: true });
   }
@@ -94,7 +97,8 @@ export default class App extends React.Component {
     const ScaffoldingScene = StackNavigator(
       {
         locator: { screen: ScaffoldingScreen },
-        test: {screen:TestScreen}
+        test: { screen: TestScreen },
+        editItem: { screen: EditItemScreen }
       },
       {
         navigationOptions: {
