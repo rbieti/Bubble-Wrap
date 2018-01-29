@@ -21,7 +21,7 @@ export default class Untitled extends Component {
         />
         <Button //HANDSHAKE SCREEN BUTTON
           onPress={() => {navigate('shakenbake')} }
-          title="Screen"
+          title="HandShake"
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
         />
