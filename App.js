@@ -26,7 +26,7 @@ import VendorScreen from './src/screens/VendorScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
-import BuyItemScreen from './src/screens/BuyItemScreen';
+import CreateItemScreen from './src/artboards/CreateItemScreen';
 
 import TestScreen from './src/screens/TestScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
@@ -60,9 +60,11 @@ export default class App extends React.Component {
   // TR: Make fonts work in Expo: https://github.com/oblador/react-native-vector-icons/issues/523
   async componentDidMount() {
     await Font.loadAsync({
-      Entypo:        require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
-      FontAwesome:   require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
-      'Material Icons': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
+      Entypo: require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
+      FontAwesome: require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
+      'Material Icons': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'), 
+      MaterialIcons: require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
+      Ionicons: require('./node_modules/react-native-vector-icons/Fonts/Ionicons.ttf'),
     });
     this.setState({ fontLoaded: true });
   }
@@ -81,8 +83,7 @@ export default class App extends React.Component {
       {
         search: { screen: SearchScreen },
         searchResults: { screen: SearchResultsScreen },
-        buyItem: { screen: BuyItemScreen }, // TR: MEMEMEMEME
-        
+        createItem: { screen: CreateItemScreen },
         vendor: { screen: VendorScreen }
       },
       {

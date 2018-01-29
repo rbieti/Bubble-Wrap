@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { View, StyleSheet, ScrollView, Button } from "react-native";
-import {navigate}  from"react-navigation";
+import { navigate }  from "react-navigation";
 import { PRIMARY_COLOR } from '../constants/style';
 import TestScreen from '../screens/TestScreen';
-export default class Untitled extends Component {
+import CreateItemScreen from '../artboards/CreateItemScreen';
+
+export default class ScaffoldingScreen extends Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -14,35 +16,35 @@ export default class Untitled extends Component {
         <View style={styles.rect2}>
         
         <Button
-        onPress={() => {navigate('test')} }
+        onPress={() => { navigate('test') }}
         title="Screen"
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
-      />
-      <Button
-  //onPress={onPressLearnMore}
-  title="Screen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
-<Button
- // onPress={onPressLearnMore}
-  title="Screen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
-<Button
-  //onPress={onPressLearnMore}
-  title="Screen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
-<Button
-  //onPress={onPressLearnMore}
-  title="Screen"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
+        />
+        <Button
+          //onPress={onPressLearnMore}
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          onPress={() => { navigate('createItem') }}
+          title="Create Item Screen"
+          color={PRIMARY_COLOR}
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          //onPress={onPressLearnMore}
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          //onPress={onPressLearnMore}
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
          
         </View>
       </View>
