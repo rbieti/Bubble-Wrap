@@ -20,8 +20,8 @@ export default class Untitled extends Component {
           accessibilityLabel="Learn more about this purple button"
         />
         <Button
-          onPress={() => {navigate('test')} }
-          title="Screen"
+          onPress={() => {navigate('mos')} }
+          title="Make Offer Screen"
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
         />

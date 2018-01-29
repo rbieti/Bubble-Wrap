@@ -27,6 +27,7 @@ import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
 import TestScreen from './src/screens/TestScreen';
+import MakeOfferScreen from './src/screens/MakeOfferScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
@@ -94,7 +95,8 @@ export default class App extends React.Component {
     const ScaffoldingScene = StackNavigator(
       {
         locator: { screen: ScaffoldingScreen },
-        test: {screen:TestScreen}
+        test: {screen:TestScreen},
+        mos: {screen:MakeOfferScreen}
       },
       {
         navigationOptions: {
