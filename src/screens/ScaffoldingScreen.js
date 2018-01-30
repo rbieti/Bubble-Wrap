@@ -4,6 +4,7 @@ import { navigate }  from "react-navigation";
 import { PRIMARY_COLOR } from '../constants/style';
 import TestScreen from '../screens/TestScreen';
 import CreateItemScreen from '../artboards/CreateItemScreen';
+import EditItemScreen from '../artboards/EditItemScreen';
 
 export default class ScaffoldingScreen extends Component {
   render() {
@@ -17,9 +18,21 @@ export default class ScaffoldingScreen extends Component {
         
         <Button
         onPress={() => { navigate('test') }}
-        title="Screen"
+        title="Test Screen"
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          //onPress={onPressLearnMore}
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+        // onPress={onPressLearnMore}
+          title="Screen"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
         />
         <Button
           //onPress={onPressLearnMore}
@@ -31,18 +44,12 @@ export default class ScaffoldingScreen extends Component {
           onPress={() => { navigate('createItem') }}
           title="Create Item Screen"
           color={PRIMARY_COLOR}
-          accessibilityLabel="Learn more about this purple button"
+          accessibilityLabel="Navigate to Create Item Screen"
         />
         <Button
-          //onPress={onPressLearnMore}
-          title="Screen"
-          color="#841584"
-          accessibilityLabel="Learn more about this purple button"
-        />
-        <Button
-          //onPress={onPressLearnMore}
-          title="Screen"
-          color="#841584"
+          onPress={() => { navigate('editItem') }}
+          title="Edit Item Screen"
+          color={PRIMARY_COLOR}
           accessibilityLabel="Learn more about this purple button"
         />
          
