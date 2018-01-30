@@ -117,7 +117,9 @@ export default class App extends React.Component {
         settings: { screen: SettingsScreen },
         messenger: { screen: ChatMessengerScreen },
         trans: {screen:TransactionScreen},
-        mos: {screen:MakeOfferScreen}
+        mos: {screen:MakeOfferScreen},
+        search: {screen:SearchScreen},
+        searchRes:{screen:SearchResultsScreen}
       },
       {
         navigationOptions: {

@@ -21,6 +21,24 @@ export default class ScaffoldingScreen extends Component {
 
           <TouchableOpacity 
             style={styles.btnOpacity}
+            onPress={() => {navigate('search')}}
+            >
+            <Text style={styles.btnText}>
+              Search
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.btnOpacity}
+            onPress={() => {navigate('searchRes')}}
+            >
+            <Text style={styles.btnText}>
+              Search Results
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.btnOpacity}
             onPress={() => {navigate('createItem')}}
             >
             <Text style={styles.btnText}>
