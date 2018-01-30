@@ -17,41 +17,35 @@ export default class ScaffoldingScreen extends Component {
          
         <View style={styles.rect2}>
         
-        <Button
-        onPress={() => { navigate('test') }}
-        title="Test Screen"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
-        />
-        <Button
-          // onPress={onPressLearnMore}
-          title="Screen"
+        <Button //HANDSHAKE SCREEN BUTTON
+          onPress={() => {navigate('shakenbake')} }
+          title="HandShake"
           color="#841584"
-          accessibilityLabel="Learn more about this purple button"
-        />
-        <Button
-          //onPress={onPressLearnMore}
-          title="Screen"
-          color="#841584"
-          accessibilityLabel="Learn more about this purple button"
         />
         <Button
           onPress={() => { navigate('createItem') }}
           title="Create Item Screen"
           color={PRIMARY_COLOR}
-          accessibilityLabel="Navigate to Create Item Screen"
         />
         <Button
           onPress={() => { navigate('editItem') }}
           title="Edit Item Screen"
           color={PRIMARY_COLOR}
-          accessibilityLabel="Learn more about this purple button"
         />
         <Button
           onPress={() => { navigate('buyItem') }}
           title="Buy Item"
           color="#0000ff"
-          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          onPress={() => {navigate('loo')} }
+          title="List of Offers"
+          color="#841584"
+        />
+        <Button
+          onPress={() => {navigate('soview')} }
+          title="Single Offer View Screen"
+          color="#841584"
         />
          
         </View>
