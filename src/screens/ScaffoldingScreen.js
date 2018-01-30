@@ -21,6 +21,51 @@ export default class ScaffoldingScreen extends Component {
 
           <TouchableOpacity 
             style={styles.btnOpacity}
+            onPress={() => {navigate('profile')}}
+            >
+            <Text style={styles.btnText}>
+              User Profile
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.btnOpacity}
+            onPress={() => {navigate('seller')}}
+            >
+            <Text style={styles.btnText}>
+              Seller Profile
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.btnOpacity}
+            onPress={() => {navigate('messenger')}}
+            >
+            <Text style={styles.btnText}>
+              Chat Messenger
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.btnOpacity}
+            onPress={() => {navigate('settings')}}
+            >
+            <Text style={styles.btnText}>
+              Settings
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.btnOpacity}
+            onPress={() => {navigate('campusSafety')}}
+            >
+            <Text style={styles.btnText}>
+              Campus Safety
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.btnOpacity}
             onPress={() => {navigate('search')}}
             >
             <Text style={styles.btnText}>
@@ -88,42 +133,6 @@ export default class ScaffoldingScreen extends Component {
             >
             <Text style={styles.btnText}>
               Single Offer View
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            style={styles.btnOpacity}
-            onPress={() => {navigate('profile')}}
-            >
-            <Text style={styles.btnText}>
-              User Profile
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            style={styles.btnOpacity}
-            onPress={() => {navigate('seller')}}
-            >
-            <Text style={styles.btnText}>
-              Seller Profile
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            style={styles.btnOpacity}
-            onPress={() => {navigate('messenger')}}
-            >
-            <Text style={styles.btnText}>
-              Chat Messenger
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            style={styles.btnOpacity}
-            onPress={() => {navigate('settings')}}
-            >
-            <Text style={styles.btnText}>
-              Settings
             </Text>
           </TouchableOpacity>
 

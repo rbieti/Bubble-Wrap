@@ -13,7 +13,7 @@ export default class CampusSafety extends Component {
         <Text style={styles.text4}>Location: </Text>
         <Text style={styles.text5}>Phone Number:555-555-5555</Text>
         <Image
-          source={require("../assets/Screen_Shot_2018-01-19_at_12.08.15_AM.png")}
+          source={require("../../assets/logo.png")}
           style={styles.image1}
         />
       </View>

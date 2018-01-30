@@ -38,6 +38,7 @@ import SettingsScreen from './src/screens/SettingsScreen';
 import HandShakeScreen from './src/screens/HandShakeScreen';
 import MakeOfferScreen from './src/screens/MakeOfferScreen';
 import TransactionScreen from './src/screens/TransactionScreen';
+import CampusSafetyScreen from './src/screens/CampusSafety';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
 import EditItemScreen from './src/artboards/EditItemScreen';
@@ -116,10 +117,11 @@ export default class App extends React.Component {
         seller: { screen: SellerScreen },
         settings: { screen: SettingsScreen },
         messenger: { screen: ChatMessengerScreen },
-        trans: {screen:TransactionScreen},
-        mos: {screen:MakeOfferScreen},
-        search: {screen:SearchScreen},
-        searchRes:{screen:SearchResultsScreen}
+        trans: { screen:TransactionScreen },
+        mos: { screen:MakeOfferScreen },
+        search: { screen:SearchScreen },
+        searchRes:{ screen:SearchResultsScreen },
+        campusSafety: {screen: CampusSafetyScreen }
       },
       {
         navigationOptions: {
