@@ -32,6 +32,10 @@ import TestScreen from './src/screens/TestScreen';
 import ListOfOffers from './src/screens/ListOfOffers';
 import SingleOfferViewScreen from './src/screens/SingleOfferViewScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import SellerScreen from './src/screens/SellerProfileScreen';
+import ChatMessengerScreen from './src/screens/ChatMessengerScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
 import HandShakeScreen from './src/screens/HandShakeScreen';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
@@ -107,7 +111,11 @@ export default class App extends React.Component {
         buyItem: { screen: BuyItemScreen },
         shakenbake: {screen:HandShakeScreen},
         loo: {screen:ListOfOffers},
-        soview: {screen:SingleOfferViewScreen}
+        soview: {screen:SingleOfferViewScreen},
+        profile: {screen: ProfileScreen},
+        seller: {screen: SellerScreen},
+        settings: { screen: SettingsScreen },
+        messenger: { screen: ChatMessengerScreen }
       },
       {
         navigationOptions: {
