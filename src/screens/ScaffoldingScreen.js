@@ -8,7 +8,7 @@ import BuyItemScreen from '../artboards/BuyItemScreen';
 
 export default class ScaffoldingScreen extends Component {
   render() {
-    const { navigate } = this.props.navigation;// THIS IS NECESSARY FOR NAVIGATION
+    const { navigate } = this.props.navigation; // THIS IS NECESSARY FOR NAVIGATION
     return (
       <View style={styles.root}>
         <ScrollView 
@@ -46,7 +46,6 @@ export default class ScaffoldingScreen extends Component {
             </Text>
           </TouchableOpacity>
 
-
           <TouchableOpacity 
             style={styles.btnOpacity}
             onPress={() => {navigate('shakenbake')}}
@@ -73,7 +72,6 @@ export default class ScaffoldingScreen extends Component {
               Single Offer View
             </Text>
           </TouchableOpacity>
-
 
           <TouchableOpacity 
             style={styles.btnOpacity}
@@ -108,6 +106,24 @@ export default class ScaffoldingScreen extends Component {
             >
             <Text style={styles.btnText}>
               Settings
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.btnOpacity}
+            onPress={() => {navigate('mos')}}
+            >
+            <Text style={styles.btnText}>
+              Make Offer
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.btnOpacity}
+            onPress={() => {navigate('trans')}}
+            >
+            <Text style={styles.btnText}>
+              Transaction
             </Text>
           </TouchableOpacity>
         </ScrollView>

@@ -18,7 +18,6 @@ import { Divider } from 'react-native-elements';
 import { Provider } from 'react-redux';
 import firebase from 'firebase';
 import { Font } from 'expo';
-
 import store from './src/store';
 import SearchScreen from './src/screens/SearchScreen';
 import SearchResultsScreen from './src/screens/SearchResultsScreen';
@@ -37,6 +36,8 @@ import SellerScreen from './src/screens/SellerProfileScreen';
 import ChatMessengerScreen from './src/screens/ChatMessengerScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import HandShakeScreen from './src/screens/HandShakeScreen';
+import MakeOfferScreen from './src/screens/MakeOfferScreen';
+import TransactionScreen from './src/screens/TransactionScreen';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
 import EditItemScreen from './src/artboards/EditItemScreen';
@@ -105,17 +106,18 @@ export default class App extends React.Component {
     const ScaffoldingScene = StackNavigator(
       {
         locator: { screen: ScaffoldingScreen },
-        test: { screen: TestScreen },
         createItem: { screen: CreateItemScreen },
         editItem: { screen: EditItemScreen },
         buyItem: { screen: BuyItemScreen },
-        shakenbake: {screen:HandShakeScreen},
-        loo: {screen:ListOfOffers},
-        soview: {screen:SingleOfferViewScreen},
-        profile: {screen: ProfileScreen},
-        seller: {screen: SellerScreen},
+        shakenbake: { screen: HandShakeScreen },
+        loo: { screen: ListOfOffers},
+        soview: { screen: SingleOfferViewScreen },
+        profile: { screen: ProfileScreen },
+        seller: { screen: SellerScreen },
         settings: { screen: SettingsScreen },
-        messenger: { screen: ChatMessengerScreen }
+        messenger: { screen: ChatMessengerScreen },
+        trans: {screen:TransactionScreen},
+        mos: {screen:MakeOfferScreen}
       },
       {
         navigationOptions: {
