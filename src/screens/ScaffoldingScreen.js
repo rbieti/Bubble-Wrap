@@ -5,10 +5,11 @@ import { PRIMARY_COLOR } from '../constants/style';
 import TestScreen from '../screens/TestScreen';
 import CreateItemScreen from '../artboards/CreateItemScreen';
 import EditItemScreen from '../artboards/EditItemScreen';
+import BuyItemScreen from '../artboards/BuyItemScreen';
 
 export default class ScaffoldingScreen extends Component {
   render() {
-    const { navigate } = this.props.navigation;
+    const { navigate } = this.props.navigation;// THIS IS NECESSARY FOR NAVIGATION
     return (
       <View style={styles.root}>
         <View style={styles.rect1} />
@@ -23,13 +24,7 @@ export default class ScaffoldingScreen extends Component {
         accessibilityLabel="Learn more about this purple button"
         />
         <Button
-          //onPress={onPressLearnMore}
-          title="Screen"
-          color="#841584"
-          accessibilityLabel="Learn more about this purple button"
-        />
-        <Button
-        // onPress={onPressLearnMore}
+          // onPress={onPressLearnMore}
           title="Screen"
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
@@ -50,6 +45,12 @@ export default class ScaffoldingScreen extends Component {
           onPress={() => { navigate('editItem') }}
           title="Edit Item Screen"
           color={PRIMARY_COLOR}
+          accessibilityLabel="Learn more about this purple button"
+        />
+        <Button
+          onPress={() => { navigate('buyItem') }}
+          title="Buy Item"
+          color="#0000ff"
           accessibilityLabel="Learn more about this purple button"
         />
          

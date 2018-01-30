@@ -27,6 +27,7 @@ import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
 import CreateItemScreen from './src/artboards/CreateItemScreen';
+import BuyItemScreen from './src/artboards/BuyItemScreen';
 
 import TestScreen from './src/screens/TestScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
@@ -62,7 +63,7 @@ export default class App extends React.Component {
   async componentDidMount() {
     await Font.loadAsync({
       Entypo: require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
-      FontAwesome: require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'), 
+      FontAwesome: require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
       'Material Icons': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
       MaterialIcons: require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
       Ionicons: require('./node_modules/react-native-vector-icons/Fonts/Ionicons.ttf'),
@@ -84,7 +85,6 @@ export default class App extends React.Component {
       {
         search: { screen: SearchScreen },
         searchResults: { screen: SearchResultsScreen },
-        createItem: { screen: CreateItemScreen },
         vendor: { screen: VendorScreen }
       },
       {
@@ -100,7 +100,9 @@ export default class App extends React.Component {
       {
         locator: { screen: ScaffoldingScreen },
         test: { screen: TestScreen },
-        editItem: { screen: EditItemScreen }
+        createItem: { screen: CreateItemScreen },
+        editItem: { screen: EditItemScreen },
+        buyItem: { screen: BuyItemScreen },
       },
       {
         navigationOptions: {
@@ -164,7 +166,7 @@ export default class App extends React.Component {
     const MainNavigator = TabNavigator(
       {
         welcome: { screen: WelcomeScreen },
-        navigate: {screen:ScaffoldingScene},
+        navigate: { screen: ScaffoldingScene },
         
         auth: { screen: AuthScreen },
         main: { screen: MainDrawer }
