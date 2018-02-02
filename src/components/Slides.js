@@ -15,7 +15,7 @@ class Slides extends Component {
         <View style={{ marginTop: 15 }}>
           <Button
             buttonStyle={styles.buttonStyle}
-            title="Drink Soda!"
+            title="Buy Buy Bubble!"
             raised
             onPress={this.props.onComplete}
           />

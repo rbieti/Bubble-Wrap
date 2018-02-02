@@ -10,24 +10,29 @@ export default class Untitled extends Component {
           textAlign: 'center',
           alignSelf: 'center'
         },
+        /*
         headerLeft: (
+        
           <Button
-            navigate={navigation.navigate}
+          //  navigate={navigation.navigate}
             large
             icon={{ name: 'menu' }}
             backgroundColor={PRIMARY_COLOR}
             onPress={() => navigation.navigate('DrawerOpen')}
           />
+         
         ),
         drawerIcon: ({ tintColor }) => (
           <Icon name="home" size={25} color={tintColor} />
         )
+        */
       });
      
       //######################
       //ADD YOUR CODE HERE!!!!!
       //######################
       render() {
+        const { navigate } = this.props.navigation;
         return (
           <View style={styles.root}>
             <TouchableOpacity style={styles.button1}>

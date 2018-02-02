@@ -18,7 +18,6 @@ import { Divider } from 'react-native-elements';
 import { Provider } from 'react-redux';
 import firebase from 'firebase';
 import { Font } from 'expo';
-
 import store from './src/store';
 import SearchScreen from './src/screens/SearchScreen';
 import SearchResultsScreen from './src/screens/SearchResultsScreen';
@@ -26,10 +25,23 @@ import VendorScreen from './src/screens/VendorScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
-import TestScreen from './src/screens/TestScreen'
-
+import CreateItemScreen from './src/artboards/CreateItemScreen';
+import BuyItemScreen from './src/artboards/BuyItemScreen';
+import TestScreen from './src/screens/TestScreen';
+import ListOfOffers from './src/screens/ListOfOffers';
+import SingleOfferViewScreen from './src/screens/SingleOfferViewScreen';
+import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import SellerScreen from './src/screens/SellerProfileScreen';
+import ChatMessengerScreen from './src/screens/ChatMessengerScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
+import HandShakeScreen from './src/screens/HandShakeScreen';
+import MakeOfferScreen from './src/screens/MakeOfferScreen';
+import TransactionScreen from './src/screens/TransactionScreen';
+import CampusSafetyScreen from './src/screens/CampusSafety';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
+import EditItemScreen from './src/artboards/EditItemScreen';
 
 export default class App extends React.Component {
   //////////////////////////////////////////////////////////////////////////////
@@ -58,9 +70,11 @@ export default class App extends React.Component {
   // TR: Make fonts work in Expo: https://github.com/oblador/react-native-vector-icons/issues/523
   async componentDidMount() {
     await Font.loadAsync({
-      Entypo:        require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
-      FontAwesome:   require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
+      Entypo: require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
+      FontAwesome: require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
       'Material Icons': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
+      MaterialIcons: require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
+      Ionicons: require('./node_modules/react-native-vector-icons/Fonts/Ionicons.ttf'),
     });
     this.setState({ fontLoaded: true });
   }
@@ -80,6 +94,34 @@ export default class App extends React.Component {
         search: { screen: SearchScreen },
         searchResults: { screen: SearchResultsScreen },
         vendor: { screen: VendorScreen }
+      },
+      {
+        navigationOptions: {
+          headerStyle: { backgroundColor: PRIMARY_COLOR },
+          headerBackTitleStyle: { color: '#FFF' },
+          headerTitleStyle: { color: '#FFF' },
+          headerTintColor: '#FFF'
+        }
+      }
+    );
+    const ScaffoldingScene = StackNavigator(
+      {
+        locator: { screen: ScaffoldingScreen },
+        createItem: { screen: CreateItemScreen },
+        editItem: { screen: EditItemScreen },
+        buyItem: { screen: BuyItemScreen },
+        shakenbake: { screen: HandShakeScreen },
+        loo: { screen: ListOfOffers},
+        soview: { screen: SingleOfferViewScreen },
+        profile: { screen: ProfileScreen },
+        seller: { screen: SellerScreen },
+        settings: { screen: SettingsScreen },
+        messenger: { screen: ChatMessengerScreen },
+        trans: { screen:TransactionScreen },
+        mos: { screen:MakeOfferScreen },
+        search: { screen:SearchScreen },
+        searchRes:{ screen:SearchResultsScreen },
+        campusSafety: {screen: CampusSafetyScreen }
       },
       {
         navigationOptions: {
@@ -143,7 +185,8 @@ export default class App extends React.Component {
     const MainNavigator = TabNavigator(
       {
         welcome: { screen: WelcomeScreen },
-        test: {screen:TestScreen},
+        navigate: { screen: ScaffoldingScene },
+        
         auth: { screen: AuthScreen },
         main: { screen: MainDrawer }
       },
