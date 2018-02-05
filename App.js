@@ -39,6 +39,7 @@ import HandShakeScreen from './src/screens/HandShakeScreen';
 import MakeOfferScreen from './src/screens/MakeOfferScreen';
 import TransactionScreen from './src/screens/TransactionScreen';
 import CampusSafetyScreen from './src/screens/CampusSafety';
+import PaymentsScreen from './src/screens/PaymentsScreen';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
 import EditItemScreen from './src/artboards/EditItemScreen';
@@ -47,11 +48,14 @@ export default class App extends React.Component {
   //////////////////////////////////////////////////////////////////////////////
   // Setup some warnings to ignore
   // https://github.com/firebase/firebase-js-sdk/issues/97
+  
   constructor() {
     super();
     this.state = {
       fontLoaded: false
     };
+    // index.ios.js
+    global.PaymentRequest = require('react-native-payments').PaymentRequest;
     console.ignoredYellowBox = ['Setting a timer'];
   }
   //////////////////////////////////////////////////////////////////////////////
@@ -121,7 +125,8 @@ export default class App extends React.Component {
         mos: { screen:MakeOfferScreen },
         search: { screen:SearchScreen },
         searchRes:{ screen:SearchResultsScreen },
-        campusSafety: {screen: CampusSafetyScreen }
+        campusSafety: {screen: CampusSafetyScreen },
+        payments: {screen:PaymentsScreen}
       },
       {
         navigationOptions: {
