@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
+import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
 
 export default class CreateItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    //tabBarVisible: false,
     title: 'Create Item',
     tabBarLabel: 'Create',
     headerTitleStyle: {
@@ -12,119 +11,152 @@ export default class CreateItemScreen extends Component {
       alignSelf: 'center'
     }
   });
+
   render() {
     return (
-      // <ScrollView 
-      //   //style={styles.scroll1} 
-      //   automaticallyAdjustInsets={true}
-      //   horizontal={false}
-      //   pagingEnabled={false}
-      //   scrollEnabled={true}
-      //   decelerationRate={0.5}
-      //   scrollEventThrottle={16}
-      // >
-        <View style={styles.root}>
-          <View style={styles.imageBox}>
-            <Image
-              style={styles.image}
-              source={require("../../assets/478x478-reeses.jpg")}
-              resizeMode="cover"
+      <View style={styles.root}>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.mainImg}
+            source={require("../../assets/478x478-reeses.jpg")}
+            resizeMode="cover"
+          />
+          <View style={styles.thumbnailsContainer}>
+            <View style={styles.thumbnailView}>
+            </View>
+            <View>
+            </View>
+            <View>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.iconContainer}>
+          <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
+          <Icon style={styles.iconImg} name="ios-add" size={40} />
+        </View>
+
+        <View style={styles.textContainer}>
+          <View style={styles.textCell}>
+            <Text style={styles.text}>Name</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Type here to translate!"
+              onChangeText={(text) => this.setState({text})}
             />
           </View>
 
-          <View style={styles.iconBox}>
-            <Icon style={styles.cameraIcon} name="ios-camera-outline" size={40} />
-            <Icon style={styles.plusIcon} name="ios-add" size={40} />
-          </View>
-
-          <View style={styles.fieldBox}>
-            <Text style={styles.text}>Name</Text>
+          <View style={styles.textCell}>
             <Text style={styles.text}>Description</Text>
-            <Text style={styles.text}>Price</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Type here to translate!"
+              onChangeText={(text) => this.setState({text})}
+            />
           </View>
 
-          <Text style={styles.save}>Post Item</Text>
+          <View style={styles.textCell}>
+            <Text style={styles.text}>Price</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Type here to translate!"
+              onChangeText={(text) => this.setState({text})}
+            />
+          </View>
         </View>
-      // </ScrollView>
+
+        <View style={styles.btnContainer}>
+          <TouchableOpacity 
+            style={styles.btnOpacity}
+            onPress={() => {console.log("Button pressed")}}
+            >
+            <Text style={styles.btnText}>
+              Post Item
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: "#0000ff",
+    backgroundColor: "#fff",
     flex: 1,
-    alignItems: "center",
-    flexDirection: "column"
   },
 
-  imageBox: {
-    flex: 0.64,
-    backgroundColor: "rgb(231, 231, 231)",
-    alignSelf: "stretch",
-    margin: 0,
-    minHeight: 0,
-    width: 374.98,
+  imageContainer: {
+    flex: 1,
+    width: window.width,
+    height: window.width,
     height: 3,
     justifyContent: "flex-end",
-    alignItems: "center"
-  },
-
-  iconBox: {
-    backgroundColor: "rgb(232, 232, 232)",
-    alignSelf: "stretch",
-    height: 60,
-    flexDirection: "row",
-    justifyContent: "space-around",
     alignItems: "center",
-    width: 374.98
+  },
+  mainImg: {
+    marginTop: 0,
+    width: "100%",
+    height: "100%",
+  },
+  thumbnailsContainer: {
+    
+  },
+  thumbnailView: {
+
   },
 
-  fieldBox: {
-    flex: 0.2,
-    backgroundColor: "rgb(215, 215, 215)",
-    flexDirection: "column",
-    alignSelf: "stretch",
-    justifyContent: "space-around",
-    alignItems: "stretch",
-    width: 374.98,
-    height: 146.41
+  iconContainer: {
+    flex: 1,
+    flexDirection: "row",
+    paddingRight: "25%",
+    paddingLeft: "25%",
+    backgroundColor: "#f5f5f5",
+    maxHeight: 70,
+    alignItems: 'center',
+    justifyContent: "space-between",
   },
-  
-  save: {
-    height: 71.82,
-    flex: 0.15,
-    backgroundColor: "transparent",
-    fontSize: 36,
-    color: "rgba(255,255,255,1)",
-    width: 359.12,
-    textAlign: "center"
+  iconImg: {
+    height: 50,
+    width: 50,
+    marginTop: 15,
   },
 
-  plusIcon: {
-    backgroundColor: "transparent",
-    color: "grey",
-    fontSize: 50,
-    width: 25.01,
-    height: 48.94
+  textContainer: {
+    padding: 15,
+    backgroundColor: "#fff",
+    height: 150,
   },
-
-  cameraIcon: {
-    backgroundColor: "transparent",
-    color: "grey",
-    fontSize: 50,
-    textAlign: "left",
-    width: 37.52,
-    height: 48.94
+  textCell: {
+    flex: 1,
+    flexDirection: 'row',
   },
-
   text: {
-    backgroundColor: "transparent",
-    fontSize: 24,
-    color: "rgba(0,0,0,1)",
-    //width: 80.03
-    height: 30.75
+    fontWeight: 'bold',
+    paddingTop: 10,
+    paddingBottom: 5,
+  },
+  textInput: {
+    height: 40,
+    paddingLeft: 20,
   },
 
-  image: { width: 374.99, height: 382.04 }
+  btnContainer: {
+    width: window.width,
+    height: 70,
+  },
+  btnOpacity: {
+    backgroundColor: "#33a3f3",
+    width: "100%",
+    height: "100%",
+    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnText: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#fff',
+    fontSize: 20,
+  }
 });
