@@ -21,13 +21,13 @@ export default class CreateItemScreen extends Component {
             source={require("../../assets/478x478-reeses.jpg")}
             resizeMode="cover"
           />
-          <View style={styles.thumbnailsContainer}>
-            <View style={styles.thumbnailView}>
-            </View>
-            <View>
-            </View>
-            <View>
-            </View>
+
+          <View style={styles.thumbnailContainer}>
+            <View style={styles.thumbnailView}></View>
+
+            <View style={styles.thumbnailView}></View>
+
+            <View style={styles.thumbnailView}></View>
           </View>
         </View>
 
@@ -41,7 +41,7 @@ export default class CreateItemScreen extends Component {
             <Text style={styles.text}>Name</Text>
             <TextInput
               style={styles.textInput}
-              placeholder="Type here to translate!"
+              placeholder="The name of your product"
               onChangeText={(text) => this.setState({text})}
             />
           </View>
@@ -50,7 +50,7 @@ export default class CreateItemScreen extends Component {
             <Text style={styles.text}>Description</Text>
             <TextInput
               style={styles.textInput}
-              placeholder="Type here to translate!"
+              placeholder="A short description"
               onChangeText={(text) => this.setState({text})}
             />
           </View>
@@ -59,7 +59,7 @@ export default class CreateItemScreen extends Component {
             <Text style={styles.text}>Price</Text>
             <TextInput
               style={styles.textInput}
-              placeholder="Type here to translate!"
+              placeholder="Set your price"
               onChangeText={(text) => this.setState({text})}
             />
           </View>
@@ -99,20 +99,42 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  thumbnailsContainer: {
-    
+
+  thumbnailContainer: {
+    maxHeight: 80,
+    width: window.width,
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    justifyContent: "space-between",
+    paddingLeft: 30,
+    paddingRight: 30,
+    position: "absolute",
+    right: 0,
+    left: 0,
+    bottom: 20,
   },
   thumbnailView: {
-
+    width: 80,
+    height: 80,
+    padding: 20,
+    backgroundColor: "#FFFFFF30", // 30% oppacity
+    borderStyle: "dashed",
+    borderWidth: 2,
+    borderColor: "#ddd",
+    borderRadius: 5,
   },
 
   iconContainer: {
     flex: 1,
+    maxHeight: 70,
     flexDirection: "row",
     paddingRight: "25%",
     paddingLeft: "25%",
-    backgroundColor: "#f5f5f5",
-    maxHeight: 70,
+    backgroundColor: "#f6f6f6",
+    borderColor: "#ddd",
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
     alignItems: 'center',
     justifyContent: "space-between",
   },
@@ -138,7 +160,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    paddingLeft: 20,
+    position: "absolute",
+    left: 100,
   },
 
   btnContainer: {
