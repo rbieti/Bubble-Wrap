@@ -1,74 +1,144 @@
-import React, { Component } from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
-import PRIMARY_COLOR from '../constants/style';
+import React, { Component } from "react";
+import Icon from "react-native-vector-icons/Ionicons";
+import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
 
-export default class BuyItemScreen extends Component {
+export default class CreateItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    tabBarVisible: false,
     title: 'Buy Item',
-    tabBarLabel: 'Buy Item',
+    tabBarLabel: 'Buy',
     headerTitleStyle: {
       textAlign: 'center',
       alignSelf: 'center'
     }
   });
+
   render() {
     return (
       <View style={styles.root}>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.mainImg}
+            source={require("../../assets/478x478-reeses.jpg")}
+            resizeMode="cover"
+          />
 
-        <View style={styles.offerBox}>
-          <Text style={styles.text}>Offer John</Text>
-          <Text style={styles.text}>$12.00</Text>
+          <Text style={styles.priceTxt}>$25</Text>
+
+          <View style={styles.thumbnailContainer}>
+            <View style={styles.thumbnailView}/>
+            <View style={styles.thumbnailView}/>
+            <View style={styles.thumbnailView}/>
+          </View>
         </View>
 
-        <Image
-          source={require("../../assets/478x478-reeses.jpg")}
-          style={styles.image}
-          resizeMode="cover"
-        />
-        <View style={styles.fieldBox}>
-          <Text style={styles.text}>Reeses Pieces</Text>
-          <Text style={styles.text}>A delicious treat for you and me</Text>
-          <Text style={styles.text}>$115.00</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.itemTitleTxt}>Reese's Pieces</Text>
+          <Text style={styles.descriptionTxt}>A delicious treat for you and me</Text>
         </View>
-        <Text style={styles.buy}>Buy Item</Text>
+
+        <View style={styles.btnContainer}>
+          <TouchableOpacity 
+            style={styles.btnOpacity}
+            onPress={() => {console.log("Button pressed")}}
+            >
+            <Text style={styles.btnText}>
+              Make an offer
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
-  root: { backgroundColor: "#0000ff", flex: 1, flexDirection: "column" },
-  offerBox: { 
-    flex: 0.10, 
-    flexDirection: "row",
-    backgroundColor: "rgb(227, 227, 227)",
-    alignSelf: "stretch",
-    justifyContent: "space-around",
+  root: {
+    backgroundColor: "#fff",
+    flex: 1,
+  },
+
+  imageContainer: {
+    flex: 1,
+    width: window.width,
+    height: window.width,
+    height: 3,
+    justifyContent: "flex-end",
     alignItems: "center",
   },
-  image: {
-    flex: 0.60,
-    width: 374.99,
-    height: 382.06,
+  mainImg: {
+    marginTop: 0,
+    width: "100%",
+    height: "100%",
   },
-  fieldBox: {
-    flex: 0.2,
-    backgroundColor: "rgb(215, 215, 215)",
-    flexDirection: "column",
-    alignSelf: "stretch",
-    justifyContent: "space-around",
-    alignItems: "stretch",
+  priceTxt: {
+    fontWeight: 'bold',
+    fontSize: 50,
+    backgroundColor: "#00000030",
+    padding: 15,
+    paddingLeft: 50,
+    width: 180,
+    color: "#fff",
+    position: "absolute",
+    top: 30,
+    left: 0,
   },
-  text: {
+
+  thumbnailContainer: {
+    maxHeight: 80,
+    width: window.width,
+    flex: 1,
+    flexDirection: "row",
     backgroundColor: "transparent",
-    fontSize: 24,
-    color: "#000000"
+    justifyContent: "space-between",
+    paddingLeft: 30,
+    paddingRight: 30,
+    position: "absolute",
+    right: 0,
+    left: 0,
+    bottom: 20,
   },
-  buy: {
-    flex: 0.15,
-    backgroundColor: "transparent",
-    fontSize: 36,
-    color: '#ffffff',
-    textAlign: "center"
+  thumbnailView: {
+    width: 80,
+    height: 80,
+    padding: 20,
+    backgroundColor: "#FFFFFF30", // 30% oppacity
+    borderStyle: "dashed",
+    borderWidth: 2,
+    borderColor: "#ddd",
+    borderRadius: 5,
   },
+
+  textContainer: {
+    padding: 15,
+    backgroundColor: "#fff",
+    height: 150,
+  },
+  itemTitleTxt: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    paddingTop: 10,
+  },
+  descriptionTxt: {
+    paddingTop: 10,
+    paddingBottom: 5,
+  },
+
+  btnContainer: {
+    width: window.width,
+    height: 70,
+  },
+  btnOpacity: {
+    backgroundColor: "#33a3f3",
+    width: "100%",
+    height: "100%",
+    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnText: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#fff',
+    fontSize: 20,
+  }
 });
