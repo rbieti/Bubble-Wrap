@@ -21,8 +21,10 @@ import {
   Section,
   TableView,
 } from 'react-native-tableview-simple';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
-export default class App extends Component<{}> {
+class ProfileScreen extends Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: 'My Profile',
@@ -229,3 +231,10 @@ const styles = StyleSheet.create({
   }
 
 });
+
+const mapStateToProps = (state) => {
+  console.log(state);
+  return state.userItems;
+};
+
+export default connect(mapStateToProps, actions)(ProfileScreen);
