@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator, AsyncStorage } from 'react-native';
+import { View, Text, ActivityIndicator, AsyncStorage, TouchableHighlight,ScrollView } from 'react-native';
 //import { AppLoading } from 'expo';
 import Slides from '../components/Slides';
-
+import Header from "react-native-elements/src/header/Header";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/style';
-
+import { Card, CardImage, CardTitle, CardContent, CardAction, Icon, ListItem, Button } from 'react-native-elements';
 const SLIDE_DATA = [
   { text: 'Welcome to BubbleWrap.', color: PRIMARY_COLOR },
   { text: 'The Safest Buy And Sell App', color: PRIMARY_COLOR },
