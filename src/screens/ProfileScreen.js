@@ -46,7 +46,11 @@ class ProfileScreen extends Component {
   // }
 
   renderItems() {
+<<<<<<< HEAD
     return this.props.items.map(({ key, name, price }) => (
+=======
+    return this.propsitems.map(({ key, name, price }) => (
+>>>>>>> fbf8315bb58cda27acc0769630127277f4ab0682
       <View style={styles.reviewCell} key={key}>
         <Image 
           source={require("../../assets/logo.png")}
