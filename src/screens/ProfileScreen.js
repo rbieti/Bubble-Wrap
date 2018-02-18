@@ -46,19 +46,16 @@ class ProfileScreen extends Component {
   // }
 
   renderItems() {
-    const { items } = this.props;
-    if (items.length !== undefined && items.length > 0) {
-      return items.map((item) => (
-        <View style={styles.reviewCell} key={item.key}>
-          <Image 
-            source={require("../../assets/logo.png")}
-            style={styles.reviewerImg}
-            resizeMode="cover"
-          />
-          <Text style={styles.h1Lbl}>{`${item.name} | $${item.price}`}</Text>
-        </View>
-      ));
-    }
+    return this.props.items.map(({ key, name, price }) => (
+      <View style={styles.reviewCell} key={key}>
+        <Image 
+          source={require("../../assets/logo.png")}
+          style={styles.reviewerImg}
+          resizeMode="cover"
+        />
+        <Text style={styles.h1Lbl}>{`${name} | $${price}`}</Text>
+      </View>
+    ));
   }
 
   // renderItem = (item) => {
