@@ -22,7 +22,8 @@ import {
   TableView,
 } from 'react-native-tableview-simple';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+//import userItems from '../reducers/user_items_reducer';
+import { fetchItems } from '../actions/user_items_actions';
 
 class ProfileScreen extends Component {
 
@@ -34,6 +35,42 @@ class ProfileScreen extends Component {
       alignSelf: 'center'
     }
   });
+
+  async componentDidMount() {
+    this.props.fetchItems();
+  }
+
+  // onFetchButtonPress() {
+  //   //this.props.fetchItems();
+  //   console.log('not yet');
+  // }
+
+  renderItems() {
+    const { items } = this.props;
+    if (items.length !== undefined && items.length > 0) {
+      return items.map((item) => (
+        <View style={styles.reviewCell} key={item.key}>
+          <Image 
+            source={require("../../assets/logo.png")}
+            style={styles.reviewerImg}
+            resizeMode="cover"
+          />
+          <Text style={styles.h1Lbl}>{`${item.name} | $${item.price}`}</Text>
+        </View>
+      ));
+    }
+  }
+
+  // renderItem = (item) => {
+  //   <View style={styles.reviewCell} key={item.key}>
+  //     <Image 
+  //       source={require("../../assets/logo.png")}
+  //       style={styles.reviewerImg}
+  //       resizeMode="cover"
+  //     />
+  //     <Text style={styles.h1Lbl}>{`${item.name} | $${item.price}`}</Text>
+  //   </View>
+  // }
 
   render() {
     return (
@@ -101,6 +138,21 @@ class ProfileScreen extends Component {
                 <Text style={styles.h1Lbl}>5/5</Text>
                 <Text style={styles.reviewerTxt}>"Went out of his way to be helpful."</Text>
               </View>
+            </ScrollView>
+          </View>
+
+          <View style={styles.scrollSection}>
+          <Text style={styles.scrollSectionLbl}>Items you are selling</Text>
+          <ScrollView 
+            style={styles.horizontalScrollView} 
+            automaticallyAdjustInsets={true}
+            horizontal={true}
+            pagingEnabled={true}
+            scrollEnabled={true}
+            decelerationRate={0.5}
+            scrollEventThrottle={16}
+          >
+            {this.renderItems()}
             </ScrollView>
           </View>
 
@@ -233,8 +285,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  console.log(state);
-  return state.userItems;
+  const { items } = state.userItems;
+  //console.log(items);
+  return { items };
 };
 
-export default connect(mapStateToProps, actions)(ProfileScreen);
+export default connect(mapStateToProps, { fetchItems })(ProfileScreen);

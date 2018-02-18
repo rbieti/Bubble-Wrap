@@ -1,23 +1,14 @@
-import firebase from 'firebase';
-//import {} from '../actions/types';
+import { FETCH_USER_ITEMS_LIST } from '../actions/types';
 
-// START Testing getting items
-export default () => {
-  const { currentUser } = firebase.auth();
-  const recentPostsRef = firebase.database().ref(`/users/${currentUser.uid}/items`);
-  recentPostsRef.once('value').then(snapshot => {
-      return snapshot.val();
-  });
+const INITIAL_STATE = {
+  items: []
 };
-// END Testing
 
-// const INITIAL_STATE = {
-
-// };
-
-// export default function (state = INITIAL_STATE, action) {
-//   switch (action.type) {
-//     default:
-//       return state;
-//   }
-// }
+export default function (state = INITIAL_STATE, action) {
+  switch (action.type) {
+    case FETCH_USER_ITEMS_LIST:
+      return { ...state, items: action.payload.items };
+    default:
+      return state;
+  }
+}
