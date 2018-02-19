@@ -1,112 +1,144 @@
-import React, { Component } from 'react';
-import {
-  Text,
-  ScrollView,
-  Image,
-  View,
-  TouchableWithoutFeedback,
-  Dimensions
-} from 'react-native';
-import { Icon, List, ListItem, Rating, Button, Card } from 'react-native-elements';
-import { connect } from 'react-redux';
-import * as actions from '../actions';
-import * as urlBuilder from '../utility/url_builder';
-import { PRIMARY_COLOR } from '../constants/style';
+import React, { Component } from "react";
+import Icon from "react-native-vector-icons/Ionicons";
+import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
-////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////
-// TR: WHO KNOWS WHAT I'M EVEN DOING
-////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////
-class BuyItemScreen extends Component {
-  //////////////////////////////////////////////////////////////////////////////////
-  // Properties automatically referred to by react-navigation navigators
+export default class CreateItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Buy Item',
-    tabBarLabel: 'Buy Item',
+    tabBarLabel: 'Buy',
     headerTitleStyle: {
       textAlign: 'center',
       alignSelf: 'center'
-    },
-    headerLeft: (
-        <Button
-          navigate={navigation.navigate}
-          large
-          icon={{ name: 'menu' }}
-          backgroundColor={PRIMARY_COLOR}
-          onPress={() => navigation.navigate('DrawerOpen')}
-        />
-      ),
-      drawerIcon: ({ tintColor }) => (
-        <Icon name="home" size={25} color={tintColor} />
-      )
+    }
   });
 
-  ////////////////////////////////////////////////////////////////////////////////////////
-  // Called when the link is pressed
-  onButtonGoHome = () => {
-    this.props.navigation.navigate('search');
-  };
-
-  ////////////////////////////////////////////////////////////////////////////////////////
-  // Main render method
   render() {
-    // Pull off top-level keys from JSON object
-    const { id, name, photos, vicinity } = this.props.place;
-
-    const photoUrl = urlBuilder.buildPlacesPhotoUrl(photos[0].photo_reference);
-
     return (
-      <ScrollView>
-        <Card title='CouchDB'>
-          <View>
-            <Text>I will walk 500 miles and I'll walk 500 more.</Text>
-          </View>
-        </Card>
-        <Image style={{ flex: 1, minHeight: 200 }} source={{ uri: photoUrl }} />
-        <Text style={{ fontSize: 18 }}>{name}</Text>
-        <Text style={{ fontSize: 12 }}>{vicinity}</Text>
+      <View style={styles.root}>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.mainImg}
+            source={require("../../assets/478x478-reeses.jpg")}
+            resizeMode="cover"
+          />
 
-        <View style={styles.detailWrapperStyle}>
-          <Text style={{ textAlign: 'center', width: SCREEN_WIDTH }}>
-            Some content here...
-          </Text>
-          <TouchableWithoutFeedback onPress={this.onButtonGoHome}>
-            <View>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  color: 'blue',
-                  textDecorationLine: 'underline'
-                }}
-              >
-                Let's just go home!
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
+          <Text style={styles.priceTxt}>$25</Text>
+
+          <View style={styles.thumbnailContainer}>
+            <View style={styles.thumbnailView}/>
+            <View style={styles.thumbnailView}/>
+            <View style={styles.thumbnailView}/>
+          </View>
         </View>
-      </ScrollView>
+
+        <View style={styles.textContainer}>
+          <Text style={styles.itemTitleTxt}>Reese's Pieces</Text>
+          <Text style={styles.descriptionTxt}>A delicious treat for you and me</Text>
+        </View>
+
+        <View style={styles.btnContainer}>
+          <TouchableOpacity 
+            style={styles.btnOpacity}
+            onPress={() => {console.log("Button pressed")}}
+            >
+            <Text style={styles.btnText}>
+              Make an offer
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
-// Styles object
-const styles = {
-  detailWrapperStyle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
-    marginTop: 10,
-    width: SCREEN_WIDTH
+const styles = StyleSheet.create({
+  root: {
+    backgroundColor: "#fff",
+    flex: 1,
   },
-  subtitleView: {
-    flexDirection: 'row',
-    paddingLeft: 10,
-    paddingTop: 5
-  }
-};
 
-export default (BuyItemScreen);
+  imageContainer: {
+    flex: 1,
+    width: window.width,
+    height: window.width,
+    height: 3,
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  mainImg: {
+    marginTop: 0,
+    width: "100%",
+    height: "100%",
+  },
+  priceTxt: {
+    fontWeight: 'bold',
+    fontSize: 50,
+    backgroundColor: "#00000030",
+    padding: 15,
+    paddingLeft: 50,
+    width: 180,
+    color: "#fff",
+    position: "absolute",
+    top: 30,
+    left: 0,
+  },
+
+  thumbnailContainer: {
+    maxHeight: 80,
+    width: window.width,
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    justifyContent: "space-between",
+    paddingLeft: 30,
+    paddingRight: 30,
+    position: "absolute",
+    right: 0,
+    left: 0,
+    bottom: 20,
+  },
+  thumbnailView: {
+    width: 80,
+    height: 80,
+    padding: 20,
+    backgroundColor: "#FFFFFF30", // 30% oppacity
+    borderStyle: "dashed",
+    borderWidth: 2,
+    borderColor: "#ddd",
+    borderRadius: 5,
+  },
+
+  textContainer: {
+    padding: 15,
+    backgroundColor: "#fff",
+    height: 150,
+  },
+  itemTitleTxt: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    paddingTop: 10,
+  },
+  descriptionTxt: {
+    paddingTop: 10,
+    paddingBottom: 5,
+  },
+
+  btnContainer: {
+    width: window.width,
+    height: 70,
+  },
+  btnOpacity: {
+    backgroundColor: "#33a3f3",
+    width: "100%",
+    height: "100%",
+    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnText: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#fff',
+    fontSize: 20,
+  }
+});

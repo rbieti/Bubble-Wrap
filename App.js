@@ -25,8 +25,9 @@ import VendorScreen from './src/screens/VendorScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
-import CreateItemScreen from './src/artboards/CreateItemScreen';
-import BuyItemScreen from './src/artboards/BuyItemScreen';
+import CreateItemScreen from './src/screens/CreateItemScreen';
+import EditItemScreen from './src/screens/EditItemScreen';
+import BuyItemScreen from './src/screens/BuyItemScreen';
 import TestScreen from './src/screens/TestScreen';
 import ListOfOffers from './src/screens/ListOfOffers';
 import SingleOfferViewScreen from './src/screens/SingleOfferViewScreen';
@@ -41,7 +42,6 @@ import TransactionScreen from './src/screens/TransactionScreen';
 import CampusSafetyScreen from './src/screens/CampusSafety';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
-import EditItemScreen from './src/artboards/EditItemScreen';
 
 export default class App extends React.Component {
   //////////////////////////////////////////////////////////////////////////////
@@ -111,17 +111,17 @@ export default class App extends React.Component {
         editItem: { screen: EditItemScreen },
         buyItem: { screen: BuyItemScreen },
         shakenbake: { screen: HandShakeScreen },
-        loo: { screen: ListOfOffers},
+        loo: { screen: ListOfOffers },
         soview: { screen: SingleOfferViewScreen },
         profile: { screen: ProfileScreen },
         seller: { screen: SellerScreen },
         settings: { screen: SettingsScreen },
         messenger: { screen: ChatMessengerScreen },
-        trans: { screen:TransactionScreen },
-        mos: { screen:MakeOfferScreen },
-        search: { screen:SearchScreen },
-        searchRes:{ screen:SearchResultsScreen },
-        campusSafety: {screen: CampusSafetyScreen }
+        trans: { screen: TransactionScreen },
+        mos: { screen: MakeOfferScreen },
+        search: { screen: SearchScreen },
+        searchRes: { screen: SearchResultsScreen },
+        campusSafety: { screen: CampusSafetyScreen }
       },
       {
         navigationOptions: {
