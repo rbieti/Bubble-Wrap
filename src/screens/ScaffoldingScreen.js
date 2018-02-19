@@ -6,6 +6,8 @@ import CreateItemScreen from '../artboards/CreateItemScreen';
 import EditItemScreen from '../artboards/EditItemScreen';
 import BuyItemScreen from '../artboards/BuyItemScreen';
 
+import Item from '../components/Item';
+
 export default class ScaffoldingScreen extends Component {
   render() {
     const { navigate } = this.props.navigation; // THIS IS NECESSARY FOR NAVIGATION
@@ -151,6 +153,26 @@ export default class ScaffoldingScreen extends Component {
             >
             <Text style={styles.btnText}>
               Transaction
+            </Text>
+          </TouchableOpacity>
+
+          
+          <TouchableOpacity 
+          //THIS IS FOR CLASSES! HELP SEND HELP REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+            style={styles.btnOpacity}
+            onPress={() => {
+            
+            //new code 
+            var hi1 = Item();
+
+            //ItemName, ItemPrice, ItemOffers, Owner, Description, Tag
+            hi1.setAll('Pizza', 99.99, 'None', 'PizzaPie', 'A Pizza Pie', '#Pizza #Pie');
+            console.log(hi1.toString());
+
+            }}
+            >
+            <Text style={styles.btnText}>
+              Testing
             </Text>
           </TouchableOpacity>
         </ScrollView>
