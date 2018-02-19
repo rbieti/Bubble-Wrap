@@ -1,5 +1,23 @@
 import firebase from 'firebase';
-import { FETCH_USER_ITEMS_LIST } from './types';
+import { 
+  ITEM_UPDATE, 
+  FETCH_USER_ITEMS_LIST 
+} from './types';
+
+export const itemUpdate = ({ prop, value }) => {
+  return {
+    type: ITEM_UPDATE,
+    payload: { prop, value }
+  };
+};
+
+export const itemCreate = ({ name, description, price }) => {
+  // console.log(name, description, price); // comment this
+  const { currentUser } = firebase.auth();
+
+  firebase.database().ref(`/users/${currentUser.uid}/items`)
+    .push({ name, description, price });
+};
 
 export const fetchItems = () => {
   return dispatch => {

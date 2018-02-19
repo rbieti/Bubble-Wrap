@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
 import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import { itemUpdate, itemCreate } from '../actions/user_items_actions';
 
-export default class CreateItemScreen extends Component {
+
+class CreateItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Create Item',
     tabBarLabel: 'Create',
@@ -11,6 +14,11 @@ export default class CreateItemScreen extends Component {
       alignSelf: 'center'
     }
   });
+
+  onButtonPress() {
+    const { name, description, price } = this.props;
+    this.props.itemCreate({ name, description, price });
+  }
 
   render() {
     return (
@@ -42,7 +50,9 @@ export default class CreateItemScreen extends Component {
             <TextInput
               style={styles.textInput}
               placeholder="The name of your product"
-              onChangeText={(text) => this.setState({text})}
+              value={this.props.name}
+              onChangeText={value => this.props.itemUpdate({ prop: 'name', value })}
+              // onChangeText={(text) => this.setState({ text })}
             />
           </View>
 
@@ -51,7 +61,9 @@ export default class CreateItemScreen extends Component {
             <TextInput
               style={styles.textInput}
               placeholder="A short description"
-              onChangeText={(text) => this.setState({text})}
+              value={this.props.description}
+              onChangeText={value => this.props.itemUpdate({ prop: 'description', value })}
+              // onChangeText={(text) => this.setState({ text })}
             />
           </View>
 
@@ -60,7 +72,9 @@ export default class CreateItemScreen extends Component {
             <TextInput
               style={styles.textInput}
               placeholder="Set your price"
-              onChangeText={(text) => this.setState({text})}
+              value={this.props.price}
+              onChangeText={value => this.props.itemUpdate({ prop: 'price', value })}
+              // onChangeText={(text) => this.setState({ text })}
             />
           </View>
         </View>
@@ -68,8 +82,8 @@ export default class CreateItemScreen extends Component {
         <View style={styles.btnContainer}>
           <TouchableOpacity 
             style={styles.btnOpacity}
-            onPress={() => {console.log("Button pressed")}}
-            >
+            onPress={this.onButtonPress.bind(this)}
+          >
             <Text style={styles.btnText}>
               Post Item
             </Text>
@@ -162,6 +176,7 @@ const styles = StyleSheet.create({
     height: 40,
     position: "absolute",
     left: 100,
+    width: '70%'
   },
 
   btnContainer: {
@@ -183,3 +198,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
   }
 });
+
+const mapStateToProps = (state) => {
+  const { name, description, price } = state.userItems;
+  return { name, description, price };
+};
+
+export default connect(mapStateToProps, { 
+  itemUpdate, itemCreate 
+})(CreateItemScreen);

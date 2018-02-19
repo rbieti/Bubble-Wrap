@@ -18,4 +18,5 @@ export const AUTH_SIGNOUT_USER = 'signout_user';
 
 export const RESET_APP_STATE = 'reset_app_state';
 
+export const ITEM_UPDATE = 'item_update';
 export const FETCH_USER_ITEMS_LIST = 'get_user_items_list';
