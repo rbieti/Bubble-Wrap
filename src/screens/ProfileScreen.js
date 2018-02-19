@@ -20,9 +20,12 @@ import {
   Cell,
   Section,
   TableView,
+  ListView
 } from 'react-native-tableview-simple';
+import { connect } from 'react-redux';
+import { fetchItems } from '../actions/user_items_actions';
 
-export default class App extends Component<{}> {
+class ProfileScreen extends Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: 'My Profile',
@@ -32,6 +35,55 @@ export default class App extends Component<{}> {
       alignSelf: 'center'
     }
   });
+
+  componentWillMount() {
+  }
+
+  async componentDidMount() {
+    this.props.fetchItems();
+    /* Two lines below are for the incomplete ListView for the items */
+    // const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    // this.dataSource = ds.cloneWithRows(this.props.items);
+  }
+
+  renderItems() {
+    const { items } = this.props;
+    return items.map(({ key, name, price }) => (
+      <View style={styles.reviewCell} key={key}>
+        <Image 
+          source={require("../../assets/logo.png")}
+          style={styles.reviewerImg}
+          resizeMode="cover"
+        />
+        <Text style={styles.h1Lbl}>{`${name} | $${price}`}</Text>
+      </View>
+    ));
+  }
+
+  /* Two INCOMPLETE function below render the items in a ListView */
+  // renderItems() {
+  //   return (
+  //     <ListView
+  //       //horizontal={true}
+  //       style={{ flex: 1 }}
+  //       dataSource={this.dataSource}
+  //       renderRow={this.renderRow(this.props.items)}
+  //     />
+  //   );
+  // }
+  // renderRow(item) {
+  //   const { key, name, price } = item;
+  //   return (
+  //     <View style={styles.reviewCell} key={key}>
+  //       <Image 
+  //         source={require("../../assets/logo.png")}
+  //         style={styles.reviewerImg}
+  //         resizeMode="cover"
+  //       />
+  //       <Text style={styles.h1Lbl}>{`${name} | $${price}`}</Text>
+  //     </View>
+  //   );
+  // }
 
   render() {
     return (
@@ -102,6 +154,21 @@ export default class App extends Component<{}> {
             </ScrollView>
           </View>
 
+          <View style={styles.reviewsView}>
+            <Text style={styles.h1Lbl}>Items you are selling</Text>
+            <ScrollView 
+              style={styles.horizontalScrollView} 
+              automaticallyAdjustInsets={true}
+              horizontal={true}
+              pagingEnabled={true}
+              scrollEnabled={true}
+              decelerationRate={0.5}
+              scrollEventThrottle={16}
+            >
+              {this.renderItems()}
+            </ScrollView>
+          </View>
+
           <TableView>
             <Section header="CONTACT INFORMATION" footer="">
               <Cell
@@ -140,10 +207,10 @@ export default class App extends Component<{}> {
       </View>
     );
   }
-};
+}
 
-let profileImgWidth = 100;
-let reviewerImgWidth = 60;
+const profileImgWidth = 100;
+const reviewerImgWidth = 60;
 
 const styles = StyleSheet.create({
   root: { 
@@ -229,3 +296,10 @@ const styles = StyleSheet.create({
   }
 
 });
+
+const mapStateToProps = (state) => {
+  const { items } = state.userItems;
+  return { items };
+};
+
+export default connect(mapStateToProps, { fetchItems })(ProfileScreen);
