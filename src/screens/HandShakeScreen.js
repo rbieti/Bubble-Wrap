@@ -16,14 +16,18 @@ export default class CreateItemScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
+        <View style={styles.header}>
+          <Text style={styles.text}>Waiting for both parties to be present.</Text>
+          <Text style={styles.text}>We'll let you know when your Bubble Buddy is nearby so you can continue with your transaction.</Text>
+        </View>
         <MapView
           initialRegion={{
             latitude: 34.130075,
             longitude: -117.888359,
-            latitudeDelta: 0.0461 * 0.5,
-            longitudeDelta: 0.02105 * 0.5,
+            latitudeDelta: 0.0461 * 0.5,    // Controls the scale
+            longitudeDelta: 0.02105 * 0.5,  // Controls the scale
           }}
-          style={styles.mapView}
+          style={styles.map}
         />
       </View>
     );
@@ -35,9 +39,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flex: 1,
   },
-  mapView: {
+
+  header: {
+    width: window.width,
+    height: 100,
+    backgroundColor: "#3d4756",
+    padding: 25,
+    paddingLeft: 50,
+  },
+
+  text: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+
+  map: {
     position: "absolute",
-    top: 0,
+    top: 100,
     right: 0,
     bottom: 0,
     left: 0,

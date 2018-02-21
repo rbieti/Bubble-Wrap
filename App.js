@@ -20,14 +20,12 @@ import firebase from 'firebase';
 import { Font } from 'expo';
 import store from './src/store';
 import SearchScreen from './src/screens/SearchScreen';
-import SearchResultsScreen from './src/screens/SearchResultsScreen';
 import VendorScreen from './src/screens/VendorScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
 import CreateItemScreen from './src/artboards/CreateItemScreen';
 import BuyItemScreen from './src/artboards/BuyItemScreen';
-import TestScreen from './src/screens/TestScreen';
 import ListOfOffers from './src/screens/ListOfOffers';
 import SingleOfferViewScreen from './src/screens/SingleOfferViewScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
@@ -92,7 +90,6 @@ export default class App extends React.Component {
     const HomeScene = StackNavigator(
       {
         search: { screen: SearchScreen },
-        searchResults: { screen: SearchResultsScreen },
         vendor: { screen: VendorScreen }
       },
       {
@@ -120,7 +117,6 @@ export default class App extends React.Component {
         trans: { screen:TransactionScreen },
         mos: { screen:MakeOfferScreen },
         search: { screen:SearchScreen },
-        searchRes:{ screen:SearchResultsScreen },
         campusSafety: {screen: CampusSafetyScreen }
       },
       {

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import MapView, { Marker } from 'react-native-maps';
+
 export default class CampusSafety extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Campus Safety',
@@ -22,10 +24,14 @@ export default class CampusSafety extends Component {
           <Text style={styles.contactTxt}> For critical emergencies, call 911 </Text>
         </View>
 
-        <Image 
-          source={require("../../assets/map_sample.jpg")}
-          style={styles.mapImg}
-          resizeMode="cover"
+        <MapView
+          initialRegion={{
+            latitude: 34.130075,
+            longitude: -117.888359,
+            latitudeDelta: 0.0461 * 0.5,    // Controls the scale
+            longitudeDelta: 0.02105 * 0.5,  // Controls the scale
+          }}
+          style={styles.map}
         />
 
         <TouchableOpacity 
@@ -62,7 +68,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  mapImg: {
+  map: {
     width: window.width,
     height: window.width,
   },
