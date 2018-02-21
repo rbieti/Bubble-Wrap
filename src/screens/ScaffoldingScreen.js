@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { View, StyleSheet, ScrollView, Button, Text, TouchableOpacity } from "react-native";import { navigate }  from "react-navigation";
+import { View, StyleSheet, ScrollView, Button, Text, TouchableOpacity } from "react-native";
+import { navigate }  from "react-navigation";
 import { PRIMARY_COLOR } from '../constants/style';
-import TestScreen from '../screens/TestScreen';
 import CreateItemScreen from '../artboards/CreateItemScreen';
 import EditItemScreen from '../artboards/EditItemScreen';
 import BuyItemScreen from '../artboards/BuyItemScreen';
@@ -70,15 +70,6 @@ export default class ScaffoldingScreen extends Component {
             >
             <Text style={styles.btnText}>
               Search
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            style={styles.btnOpacity}
-            onPress={() => {navigate('searchRes')}}
-            >
-            <Text style={styles.btnText}>
-              Search Results
             </Text>
           </TouchableOpacity>
 
