@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { View, StyleSheet, ScrollView, Button, Text, TouchableOpacity } from "react-native";
 import { navigate }  from "react-navigation";
 import { PRIMARY_COLOR } from '../constants/style';
-import CreateItemScreen from '../artboards/CreateItemScreen';
-import EditItemScreen from '../artboards/EditItemScreen';
-import BuyItemScreen from '../artboards/BuyItemScreen';
+import CreateItemScreen from '../screens/CreateItemScreen';
+import EditItemScreen from '../screens/EditItemScreen';
+import BuyItemScreen from '../screens/BuyItemScreen';
 
 export default class ScaffoldingScreen extends Component {
   render() {

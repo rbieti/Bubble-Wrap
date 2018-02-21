@@ -27,7 +27,6 @@ import SignoutScreen from './src/screens/SignoutScreen';
 import CreateItemScreen from './src/screens/CreateItemScreen';
 import EditItemScreen from './src/screens/EditItemScreen';
 import BuyItemScreen from './src/screens/BuyItemScreen';
-import TestScreen from './src/screens/TestScreen';
 import ListOfOffers from './src/screens/ListOfOffers';
 import SingleOfferViewScreen from './src/screens/SingleOfferViewScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
@@ -118,7 +117,6 @@ export default class App extends React.Component {
         trans: { screen:TransactionScreen },
         mos: { screen:MakeOfferScreen },
         search: { screen:SearchScreen },
-        searchRes: { screen: SearchResultsScreen },
         campusSafety: {screen: CampusSafetyScreen }
       },
       {
