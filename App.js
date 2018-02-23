@@ -25,7 +25,6 @@ import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
 import CreateItemScreen from './src/screens/CreateItemScreen';
-import EditItemScreen from './src/screens/EditItemScreen';
 import BuyItemScreen from './src/screens/BuyItemScreen';
 import ListOfOffers from './src/screens/ListOfOffers';
 import SingleOfferViewScreen from './src/screens/SingleOfferViewScreen';
@@ -40,6 +39,7 @@ import TransactionScreen from './src/screens/TransactionScreen';
 import CampusSafetyScreen from './src/screens/CampusSafety';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
+import EditItemScreen from './src/screens/EditItemScreen';
 
 export default class App extends React.Component {
   //////////////////////////////////////////////////////////////////////////////
@@ -103,21 +103,21 @@ export default class App extends React.Component {
     );
     const ScaffoldingScene = StackNavigator(
       {
-        locator: { screen: ScaffoldingScreen },
-        createItem: { screen: CreateItemScreen },
-        editItem: { screen: EditItemScreen },
-        buyItem: { screen: BuyItemScreen },
-        shakenbake: { screen: HandShakeScreen },
-        loo: { screen: ListOfOffers },
-        soview: { screen: SingleOfferViewScreen },
-        profile: { screen: ProfileScreen },
-        seller: { screen: SellerScreen },
-        settings: { screen: SettingsScreen },
-        messenger: { screen: ChatMessengerScreen },
-        trans: { screen:TransactionScreen },
-        mos: { screen:MakeOfferScreen },
-        search: { screen:SearchScreen },
-        campusSafety: {screen: CampusSafetyScreen }
+        locator:      { screen: ScaffoldingScreen },
+        createItem:   { screen: CreateItemScreen },
+        editItem:     { screen: EditItemScreen },
+        buyItem:      { screen: BuyItemScreen },
+        shakenbake:   { screen: HandShakeScreen },
+        loo:          { screen: ListOfOffers },
+        soview:       { screen: SingleOfferViewScreen },
+        profile:      { screen: ProfileScreen },
+        seller:       { screen: SellerScreen },
+        settings:     { screen: SettingsScreen },
+        messenger:    { screen: ChatMessengerScreen },
+        trans:        { screen: TransactionScreen },
+        mos:          { screen: MakeOfferScreen },
+        search:       { screen: SearchScreen },
+        campusSafety: { screen: CampusSafetyScreen }
       },
       {
         navigationOptions: {
