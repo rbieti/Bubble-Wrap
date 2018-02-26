@@ -163,7 +163,7 @@ export default class ScaffoldingScreen extends Component {
           //THIS IS FOR CLASSES! HELP SEND HELP REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
             style={styles.btnOpacity}
             onPress={() => {
-            var yolo = new Review();
+            var review = new Review();
             //yolo.setComment('bestItemEver');
             //yolo.setRating(5.00);
             //console.log(yolo.getComment());

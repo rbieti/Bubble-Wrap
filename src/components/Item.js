@@ -15,11 +15,11 @@ function Item()
         itemOffers = newItemOffers;
         owner = newOwner;
         description = newDescription;
-        tag : {'NoTags','NoTags2'};
+        tag = newTag;
     }
     this.toString = function()
     {
-        return 'item: ' + itemName + '\nprice: ' + itemPrice + '\noffers: '+ itemOffers + '\nowner: ' + owner + '\ndescription: ' + description + '\ntag: ' + tag;
+        return 'item: ' + itemName + '\nprice: ' + itemPrice + '\noffers: '+ itemOffers + '\nowner: ' + owner + '\ndescription: ' + description;
     }
 
 }
