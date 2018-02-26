@@ -7,6 +7,9 @@ import EditItemScreen from '../artboards/EditItemScreen';
 import BuyItemScreen from '../artboards/BuyItemScreen';
 
 import Item from '../components/Item';
+import User from '../components/User';
+import Review from '../components/Review';
+import Community from '../components/Community';
 
 export default class ScaffoldingScreen extends Component {
   render() {
@@ -20,6 +23,34 @@ export default class ScaffoldingScreen extends Component {
           scrollEventThrottle={16}
           style={styles.scrollArea1}
           contentContainerStyle={{flexGrow: 1, alignItems: 'center'}}>
+
+<TouchableOpacity 
+           //THIS IS FOR CLASSES! HELP SEND HELP REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+            style={styles.btnOpacity}
+            onPress={() => {
+
+            // //new code 
+            // var hi1 = Item();
+            // //profilePicture userName rating numTransactions bubbleCommunity reviews purchaseHistory sellHistory strikeCount
+            
+            var u1 = new User();
+            var u2 = new User();
+            var u3 = new User();
+
+            var reviews = [];
+            var purchaseHistory = [];
+            var sellHistory = [];
+
+            u1.createUser('blah.png', 'John', 'Doe', 0.00, 1, 'Azusa', reviews, purchaseHistory, sellHistory, 0);
+            u2.createUser('blah.png', 'Jane', 'Doe', 0.00, 2, 'Pasadena', reviews, purchaseHistory, sellHistory, 0);
+            u3.createUser('blah.png', 'REEEEEEEEEEEE', 'Doe', 0.00, 3, 'GG', reviews, purchaseHistory, sellHistory, 0);
+
+            }}
+            >
+            <Text style={styles.btnText}>
+              Testing
+            </Text>
+          </TouchableOpacity>
 
           <TouchableOpacity 
             style={styles.btnOpacity}
@@ -153,26 +184,6 @@ export default class ScaffoldingScreen extends Component {
             >
             <Text style={styles.btnText}>
               Transaction
-            </Text>
-          </TouchableOpacity>
-
-          
-          <TouchableOpacity 
-          //THIS IS FOR CLASSES! HELP SEND HELP REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            style={styles.btnOpacity}
-            onPress={() => {
-            
-            //new code 
-            var hi1 = Item();
-
-            //ItemName, ItemPrice, ItemOffers, Owner, Description, Tag
-            hi1.setAll('Pizza', 99.99, 'None', 'PizzaPie', 'A Pizza Pie', '#Pizza #Pie');
-            console.log(hi1.toString());
-
-            }}
-            >
-            <Text style={styles.btnText}>
-              Testing
             </Text>
           </TouchableOpacity>
         </ScrollView>
