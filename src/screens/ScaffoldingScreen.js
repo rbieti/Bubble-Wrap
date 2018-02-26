@@ -7,6 +7,8 @@ import EditItemScreen from '../artboards/EditItemScreen';
 import BuyItemScreen from '../artboards/BuyItemScreen';
 
 import Item from '../components/Item';
+import User from '../components/User';
+import Review from '../components/Review';
 
 export default class ScaffoldingScreen extends Component {
   render() {
@@ -161,13 +163,29 @@ export default class ScaffoldingScreen extends Component {
           //THIS IS FOR CLASSES! HELP SEND HELP REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
             style={styles.btnOpacity}
             onPress={() => {
-            
-            //new code 
-            var hi1 = Item();
+            var yolo = new Review();
+            //yolo.setComment('bestItemEver');
+            //yolo.setRating(5.00);
+            //console.log(yolo.getComment());
+            //console.log(yolo.getRating());
+            var reviews = [];
+            var purchaseHistory = [];
+            var sellHistory = [];
 
-            //ItemName, ItemPrice, ItemOffers, Owner, Description, Tag
-            hi1.setAll('Pizza', 99.99, 'None', 'PizzaPie', 'A Pizza Pie', '#Pizza #Pie');
-            console.log(hi1.toString());
+            // //new code 
+            // var hi1 = Item();
+            // //profilePicture userName rating numTransactions bubbleCommunity reviews purchaseHistory sellHistory strikeCount
+            
+            var u1 = new User();
+            u1.createUser('blah.png', 'John', 'Doe', 0.00, 1, 'Azusa', reviews, purchaseHistory, sellHistory, 0);
+            // //ItemName, ItemPrice, ItemOffers, Owner, Description, Tag
+            // //hi1.setAll('Pizza', 99.99, 'None', 'PizzaPie', 'A Pizza Pie', '#Pizza #Pie');
+            u1.addReview(5.0, 'REEEEEEEEE');
+            u1.addReview(3.0, 'He Is a Drone');
+            u1.consolePrintReview();
+            // //console.log(hi1.toString());
+            // console.log(u1.getReviews());
+            // u1.consolePrintReview();
 
             }}
             >
