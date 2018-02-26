@@ -45,6 +45,12 @@ export default class ScaffoldingScreen extends Component {
             u2.createUser('blah.png', 'Jane', 'Doe', 0.00, 2, 'Pasadena', reviews, purchaseHistory, sellHistory, 0);
             u3.createUser('blah.png', 'REEEEEEEEEEEE', 'Doe', 0.00, 3, 'GG', reviews, purchaseHistory, sellHistory, 0);
 
+            var com1 = new Community();
+            com1.addUser(u1);
+            com1.addUser(u2);
+            com1.addUser(u3);
+            com1.printUsers();
+
             }}
             >
             <Text style={styles.btnText}>
