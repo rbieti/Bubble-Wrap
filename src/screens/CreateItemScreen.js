@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
-import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import { View, StyleSheet, Text, Image, TouchableOpacity, TextInput, Dimensions } from "react-native";
 import { itemUpdate, itemCreate } from '../actions/user_items_actions';
+import ImageBrowser from '../components/ImageBrowser';
 
+const window = Dimensions.get('window');
 
 class CreateItemScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = () => ({
     title: 'Create Item',
     tabBarLabel: 'Create',
     headerTitleStyle: {
@@ -15,15 +17,55 @@ class CreateItemScreen extends Component {
     }
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      imageBrowserOpen: false,
+      photos: []
+    };
+  }
+
   onButtonPress() {
     const { name, description, price } = this.props;
     this.props.itemCreate({ name, description, price });
   }
 
+  // onCameraButtonPress() {
+  //   console.log('what\'s good fam?');
+  // }
+
+  imageBrowserCallback = (callback) => {
+    callback.then((photos) => {
+      console.log(photos);
+      this.setState({
+        imageBrowserOpen: false,
+        photos
+      });
+    }).catch((error) => console.log(error));
+  }
+  
+  renderImage(item, i) {
+    return (
+      <View style={styles.thumbnailView}>
+        <Image
+          style={{ height: 100, width: 100 }}
+          source={{ uri: item.file }}
+          key={i}
+        />
+      </View>
+    );
+  }
+
   render() {
+    if (this.state.imageBrowserOpen) {
+      return (<ImageBrowser max={3} callback={this.imageBrowserCallback} />);
+    }
     return (
       <View style={styles.root}>
         <View style={styles.imageContainer}>
+          {/* <ScrollView>
+            {this.state.photos.map((item, i) => this.renderImage(item, i))}
+          </ScrollView> */}
           <Image
             style={styles.mainImg}
             source={require("../../assets/478x478-reeses.jpg")}
@@ -31,17 +73,19 @@ class CreateItemScreen extends Component {
           />
 
           <View style={styles.thumbnailContainer}>
-            <View style={styles.thumbnailView}></View>
-
-            <View style={styles.thumbnailView}></View>
-
-            <View style={styles.thumbnailView}></View>
+            {this.state.photos.map((item, i) => this.renderImage(item, i))}
           </View>
         </View>
 
         <View style={styles.iconContainer}>
-          <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
-          <Icon style={styles.iconImg} name="ios-add" size={40} />
+          <TouchableOpacity 
+            //style={styles.btnOpacity}
+            //onPress={this.onCameraButtonPress.bind(this)} // TR: possible function
+            onPress={() => this.setState({ imageBrowserOpen: true })}
+          >
+            <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
+            {/* <Icon style={styles.iconImg} name="ios-add" size={40} /> */}
+          </TouchableOpacity>
         </View>
 
         <View style={styles.textContainer}>
@@ -104,7 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: window.width,
     height: window.width,
-    height: 3,
+    //height: 3,
     justifyContent: "flex-end",
     alignItems: "center",
   },
@@ -138,19 +182,21 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     borderRadius: 5,
   },
+  thumbnailImg: {
 
+  },
   iconContainer: {
     flex: 1,
     maxHeight: 70,
-    flexDirection: "row",
-    paddingRight: "25%",
-    paddingLeft: "25%",
+    // flexDirection: "row",
+    // paddingRight: "25%",
+    // paddingLeft: "25%",
     backgroundColor: "#f6f6f6",
     borderColor: "#ddd",
     borderTopWidth: 2,
     borderBottomWidth: 2,
     alignItems: 'center',
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
   },
   iconImg: {
     height: 50,
