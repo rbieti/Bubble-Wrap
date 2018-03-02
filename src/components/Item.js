@@ -8,15 +8,6 @@ function Item()
     var description = 'NoDescription';
     var tag = [];
    
-    this.setAll = function(newItemName, newItemPrice, newItemOffers, newOwner, newDescription, newTag)
-    {
-        itemName = newItemName;
-        itemPrice = newItemPrice;
-        itemOffers = newItemOffers;
-        owner = newOwner;
-        description = newDescription;
-        tag = newTag;
-    }
     this.toString = function()
     {
         return 'item: ' + itemName + '\nprice: ' + itemPrice + '\noffers: '+ itemOffers + '\nowner: ' + owner + '\ndescription: ' + description;
