@@ -45,6 +45,9 @@ function User() {
         for (i=0; i<reviews.length; i++)
         {
             var help = reviews[i];
+            for (let attribute in help) {
+                console.log[attribute];
+            }
             console.log(help["comment"]);
             console.log(help["rating"]);
         }

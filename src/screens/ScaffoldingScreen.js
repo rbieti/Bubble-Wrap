@@ -50,6 +50,7 @@ export default class ScaffoldingScreen extends Component {
             com1.addUser(u2);
             com1.addUser(u3);
             com1.printUsers();
+            console.log("reeee");
 
             }}
             >
