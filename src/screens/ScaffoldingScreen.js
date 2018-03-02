@@ -64,7 +64,7 @@ export default class ScaffoldingScreen extends Component {
             onPress={() => {navigate('profile')}}
             >
             <Text style={styles.btnText}>
-              User Profile
+              User Profiles
             </Text>
           </TouchableOpacity>
 
