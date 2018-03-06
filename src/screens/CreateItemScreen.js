@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
 import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import { ImagePicker } from 'expo';
+import firebase from 'firebase';
 import { itemUpdate, itemCreate } from '../actions/user_items_actions';
-
+import { GOOGLE_FIREBASE_CONFIG } from "../constants/api_keys";
 
 class CreateItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -14,34 +16,76 @@ class CreateItemScreen extends Component {
       alignSelf: 'center'
     }
   });
+  
+  state = { image: '' };
 
   onButtonPress() {
     const { name, description, price } = this.props;
     this.props.itemCreate({ name, description, price });
   }
 
+  pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [1, 1],
+    });
+
+    // console.log(result);
+
+    if (!result.cancelled) {
+      this.setState({ image: result.uri });
+      this.uploadImageToFirebase(result);
+    }
+  };
+
+  // temporary function test
+  uploadImageToFirebase = async (result) => {
+    const storageRef = firebase.storage().ref();
+    const imageRef = storageRef.child("images/test0001.jpg");
+    imageRef.putString(result.uri).then(() => console.log("Image uploaded successfully?")).catch((err) => console.log(err));
+  };
+
   render() {
+    let { image } = this.state;
+
     return (
       <View style={styles.root}>
-        <View style={styles.imageContainer}>
+        <TouchableOpacity 
+          style={styles.imageContainer}
+          onPress={this.pickImage}
+        >
+          {!!image &&
           <Image
             style={styles.mainImg}
-            source={require("../../assets/478x478-reeses.jpg")}
+            // source={require("../../assets/478x478-reeses.jpg")}
+            source={{ uri: image }}
             resizeMode="cover"
-          />
+          />}
 
           <View style={styles.thumbnailContainer}>
-            <View style={styles.thumbnailView}></View>
-
-            <View style={styles.thumbnailView}></View>
-
-            <View style={styles.thumbnailView}></View>
+            <TouchableOpacity 
+              // onPress={this._pickImage}
+              style={styles.thumbnailView}
+            >
+              {/* {!!image && 
+              <Image
+                style={styles.thumbnailImage}
+                source={{ uri: image }}
+              />} */}
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.thumbnailView}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.thumbnailView}>
+            </TouchableOpacity>
           </View>
-        </View>
+        </TouchableOpacity>
 
         <View style={styles.iconContainer}>
-          <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
-          <Icon style={styles.iconImg} name="ios-add" size={40} />
+          <TouchableOpacity>
+            <Text>Take a picture</Text>
+          </TouchableOpacity>
+          {/* <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
+          <Icon style={styles.iconImg} name="ios-add" size={40} /> */}
         </View>
 
         <View style={styles.textContainer}>
@@ -104,7 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: window.width,
     height: window.width,
-    height: 3,
+    // height: 3,
     justifyContent: "flex-end",
     alignItems: "center",
   },
@@ -131,12 +175,17 @@ const styles = StyleSheet.create({
   thumbnailView: {
     width: 80,
     height: 80,
-    padding: 20,
+    //padding: 20,
     backgroundColor: "#FFFFFF30", // 30% oppacity
     borderStyle: "dashed",
     borderWidth: 2,
     borderColor: "#ddd",
     borderRadius: 5,
+  },
+  thumbnailImage: {
+    width: 76,
+    height: 76,
+    borderRadius: 5
   },
 
   iconContainer: {
