@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
-import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import {KeyboardAvoidingView, Alert, View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
 import { itemUpdate, itemCreate } from '../actions/user_items_actions';
 
 
@@ -16,13 +16,29 @@ class CreateItemScreen extends Component {
   });
 
   onButtonPress() {
+    if (this.props.name == "")
+    {
+      Alert.alert("Item name is required");
+    }
+    else if (this.props.description=="")
+    {
+      Alert.alert("Item description is required");
+    }
+    else if (this.props.price =="")
+    {
+      Alert.alert("Item price is required");
+    }
+    else{
+    console.log(typeof(this.props.price));
     const { name, description, price } = this.props;
     this.props.itemCreate({ name, description, price });
+    }
   }
 
   render() {
     return (
       <View style={styles.root}>
+      
         <View style={styles.imageContainer}>
           <Image
             style={styles.mainImg}
@@ -43,7 +59,11 @@ class CreateItemScreen extends Component {
           <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
           <Icon style={styles.iconImg} name="ios-add" size={40} />
         </View>
-
+        
+        <KeyboardAvoidingView
+        style = {styles.container}
+        behavior = "padding"
+        >
         <View style={styles.textContainer}>
           <View style={styles.textCell}>
             <Text style={styles.text}>Name</Text>
@@ -55,6 +75,8 @@ class CreateItemScreen extends Component {
               // onChangeText={(text) => this.setState({ text })}
             />
           </View>
+
+          
 
           <View style={styles.textCell}>
             <Text style={styles.text}>Description</Text>
@@ -71,6 +93,7 @@ class CreateItemScreen extends Component {
             <Text style={styles.text}>Price</Text>
             <TextInput
               style={styles.textInput}
+              keyboardType = 'numeric'
               placeholder="Set your price"
               value={this.props.price}
               onChangeText={value => this.props.itemUpdate({ prop: 'price', value })}
@@ -89,7 +112,9 @@ class CreateItemScreen extends Component {
             </Text>
           </TouchableOpacity>
         </View>
+        </KeyboardAvoidingView>
       </View>
+      
     );
   }
 }
