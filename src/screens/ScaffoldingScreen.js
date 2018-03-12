@@ -6,6 +6,11 @@ import CreateItemScreen from '../screens/CreateItemScreen';
 import EditItemScreen from '../screens/EditItemScreen';
 import BuyItemScreen from '../screens/BuyItemScreen';
 
+import Item from '../components/Item';
+import User from '../components/User';
+import Review from '../components/Review';
+import Community from '../components/Community';
+
 export default class ScaffoldingScreen extends Component {
   render() {
     const { navigate } = this.props.navigation; // THIS IS NECESSARY FOR NAVIGATION
@@ -18,6 +23,41 @@ export default class ScaffoldingScreen extends Component {
           scrollEventThrottle={16}
           style={styles.scrollArea1}
           contentContainerStyle={{flexGrow: 1, alignItems: 'center'}}>
+
+<TouchableOpacity 
+           //THIS IS FOR CLASSES! HELP SEND HELP REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+            style={styles.btnOpacity}
+            onPress={() => {
+
+            // //new code 
+            // var hi1 = Item();
+            // //profilePicture userName rating numTransactions bubbleCommunity reviews purchaseHistory sellHistory strikeCount
+            
+            var u1 = new User();
+            var u2 = new User();
+            var u3 = new User();
+
+            var reviews = [];
+            var purchaseHistory = [];
+            var sellHistory = [];
+
+            u1.createUser('blah.png', 'John', 'Doe', 0.00, 1, 'Azusa', reviews, purchaseHistory, sellHistory, 0);
+            u2.createUser('blah.png', 'Jane', 'Doe', 0.00, 2, 'Pasadena', reviews, purchaseHistory, sellHistory, 0);
+            u3.createUser('blah.png', 'REEEEEEEEEEEE', 'Doe', 0.00, 3, 'GG', reviews, purchaseHistory, sellHistory, 0);
+
+            var com1 = new Community();
+            com1.addUser(u1);
+            com1.addUser(u2);
+            com1.addUser(u3);
+            com1.printUsers();
+            console.log("reeee");
+
+            }}
+            >
+            <Text style={styles.btnText}>
+              Testing
+            </Text>
+          </TouchableOpacity>
 
           <TouchableOpacity 
             style={styles.btnOpacity}
