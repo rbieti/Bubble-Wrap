@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
-import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TouchableWithoutFeedback, TextInput } from "react-native";
 import { ImagePicker } from 'expo';
 import firebase from 'firebase';
 import { itemUpdate, itemCreate } from '../actions/user_items_actions';
@@ -17,75 +17,83 @@ class CreateItemScreen extends Component {
     }
   });
   
-  state = { image: '' };
+  // images are represented as URI's for now
+  state = { images: ['', '', '', ''] };
 
   onButtonPress() {
     const { name, description, price } = this.props;
     this.props.itemCreate({ name, description, price });
   }
 
-  pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
+  pickImage = async (i) => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: false,
       aspect: [1, 1],
     });
 
-    // console.log(result);
+    console.log(result.uri);
 
     if (!result.cancelled) {
-      this.setState({ image: result.uri });
-      this.uploadImageToFirebase(result);
+      // this.setState({ images: result.uri });
+      const images = this.state.images.slice();
+      images[i] = result.uri;
+      this.setState({ images });
+      // this.uploadImageToFirebase(result);
     }
   };
 
-  // temporary function test
+  // TR: temporary function test
   uploadImageToFirebase = async (result) => {
     const storageRef = firebase.storage().ref();
     const imageRef = storageRef.child("images/test0001.jpg");
-    imageRef.putString(result.uri).then(() => console.log("Image uploaded successfully?")).catch((err) => console.log(err));
+    imageRef.putString(result.uri).then(() => console.log("Image uploaded")).catch((err) => console.log(err));
   };
 
+  renderImgThumbnails() {
+    const images = this.state.images.slice(1); // removes first element of array
+
+    return images.map((image, i) => (
+      <TouchableOpacity 
+        onPress={() => this.pickImage(i + 1)} // for indecies 1, 2, 3
+        style={styles.thumbnailView}
+        key={i}
+      >
+        {!!image && 
+        <Image
+          style={styles.thumbnailImage}
+          source={{ uri: image }}
+        />}
+      </TouchableOpacity>
+    ));
+  }
+
   render() {
-    let { image } = this.state;
+    const { images } = this.state;
 
     return (
       <View style={styles.root}>
         <TouchableOpacity 
           style={styles.imageContainer}
-          onPress={this.pickImage}
+          onPress={() => this.pickImage(0)}
         >
-          {!!image &&
+          {!!images[0] &&
           <Image
             style={styles.mainImg}
             // source={require("../../assets/478x478-reeses.jpg")}
-            source={{ uri: image }}
+            source={{ uri: images[0] }}
             resizeMode="cover"
           />}
 
           <View style={styles.thumbnailContainer}>
-            <TouchableOpacity 
-              // onPress={this._pickImage}
-              style={styles.thumbnailView}
-            >
-              {/* {!!image && 
-              <Image
-                style={styles.thumbnailImage}
-                source={{ uri: image }}
-              />} */}
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.thumbnailView}>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.thumbnailView}>
-            </TouchableOpacity>
+            {this.renderImgThumbnails()}
           </View>
         </TouchableOpacity>
 
         <View style={styles.iconContainer}>
           <TouchableOpacity>
-            <Text>Take a picture</Text>
+            <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
           </TouchableOpacity>
-          {/* <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
-          <Icon style={styles.iconImg} name="ios-add" size={40} /> */}
+          {/* <Icon style={styles.iconImg} name="ios-add" size={40} /> */}
         </View>
 
         <View style={styles.textContainer}>
@@ -191,15 +199,15 @@ const styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
     maxHeight: 70,
-    flexDirection: "row",
-    paddingRight: "25%",
-    paddingLeft: "25%",
+    // flexDirection: "row",
+    // paddingRight: "25%",
+    // paddingLeft: "25%",
     backgroundColor: "#f6f6f6",
     borderColor: "#ddd",
     borderTopWidth: 2,
     borderBottomWidth: 2,
     alignItems: 'center',
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
   },
   iconImg: {
     height: 50,
