@@ -34,14 +34,161 @@ export default class Untitled extends Component {
     return (
       <View style={styles.root}>
         <ScrollView>
-          <TableView>
-            <Section>
-              <CellVariant title="Element 1" />
-              <CellVariant title="Element 2" />
-              <CellVariant title="Element 3" />
-              <CellVariant title="Element 4" />
-            </Section>
-          </TableView>
+          <View style={styles.cardView}>
+            <Image 
+              source={require("../../assets/logo.png")}
+              style={styles.profileImg}
+              resizeMode="cover"
+            />
+            <View style={styles.titleArea}>
+              <Text style={styles.cardTitle}> iPhone 6 </Text>
+              <Text style={styles.cardSubtitle}> asking price: $245 </Text>
+            </View>
+
+            <View style={styles.sections}>
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
+              </View>
+
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
+              </View>
+
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> See more... </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.cardView}>
+            <Image 
+              source={require("../../assets/logo.png")}
+              style={styles.profileImg}
+              resizeMode="cover"
+            />
+            <View style={styles.titleArea}>
+              <Text style={styles.cardTitle}> Honda Accord 2014 50k miles </Text>
+              <Text style={styles.cardSubtitle}> asking price: $92,000 </Text>
+            </View>
+
+            <View style={styles.sections}>
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
+              </View>
+
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
+              </View>
+
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> See more... </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.cardView}>
+            <Image 
+              source={require("../../assets/logo.png")}
+              style={styles.profileImg}
+              resizeMode="cover"
+            />
+            <View style={styles.titleArea}>
+              <Text style={styles.cardTitle}> iPhone 6 </Text>
+              <Text style={styles.cardSubtitle}> asking price: $245 </Text>
+            </View>
+
+            <View style={styles.sections}>
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
+              </View>
+
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
+              </View>
+
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> See more... </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.cardView}>
+            <Image 
+              source={require("../../assets/logo.png")}
+              style={styles.profileImg}
+              resizeMode="cover"
+            />
+            <View style={styles.titleArea}>
+              <Text style={styles.cardTitle}> iPhone 6 </Text>
+              <Text style={styles.cardSubtitle}> asking price: $245 </Text>
+            </View>
+
+            <View style={styles.sections}>
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
+              </View>
+
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
+              </View>
+
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> See more... </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.cardView}>
+            <Image 
+              source={require("../../assets/logo.png")}
+              style={styles.profileImg}
+              resizeMode="cover"
+            />
+            <View style={styles.titleArea}>
+              <Text style={styles.cardTitle}> iPhone 6 </Text>
+              <Text style={styles.cardSubtitle}> asking price: $245 </Text>
+            </View>
+
+            <View style={styles.sections}>
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
+              </View>
+
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
+              </View>
+
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> See more... </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.cardView}>
+            <Image 
+              source={require("../../assets/logo.png")}
+              style={styles.profileImg}
+              resizeMode="cover"
+            />
+            <View style={styles.titleArea}>
+              <Text style={styles.cardTitle}> iPhone 6 </Text>
+              <Text style={styles.cardSubtitle}> asking price: $245 </Text>
+            </View>
+
+            <View style={styles.sections}>
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
+              </View>
+
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
+              </View>
+
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> See more... </Text>
+              </View>
+            </View>
+          </View>
         </ScrollView>
       </View>
     );
@@ -53,18 +200,65 @@ const styles = {
 
   },
 
-  customCell: {
-     alignItems: 'center', 
-     justifyContent: 'center', 
-     flexDirection: 'column', 
-     flex: 1, 
-     paddingVertical: 5, 
-     margin: 0, 
-     height: 200 
-  }
+  cardView: {
+    flexDirection: 'column', 
+    flex: 1, 
+    paddingVertical: 20, 
+    margin: 20,
+    marginBottom: 30,
+    height: 300,
+    borderRadius: 5,
+    backgroundColor: "#fff",
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 3 },
+    shadowOpacity: 0.33,
+    shadowRadius: 5,
+    elevation: 0,
+  },
 
-  cellText: {
-    justifyContent: "center",
-    alignItems: "center",
+  profileImg: {
+    width: 150,
+    height: 150,
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
+
+  titleArea: {
+    width: "50%"
+  },
+
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    position: "relative",
+    left: 160,
+    textAlign: 'left',
+  },
+
+  cardSubtitle: {
+    fontSize: 16,
+    position: "relative",
+    left: 160,
+  },
+
+  sections: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+  },
+
+  cardSection: {
+    justifyContent: 'center',
+    width: "100%",
+    height: 50,
+    backgroundColor: "#fff",
+    borderTopWidth: 2,
+    borderColor: '#d6d7da',
+  },
+
+  cardText: {
+    fontSize: 16,
+    marginLeft: 15
   }
 };
