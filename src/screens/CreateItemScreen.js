@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
-import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TouchableWithoutFeedback, TextInput } from "react-native";
+import { KeyboardAvoidingView, Alert, View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TouchableWithoutFeedback, TextInput } from "react-native";
 import { ImagePicker } from 'expo';
 import firebase from 'firebase';
 import { itemUpdate, itemCreate } from '../actions/user_items_actions';
@@ -21,9 +21,21 @@ class CreateItemScreen extends Component {
   state = { images: ['', '', '', ''] };
 
   onButtonPress() {
-    const { name, description, price } = this.props;
-    const { images } = this.state;
-    this.props.itemCreate({ name, description, price, images });
+    if (this.props.name == ""){
+      Alert.alert("Item name is required");
+    } 
+    else if (this.props.description=="") { 
+      Alert.alert("Item description is required"); 
+    } 
+    else if (this.props.price =="") { 
+      Alert.alert("Item price is required"); 
+    }
+    else {
+      const { name, description, price } = this.props;
+      const { images } = this.state;
+      this.props.itemCreate({ name, description, price, images });
+      Alert.alert("Your item has been posted");
+    }
   }
 
   pickImage = async (i) => {
@@ -90,6 +102,11 @@ class CreateItemScreen extends Component {
           {/* <Icon style={styles.iconImg} name="ios-add" size={40} /> */}
         </View>
 
+        <KeyboardAvoidingView
+          style = {styles.container}
+          behavior = "padding"
+        >
+
         <View style={styles.textContainer}>
           <View style={styles.textCell}>
             <Text style={styles.text}>Name</Text>
@@ -117,6 +134,7 @@ class CreateItemScreen extends Component {
             <Text style={styles.text}>Price</Text>
             <TextInput
               style={styles.textInput}
+              keyboardType = 'numeric'
               placeholder="Set your price"
               value={this.props.price}
               onChangeText={value => this.props.itemUpdate({ prop: 'price', value })}
@@ -135,6 +153,7 @@ class CreateItemScreen extends Component {
             </Text>
           </TouchableOpacity>
         </View>
+        </KeyboardAvoidingView>
       </View>
     );
   }
