@@ -8,6 +8,7 @@
 /.expo
 .DS_Store
 Thumbs.db
-.eslintrc
+.eslintrc*
 *.builderx
 .firebaserc
+npm-debug.log

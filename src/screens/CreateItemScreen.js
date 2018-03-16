@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
-import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TouchableWithoutFeedback, TextInput } from "react-native";
+import { ImagePicker } from 'expo';
+import firebase from 'firebase';
 import { itemUpdate, itemCreate } from '../actions/user_items_actions';
-
+import { GOOGLE_FIREBASE_CONFIG } from "../constants/api_keys";
 
 class CreateItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -14,34 +16,78 @@ class CreateItemScreen extends Component {
       alignSelf: 'center'
     }
   });
+  
+  // images are represented as URI's for now
+  state = { images: ['', '', '', ''] };
 
   onButtonPress() {
     const { name, description, price } = this.props;
-    this.props.itemCreate({ name, description, price });
+    const { images } = this.state;
+    this.props.itemCreate({ name, description, price, images });
+  }
+
+  pickImage = async (i) => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: false,
+      // aspect: [1, 1],
+    });
+
+    // console.log(result.uri);
+
+    if (!result.cancelled) {
+      // this.setState({ images: result.uri });
+      const images = this.state.images.slice();
+      images[i] = result.uri;
+      this.setState({ images });
+      //this.uploadImageToFirebase(result);
+    }
+  };
+
+  renderImgThumbnails() {
+    const images = this.state.images.slice(1); // removes first element of array
+
+    return images.map((image, i) => (
+      <TouchableOpacity 
+        onPress={() => this.pickImage(i + 1)} // for indecies 1, 2, 3
+        style={styles.thumbnailView}
+        key={i}
+      >
+        {!!image && 
+        <Image
+          style={styles.thumbnailImage}
+          source={{ uri: image }}
+        />}
+      </TouchableOpacity>
+    ));
   }
 
   render() {
+    const { images } = this.state;
+
     return (
       <View style={styles.root}>
-        <View style={styles.imageContainer}>
+        <TouchableOpacity 
+          style={styles.imageContainer}
+          onPress={() => this.pickImage(0)}
+        >
+          {!!images[0] &&
           <Image
             style={styles.mainImg}
-            source={require("../../assets/478x478-reeses.jpg")}
+            // source={require("../../assets/478x478-reeses.jpg")}
+            source={{ uri: images[0] }}
             resizeMode="cover"
-          />
+          />}
 
           <View style={styles.thumbnailContainer}>
-            <View style={styles.thumbnailView}></View>
-
-            <View style={styles.thumbnailView}></View>
-
-            <View style={styles.thumbnailView}></View>
+            {this.renderImgThumbnails()}
           </View>
-        </View>
+        </TouchableOpacity>
 
         <View style={styles.iconContainer}>
-          <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
-          <Icon style={styles.iconImg} name="ios-add" size={40} />
+          <TouchableOpacity>
+            <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
+          </TouchableOpacity>
+          {/* <Icon style={styles.iconImg} name="ios-add" size={40} /> */}
         </View>
 
         <View style={styles.textContainer}>
@@ -104,7 +150,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: window.width,
     height: window.width,
-    height: 3,
+    // height: 3,
     justifyContent: "flex-end",
     alignItems: "center",
   },
@@ -131,26 +177,31 @@ const styles = StyleSheet.create({
   thumbnailView: {
     width: 80,
     height: 80,
-    padding: 20,
+    //padding: 20,
     backgroundColor: "#FFFFFF30", // 30% oppacity
     borderStyle: "dashed",
     borderWidth: 2,
     borderColor: "#ddd",
     borderRadius: 5,
   },
+  thumbnailImage: {
+    width: 76,
+    height: 76,
+    borderRadius: 5
+  },
 
   iconContainer: {
     flex: 1,
     maxHeight: 70,
-    flexDirection: "row",
-    paddingRight: "25%",
-    paddingLeft: "25%",
+    // flexDirection: "row",
+    // paddingRight: "25%",
+    // paddingLeft: "25%",
     backgroundColor: "#f6f6f6",
     borderColor: "#ddd",
     borderTopWidth: 2,
     borderBottomWidth: 2,
     alignItems: 'center',
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
   },
   iconImg: {
     height: 50,
