@@ -22,7 +22,8 @@ class CreateItemScreen extends Component {
 
   onButtonPress() {
     const { name, description, price } = this.props;
-    this.props.itemCreate({ name, description, price });
+    const { images } = this.state;
+    this.props.itemCreate({ name, description, price, images });
   }
 
   pickImage = async (i) => {
@@ -38,33 +39,8 @@ class CreateItemScreen extends Component {
       const images = this.state.images.slice();
       images[i] = result.uri;
       this.setState({ images });
-      this.uploadImageToFirebase(result);
+      //this.uploadImageToFirebase(result);
     }
-  };
-
-  // TR: temporary function test
-  uploadImageToFirebase = async (result) => {
-    // const storageRef = firebase.storage().ref();
-    // const imageRef = storageRef.child("images/test0001.jpg");
-    // imageRef.putString(result.uri).then(() => console.log("Image uploaded")).catch((err) => console.log(err));
-
-    const name = `cloudfunctiontest0001.jpg`;
-    const body = new FormData();
-    body.append("picture", {
-      uri: result.uri,
-      name,
-      type: "image/jpg"
-    });
-    const res = await fetch("https://us-central1-bubble-wrap-8485d.cloudfunctions.net/api/picture", {
-      method: "POST",
-      body,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data"
-      }
-    });
-    console.log(`${result.uri} was successfully uploaded!`);
-    // const url = await firebase.storage.ref(name).getDownloadURL();
   };
 
   renderImgThumbnails() {
