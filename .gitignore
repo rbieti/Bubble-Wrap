@@ -2,10 +2,13 @@
 
 # dependencies
 /node_modules
+/functions/node_modules
 
 # misc
 /.expo
 .DS_Store
 Thumbs.db
-.eslintrc
+.eslintrc*
 *.builderx
+.firebaserc
+npm-debug.log
