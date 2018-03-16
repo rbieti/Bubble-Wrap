@@ -19,6 +19,7 @@ import { Cell, Section, TableView } from 'react-native-tableview-simple';
 export default class App extends Component<{}> {
 	static navigationOptions = ({ navigation }) => ({
 		title: 'My Profile',
+		//tabBarIcon: { focused: 'user', tintColor: 'black' },
 		tabBarLabel: 'Profile',
 		headerTitleStyle: {
 			textAlign: 'center',
