@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/functions/node_modules
 
 # misc
 /.expo
@@ -9,3 +10,4 @@
 Thumbs.db
 .eslintrc
 *.builderx
+.firebaserc
