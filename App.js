@@ -38,6 +38,7 @@ export default class App extends React.Component {
 			fontLoaded: false
 		};
 		console.ignoredYellowBox = [ 'Setting a timer' ];
+		console.disableYellowBox = true;
 	}
 	//////////////////////////////////////////////////////////////////////////////
 	// Upon loading app, initialize firebase
