@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
 import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
-import { fetchItem } from '../actions/buy_items_actions';
-import firebase from 'firebase';
 
 class BuyItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -15,71 +13,32 @@ class BuyItemScreen extends Component {
     }
   });
 
-  state = { images: ['', '', '', ''] };
-
-  componentWillMount() {
-    // const item = {
-    //   name: 'TEST',
-    //   description: "we ain't reading in from firebase yet! but this will do for now",
-    //   price: 100,
-    //   key: '-L7k9WgNzLLkknJ5XRSc'
-    // };
-
-    const key = '-L7k9WgNzLLkknJ5XRSc';
-    let item = {};
-
-    firebase.database().ref(`/items/${key}`)
-      .on('value', snapshot => {
-        item = snapshot.val();
-      });
-    for (let i = 0; i < 4; i++) {
-      const storageRef = firebase.storage().ref(`${key}_${i}.jpg`);
-      storageRef.getDownloadURL().then((url) => {
-        const images = this.state.images.slice();
-        images[i] = url;
-        this.setState({ images });
-      });
-    }
-    this.props.fetchItem(item);
-  }
+  renderImgThumbnails = () => {
+    return this.props.item.images.slice(1).map(({ url, index }) => (
+      <View style={styles.thumbnailView} key={index}>
+        <Image
+          style={styles.thumbnailImage}
+          source={{ uri: url }}
+        />
+      </View>
+    ));
+  };
 
   render() {
-    const { name, description, price } = this.props;
-    const { images } = this.state;
+    const { name, description, price, images } = this.props.item;
     return (
       <View style={styles.root}>
         <View style={styles.imageContainer}>
           <Image
             style={styles.mainImg}
-            source={{ uri: images[0] }}
-            // source={{require("../../assets/478x478-reeses.jpg")}}
+            source={{ uri: images[0].url }}
             resizeMode="cover"
           />
 
           <Text style={styles.priceTxt}>${price}</Text>
 
           <View style={styles.thumbnailContainer}>
-            <View style={styles.thumbnailView}>
-              {!!images[1] &&
-                <Image
-                  style={styles.thumbnailImage}
-                  source={{ uri: images[1] }}
-                />}
-            </View>
-            <View style={styles.thumbnailView}>
-              {!!images[2] &&
-                <Image
-                  style={styles.thumbnailImage}
-                  source={{ uri: images[2] }}
-                />}
-            </View>
-            <View style={styles.thumbnailView}>
-              {!!images[3] &&
-                <Image
-                  style={styles.thumbnailImage}
-                  source={{ uri: images[3] }}
-                />}
-            </View>
+            {this.renderImgThumbnails()}
           </View>
         </View>
 
@@ -201,10 +160,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const { name, description, price, images } = state.buyItems;
-  return { name, description, price, images };
+  const { item } = state.buyItems;
+  return { item };
 };
 
-export default connect(mapStateToProps, {
-  fetchItem
-})(BuyItemScreen);
+export default connect(mapStateToProps)(BuyItemScreen);

@@ -22,5 +22,5 @@ export const ITEM_UPDATE = 'item_update';
 export const ITEM_CREATE = 'item_create';
 export const FETCH_USER_ITEMS_LIST = 'fetch_user_items_list';
 
-export const FETCH_ITEM = 'fetch_item';
-export const FETCH_ITEMS_LIST = 'fetch_items_list';
+export const LOAD_ITEM = 'load_item';
+export const FETCH_ITEMS = 'fetch_items';

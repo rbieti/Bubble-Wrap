@@ -1,22 +1,24 @@
 import {
-  FETCH_ITEM,
-  FETCH_ITEMS_LIST,
+  LOAD_ITEM,
+  FETCH_ITEMS,
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  items: ['', '', '', ''],
-  name: '',
-  description: '',
-  price: '',
-  key: ''
+  items: [],
+  item: {
+    key: '',
+    name: '',
+    description: '',
+    price: '',
+    images: []
+  }
 };
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
-    case FETCH_ITEM:
-      const { name, description, price, key } = action.payload;  
-      return { ...state, name, description, price, key };
-    case FETCH_ITEMS_LIST:
+    case LOAD_ITEM:
+      return { ...state, item: action.payload.item };
+    case FETCH_ITEMS:
       return { ...state, items: action.payload.items };
     default:
       return state;

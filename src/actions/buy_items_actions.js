@@ -1,30 +1,30 @@
 import firebase from 'firebase';
 import {
-  FETCH_ITEM,
-  FETCH_ITEMS_LIST
+  LOAD_ITEM,
+  FETCH_ITEMS
 } from './types';
 
-// Fetch a specific item
-export const fetchItem = ({ name, description, price }) => ({
-  type: FETCH_ITEM,
-  payload: { name, description, price }
+// Load currently selected item for BuyItemScreen
+export const loadItem = (item) => ({
+  type: LOAD_ITEM,
+  payload: { item }
 });
 
-// TR: This is where we'd actually grab other people's items 
-export const fetchItems = () => dispatch => {
-  const { currentUser } = firebase.auth();
-  const recentPostsRef = firebase.database().ref(`/users/${currentUser.uid}/items`);
-
-  //recentPostsRef.once('value').then(snapshot => {
-  recentPostsRef.on('value', snapshot => {
-    //items = Object.values(snapshot.val());
-    const items = [];
-    snapshot.forEach(item => {
-      items.push({ ...item.val(), key: item.key });
+// Fetch items by passing in a user id
+export const fetchItems = ({ uid }) => dispatch => {
+  firebase.database().ref('/items') // NOT SCALABLE //
+    .on('value', snapshot => {
+      const items = [];
+      snapshot.forEach(item => {
+        const { owner, images } = item.val();
+        if (owner === uid) {
+          const imageArray = Object.values(images).sort((a, b) => (a.index > b.index ? 1 : -1)); // sort by index
+          items.push({ ...item.val(), images: imageArray, key: item.key });
+        }
+      });
+      dispatch({
+        type: FETCH_ITEMS,
+        payload: { items }
+      });
     });
-    dispatch({
-      type: FETCH_ITEMS_LIST,
-      payload: { items }
-    });
-  });
 };
