@@ -20,4 +20,4 @@ export const RESET_APP_STATE = 'reset_app_state';
 
 export const ITEM_UPDATE = 'item_update';
 export const ITEM_CREATE = 'item_create';
-export const FETCH_USER_ITEMS_LIST = 'get_user_items_list';
+export const FETCH_USER_ITEMS = 'fetch_user_items';

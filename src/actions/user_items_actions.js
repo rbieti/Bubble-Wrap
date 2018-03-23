@@ -2,25 +2,28 @@ import firebase from 'firebase';
 import {
   ITEM_UPDATE,
   ITEM_CREATE,
-  FETCH_USER_ITEMS_LIST
+  FETCH_USER_ITEMS
 } from './types';
 
 export const itemUpdate = ({ prop, value }) => ({
-    type: ITEM_UPDATE,
-    payload: { prop, value }
-  });
+  type: ITEM_UPDATE,
+  payload: { prop, value }
+});
 
-export const itemCreate = ({ name, description, price, images }) => {
-  // console.log(name, description, price); // comment this
-  const { currentUser } = firebase.auth();
+export const itemCreate = ({ name, description, price, images }) => dispatch => {
+  // Push item details
+  const owner = firebase.auth().currentUser.uid;
+  const itemRef = firebase.database().ref('/items')
+    .push({ name, description, price, owner });
+  const key = itemRef.key;
 
-  const newRef = firebase.database().ref(`/users/${currentUser.uid}/items`)
-    .push({ name, description, price });
-
-  const key = newRef.key;
-
-  images.forEach(async (uri, i) => {
-    const filename = `${key}_${i}.jpg`;
+  // Upload images
+  const imagesObj = {};
+  let item = {};
+  let counter = 0;
+  const imgs = images.filter(String); // filter out empty Strings
+  imgs.forEach(async (uri, index) => {
+    const filename = `${key}_${index}.jpg`; // eg: abc123itemkey_3.jpg
     const body = new FormData();
     body.append('picture', {
       uri,
@@ -35,30 +38,44 @@ export const itemCreate = ({ name, description, price, images }) => {
         'Content-Type': 'multipart/form-data'
       }
     });
-    console.log(`${uri} was successfully uploaded!`);
-    // firebase.storage.ref(filename).getDownloadURL().then();
-    //await firebase.storage.ref(filename).then((url) => console.log(url));
+
+    // Push image urls to item
+    const storageRef = firebase.storage().ref(filename);
+    storageRef.getDownloadURL().then(url => {
+      firebase.database().ref(`/items/${key}/images`)
+        .push({ url, index })
+        .then(() => {
+          imagesObj[index] = { url, index };
+          counter++;
+          if (counter === imgs.length) {
+            // dispatch the item
+            const imageArray = Object.values(imagesObj).sort((a, b) => (a.index > b.index ? 1 : -1));
+            item = { name, description, price, owner, key, images: imageArray };
+            dispatch({
+              type: ITEM_CREATE,
+              payload: { item }
+            });
+          }
+        });
+    });
   });
-  return {
-    type: ITEM_CREATE,
-    payload: 'success'
-  };
 };
 
 export const fetchItems = () => dispatch => {
-    const { currentUser } = firebase.auth();
-    const recentPostsRef = firebase.database().ref(`/users/${currentUser.uid}/items`);
-
-    //recentPostsRef.once('value').then(snapshot => {
-    recentPostsRef.on('value', snapshot => {
-      //items = Object.values(snapshot.val());
+  const { uid } = firebase.auth().currentUser;
+  firebase.database().ref('/items')
+    .on('value', snapshot => {
       const items = [];
       snapshot.forEach(item => {
-        items.push({ ...item.val(), key: item.key });
+        const { owner, images } = item.val();
+        if (owner === uid) {
+          const imageArray = Object.values(images).sort((a, b) => (a.index > b.index ? 1 : -1));
+          items.push({ ...item.val(), images: imageArray, key: item.key });
+        }
       });
       dispatch({
-        type: FETCH_USER_ITEMS_LIST,
+        type: FETCH_USER_ITEMS,
         payload: { items }
       });
     });
-  };
+};
