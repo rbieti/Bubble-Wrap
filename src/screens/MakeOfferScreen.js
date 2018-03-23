@@ -17,7 +17,7 @@ export default class Untitled extends Component {
     return (
       <Image
         style={styles.backgroundImage}
-        source={require("../../assets/item01.png")}
+        source={require("../../assets/item01.jpg")}
       >
         <View style={styles.root}>
           <View style={styles.topArea}>
@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
 
   root: { 
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
+    opacity: 1.0
   },
 
   topArea: {
