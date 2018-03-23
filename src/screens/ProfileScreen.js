@@ -1,303 +1,275 @@
-import React, { Component } from 'react';
+import React, { 
+  Component 
+} from 'react';
 import { PRIMARY_COLOR } from '../constants/style';
 import {
-	ActivityIndicator,
-	AppRegistry,
-	Dimensions,
-	Image,
-	ScrollView,
-	StyleSheet,
-	Switch,
-	Text,
-	TextInput,
-	View,
-	Button,
-	TouchableOpacity
+  ActivityIndicator,
+  AppRegistry,
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  TextInput,
+  View,
+  Button,
+  TouchableOpacity
 } from 'react-native';
-import { Cell, Section, TableView } from 'react-native-tableview-simple';
+import {
+  Cell,
+  Section,
+  TableView,
+  ListView
+} from 'react-native-tableview-simple';
+import { connect } from 'react-redux';
+import { fetchItems } from '../actions/user_items_actions';
 
-export default class App extends Component<{}> {
-	static navigationOptions = ({ navigation }) => ({
-		title: 'My Profile',
-		//tabBarIcon: { focused: 'user', tintColor: 'black' },
-		tabBarLabel: 'Profile',
-		headerTitleStyle: {
-			textAlign: 'center',
-			alignSelf: 'center'
-		}
-	});
+class ProfileScreen extends Component {
 
-	render() {
-		const { navigate } = this.props.navigation; // THIS IS NECESSARY FOR NAVIGATION
-		return (
-			<View style={styles.root}>
-				<View style={styles.headerView}>
-					<Image source={require('../../assets/profile1.jpg')} style={styles.profileImg} resizeMode="cover" />
+  static navigationOptions = ({ navigation }) => ({
+	title: 'My Profile',
+	//tabBarIcon: { focused: 'user', tintColor: 'black' },
+    tabBarLabel: 'Profile',
+    headerTitleStyle: {
+      textAlign: 'center',
+      alignSelf: 'center'
+    }
+  });
 
-					<Text style={styles.userNameLbl}>Kyle Nakamura</Text>
-					<Text style={styles.userUniversityLbl}>Azusa Pacific University</Text>
-				</View>
+  async componentDidMount() {
+    this.props.fetchItems();
+  }
 
-				<ScrollView contentContainerStyle={styles.tableViewScroll}>
-					<View style={styles.reviewsView}>
-						<Text style={styles.h1Lbl}>Your trustworthiness rating: 4.8/5</Text>
-						<ScrollView
-							style={styles.reviewsScroll}
-							automaticallyAdjustInsets={true}
-							horizontal={true}
-							pagingEnabled={true}
-							scrollEnabled={true}
-							decelerationRate={0.5}
-							scrollEventThrottle={16}
-						>
-							<TouchableOpacity
-								onPress={() => {
-									navigate('seller');
-								}}
-							>
-								<View style={styles.reviewCell}>
-									<Image
-										source={require('../../assets/icon-profile.png')}
-										style={styles.reviewerImg}
-										resizeMode="cover"
-									/>
-									<Text style={styles.h1Lbl}>Robert</Text>
-									<Text style={styles.h1Lbl}>4/5</Text>
-									<Text style={styles.reviewerTxt}>"Item was exactly as described!"</Text>
-								</View>
-							</TouchableOpacity>
+  renderItems() {
+    const { items } = this.props;
+    return items.map(({ key, name, price }) => (
+      <View style={styles.reviewCell} key={key}>
+        <Image 
+          source={require("../../assets/logo.png")}
+          style={styles.reviewerImg}
+          resizeMode="cover"
+        />
+        <Text style={styles.h1Lbl}>{`${name} | $${price}`}</Text>
+      </View>
+    ));
+  }
 
-							<TouchableOpacity
-								onPress={() => {
-									navigate('seller');
-								}}
-							>
-								<View style={styles.reviewCell}>
-									<Image
-										source={require('../../assets/icon-profile.png')}
-										style={styles.reviewerImg}
-										resizeMode="cover"
-									/>
-									<Text style={styles.h1Lbl}>Trevor</Text>
-									<Text style={styles.h1Lbl}>5/5</Text>
-									<Text style={styles.reviewerTxt}>"Thanks for selling me your car!"</Text>
-								</View>
-							</TouchableOpacity>
+  render() {
+    return (
+      <View style={styles.root}>
+        <View style={styles.headerView}>
+          <Image 
+            source={require("../../assets/profile1.jpg")}
+            style={styles.profileImg}
+            resizeMode="cover"
+          />
 
-							<TouchableOpacity
-								onPress={() => {
-									navigate('seller');
-								}}
-							>
-								<View style={styles.reviewCell}>
-									<Image
-										source={require('../../assets/icon-profile.png')}
-										style={styles.reviewerImg}
-										resizeMode="cover"
-									/>
-									<Text style={styles.h1Lbl}>Andrew</Text>
-									<Text style={styles.h1Lbl}>3/5</Text>
-									<Text style={styles.reviewerTxt}>"Kyle was very nice and reasonable."</Text>
-								</View>
-							</TouchableOpacity>
+          <Text style={styles.userNameLbl}>Kyle Nakamura</Text>
+          <Text style={styles.userUniversityLbl}>Azusa Pacific University</Text>
+        </View>
 
-							<TouchableOpacity
-								onPress={() => {
-									navigate('seller');
-								}}
-							>
-								<View style={styles.reviewCell}>
-									<Image
-										source={require('../../assets/icon-profile.png')}
-										style={styles.reviewerImg}
-										resizeMode="cover"
-									/>
-									<Text style={styles.h1Lbl}>Joshua</Text>
-									<Text style={styles.h1Lbl}>5/5</Text>
-									<Text style={styles.reviewerTxt}>"Went out of his way to be helpful."</Text>
-								</View>
-							</TouchableOpacity>
-						</ScrollView>
-					</View>
-					<View style={styles.scrollSection}>
-						<Text style={styles.scrollSectionLbl}>Kyle's Items for Sale</Text>
-						<ScrollView
-							style={styles.horizontalScrollView}
-							automaticallyAdjustInsets={true}
-							horizontal={true}
-							pagingEnabled={true}
-							scrollEnabled={true}
-							decelerationRate={0.5}
-							scrollEventThrottle={16}
-						>
-							<TouchableOpacity
-								onPress={() => {
-									navigate('editItem');
-								}}
-							>
-								<View style={styles.reviewCell}>
-									<Image
-										source={require('../../assets/logo.png')}
-										style={styles.reviewerImg}
-										resizeMode="cover"
-									/>
-									<Text style={styles.h1Lbl}>Item Name | $25</Text>
-								</View>
-							</TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.tableViewScroll}>
+          <View style={styles.reviewsView}>
+            <Text style={styles.h1Lbl}>Your trustworthiness rating: 4.8/5</Text>
+            <ScrollView 
+              style={styles.reviewsScroll} 
+              automaticallyAdjustInsets={true}
+              horizontal={true}
+              pagingEnabled={true}
+              scrollEnabled={true}
+              decelerationRate={0.5}
+              scrollEventThrottle={16}
+            >
+              <View style={styles.reviewCell}>
+                <Image 
+                  source={require("../../assets/icon-profile.png")}
+                  style={styles.reviewerImg}
+                  resizeMode="cover"
+                />
+                <Text style={styles.h1Lbl}>Robert</Text>
+                <Text style={styles.h1Lbl}>4/5</Text>
+                <Text style={styles.reviewerTxt}>"Item was exactly as described!"</Text>
+              </View>
+              <View style={styles.reviewCell}>
+                <Image 
+                  source={require("../../assets/icon-profile.png")}
+                  style={styles.reviewerImg}
+                  resizeMode="cover"
+                />
+                <Text style={styles.h1Lbl}>Trevor</Text>
+                <Text style={styles.h1Lbl}>5/5</Text>
+                <Text style={styles.reviewerTxt}>"Thanks for selling me your car!"</Text>
+              </View>
+              <View style={styles.reviewCell}>
+                <Image 
+                  source={require("../../assets/icon-profile.png")}
+                  style={styles.reviewerImg}
+                  resizeMode="cover"
+                />
+                <Text style={styles.h1Lbl}>Andrew</Text>
+                <Text style={styles.h1Lbl}>3/5</Text>
+                <Text style={styles.reviewerTxt}>"Kyle was very nice and reasonable."</Text>
+              </View>
+              <View style={styles.reviewCell}>
+                <Image 
+                  source={require("../../assets/icon-profile.png")}
+                  style={styles.reviewerImg}
+                  resizeMode="cover"
+                />
+                <Text style={styles.h1Lbl}>Joshua</Text>
+                <Text style={styles.h1Lbl}>5/5</Text>
+                <Text style={styles.reviewerTxt}>"Went out of his way to be helpful."</Text>
+              </View>
+            </ScrollView>
+          </View>
 
-							<TouchableOpacity
-								onPress={() => {
-									navigate('editItem');
-								}}
-							>
-								<View style={styles.reviewCell}>
-									<Image
-										source={require('../../assets/logo.png')}
-										style={styles.reviewerImg}
-										resizeMode="cover"
-									/>
-									<Text style={styles.h1Lbl}>Item Name | $7</Text>
-								</View>
-							</TouchableOpacity>
+          <View style={styles.reviewsView}>
+            <Text style={styles.h1Lbl}>Items you are selling</Text>
+            <ScrollView 
+              style={styles.horizontalScrollView} 
+              automaticallyAdjustInsets={true}
+              horizontal={true}
+              pagingEnabled={true}
+              scrollEnabled={true}
+              decelerationRate={0.5}
+              scrollEventThrottle={16}
+            >
+              {this.renderItems()}
+            </ScrollView>
+          </View>
 
-							<TouchableOpacity
-								onPress={() => {
-									navigate('editItem');
-								}}
-							>
-								<View style={styles.reviewCell}>
-									<Image
-										source={require('../../assets/logo.png')}
-										style={styles.reviewerImg}
-										resizeMode="cover"
-									/>
-									<Text style={styles.h1Lbl}>Item Name | $40</Text>
-								</View>
-							</TouchableOpacity>
-						</ScrollView>
-					</View>
-
-					<TableView>
-						<Section header="CONTACT INFORMATION" footer="">
-							<Cell
-								cellStyle="Basic"
-								title="Update your profile picture"
-								accessory="DisclosureIndicator"
-								onPress={() => console.log('Heyho!')}
-							/>
-							<Cell
-								cellStyle="Basic"
-								title="Add a phone number"
-								accessory="DisclosureIndicator"
-								onPress={() => console.log('Heyho!')}
-							/>
-							<Cell
-								cellStyle="Basic"
-								title="Add an email address"
-								accessory="DisclosureIndicator"
-								onPress={() => console.log('Heyho!')}
-							/>
-							<Cell
-								cellStyle="Basic"
-								title="Add a payment method"
-								accessory="DisclosureIndicator"
-								onPress={() => console.log('Heyho!')}
-							/>
-							<Cell
-								cellStyle="Basic"
-								title="Connect your Facebook account"
-								accessory="DisclosureIndicator"
-								onPress={() => console.log('Heyho!')}
-							/>
-						</Section>
-					</TableView>
-				</ScrollView>
-			</View>
-		);
-	}
+          <TableView>
+            <Section header="CONTACT INFORMATION" footer="">
+              <Cell
+                cellStyle="Basic"
+                title="Update your profile picture"
+                accessory="DisclosureIndicator"
+                onPress={() => console.log('Heyho!')}
+              />
+              <Cell
+                cellStyle="Basic"
+                title="Add a phone number"
+                accessory="DisclosureIndicator"
+                onPress={() => console.log('Heyho!')}
+              />
+              <Cell
+                cellStyle="Basic"
+                title="Add an email address"
+                accessory="DisclosureIndicator"
+                onPress={() => console.log('Heyho!')}
+              />
+              <Cell
+                cellStyle="Basic"
+                title="Add a payment method"
+                accessory="DisclosureIndicator"
+                onPress={() => console.log('Heyho!')}
+              />
+              <Cell
+                cellStyle="Basic"
+                title="Connect your Facebook account"
+                accessory="DisclosureIndicator"
+                onPress={() => console.log('Heyho!')}
+              />
+            </Section>
+          </TableView>
+        </ScrollView>
+      </View>
+    );
+  }
 }
 
-let profileImgWidth = 100;
-let reviewerImgWidth = 60;
+const profileImgWidth = 100;
+const reviewerImgWidth = 60;
 
 const styles = StyleSheet.create({
-	root: {
-		backgroundColor: '#EFEFF4',
-		flex: 1
-	},
+  root: { 
+    backgroundColor: "#EFEFF4", 
+    flex: 1 
+  },
 
-	/* Universal Styles */
-	h1Lbl: {
-		fontWeight: 'bold',
-		color: '#000'
-	},
-	/* End Universal Styles */
+  /* Universal Styles */
+    h1Lbl: {
+      fontWeight: 'bold',
+      color: '#000',
+    },
+  /* End Universal Styles */
 
-	/* Header Section */
-	headerView: {
-		backgroundColor: '#37474F',
-		height: 200,
-		alignItems: 'center',
-		justifyContent: 'center'
-	},
+  /* Header Section */
+    headerView: {
+      backgroundColor: '#37474F',
+      height: 200,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
 
-	profileImg: {
-		width: profileImgWidth,
-		height: profileImgWidth,
-		borderRadius: profileImgWidth / 2
-	},
+    profileImg: {
+      width: profileImgWidth,
+      height: profileImgWidth,
+      borderRadius: profileImgWidth / 2,
+    },
 
-	userNameLbl: {
-		color: '#fff',
-		marginTop: 12,
-		fontWeight: 'bold'
-	},
+    userNameLbl: {
+      color: '#fff',
+      marginTop: 12,
+      fontWeight: 'bold',
+    },
 
-	userUniversityLbl: {
-		color: '#fff',
-		marginTop: 0,
-		fontStyle: 'italic'
-	},
-	/* End Header Section */
+    userUniversityLbl: {
+      color: '#fff',
+      marginTop: 0,
+      fontStyle: 'italic',
+    },
+  /* End Header Section */
 
-	tableViewScroll: {
-		backgroundColor: '#EFEFF4',
-		paddingBottom: 20
-	},
+  tableViewScroll: {
+    backgroundColor: '#EFEFF4',
+    paddingBottom: 20,
+  },
 
-	reviewsView: {
-		height: 220,
-		marginTop: 20,
-		paddingLeft: 15,
-		paddingRight: 15,
-		paddingTop: 15,
-		backgroundColor: '#fff'
-	},
+  reviewsView: {
+    height: 220,
+    marginTop: 20,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 15,
+    backgroundColor: '#fff',
+  },
 
-	reviewsScroll: {},
+  reviewsScroll: {
 
-	reviewCell: {
-		height: 150,
-		width: 180,
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#f8f8f8',
-		borderRadius: 10,
-		margin: 15,
-		padding: 20
-	},
+  },
 
-	reviewerImg: {
-		width: reviewerImgWidth,
-		height: reviewerImgWidth,
-		borderRadius: reviewerImgWidth / 2,
-		marginBottom: 5
-	},
+  reviewCell: {
+    height: 150,
+    width: 180,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f8f8f8',
+    borderRadius: 10,
+    margin: 15,
+    padding: 20,
+  },
 
-	reviewerTxt: {
-		marginTop: 5,
-		textAlign: 'center',
-		fontStyle: 'italic'
-	}
+  reviewerImg: {
+    width: reviewerImgWidth,
+    height: reviewerImgWidth,
+    borderRadius: reviewerImgWidth / 2,
+    marginBottom: 5,
+  },
+
+  reviewerTxt: {
+    marginTop: 5,
+    textAlign: 'center',
+    fontStyle: 'italic',
+  }
+
 });
+
+const mapStateToProps = (state) => {
+  const { items } = state.userItems;
+  return { items };
+};
+
+export default connect(mapStateToProps, { fetchItems })(ProfileScreen);
