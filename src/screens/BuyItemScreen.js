@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
 import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
 
-export default class CreateItemScreen extends Component {
+class BuyItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Buy Item',
     tabBarLabel: 'Buy',
@@ -12,35 +13,45 @@ export default class CreateItemScreen extends Component {
     }
   });
 
+  renderImgThumbnails = () => {
+    return this.props.item.images.slice(1).map(({ url, index }) => (
+      <View style={styles.thumbnailView} key={index}>
+        <Image
+          style={styles.thumbnailImage}
+          source={{ uri: url }}
+        />
+      </View>
+    ));
+  };
+
   render() {
+    const { name, description, price, images } = this.props.item;
     return (
       <View style={styles.root}>
         <View style={styles.imageContainer}>
           <Image
             style={styles.mainImg}
-            source={require("../../assets/478x478-reeses.jpg")}
+            source={{ uri: images[0].url }}
             resizeMode="cover"
           />
 
-          <Text style={styles.priceTxt}>$25</Text>
+          <Text style={styles.priceTxt}>${price}</Text>
 
           <View style={styles.thumbnailContainer}>
-            <View style={styles.thumbnailView}/>
-            <View style={styles.thumbnailView}/>
-            <View style={styles.thumbnailView}/>
+            {this.renderImgThumbnails()}
           </View>
         </View>
 
         <View style={styles.textContainer}>
-          <Text style={styles.itemTitleTxt}>Reese's Pieces</Text>
-          <Text style={styles.descriptionTxt}>A delicious treat for you and me</Text>
+          <Text style={styles.itemTitleTxt}>{name}</Text>
+          <Text style={styles.descriptionTxt}>{description}</Text>
         </View>
 
         <View style={styles.btnContainer}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.btnOpacity}
-            onPress={() => {console.log("Button pressed")}}
-            >
+            onPress={() => { console.log("Button pressed") }}
+          >
             <Text style={styles.btnText}>
               Make an offer
             </Text>
@@ -100,12 +111,17 @@ const styles = StyleSheet.create({
   thumbnailView: {
     width: 80,
     height: 80,
-    padding: 20,
+    // padding: 20,
     backgroundColor: "#FFFFFF30", // 30% oppacity
     borderStyle: "dashed",
     borderWidth: 2,
     borderColor: "#ddd",
     borderRadius: 5,
+  },
+  thumbnailImage: {
+    width: 76,
+    height: 76,
+    borderRadius: 5
   },
 
   textContainer: {
@@ -142,3 +158,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
   }
 });
+
+const mapStateToProps = (state) => {
+  const { item } = state.buyItems;
+  return { item };
+};
+
+export default connect(mapStateToProps)(BuyItemScreen);
