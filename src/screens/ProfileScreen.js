@@ -1,5 +1,5 @@
-import React, { 
-  Component 
+import React, {
+  Component
 } from 'react';
 import { PRIMARY_COLOR } from '../constants/style';
 import {
@@ -28,8 +28,8 @@ import { fetchItems } from '../actions/user_items_actions';
 class ProfileScreen extends Component {
 
   static navigationOptions = ({ navigation }) => ({
-	title: 'My Profile',
-	//tabBarIcon: { focused: 'user', tintColor: 'black' },
+    title: 'My Profile',
+    //tabBarIcon: { focused: 'user', tintColor: 'black' },
     tabBarLabel: 'Profile',
     headerTitleStyle: {
       textAlign: 'center',
@@ -44,22 +44,27 @@ class ProfileScreen extends Component {
   renderItems() {
     const { items } = this.props;
     return items.map(({ key, name, price }) => (
-      <View style={styles.reviewCell} key={key}>
-        <Image 
-          source={require("../../assets/logo.png")}
-          style={styles.reviewerImg}
-          resizeMode="cover"
-        />
-        <Text style={styles.h1Lbl}>{`${name} | $${price}`}</Text>
-      </View>
+      <TouchableOpacity
+        onPress={() => { this.props.navigation.navigate('editItem'); }}
+      >
+        <View style={styles.reviewCell} key={key}>
+          <Image
+            source={require("../../assets/logo.png")}
+            style={styles.reviewerImg}
+            resizeMode="cover"
+          />
+          <Text style={styles.h1Lbl}>{`${name} | $${price}`}</Text>
+        </View>
+      </TouchableOpacity>
     ));
   }
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.root}>
         <View style={styles.headerView}>
-          <Image 
+          <Image
             source={require("../../assets/profile1.jpg")}
             style={styles.profileImg}
             resizeMode="cover"
@@ -72,8 +77,8 @@ class ProfileScreen extends Component {
         <ScrollView contentContainerStyle={styles.tableViewScroll}>
           <View style={styles.reviewsView}>
             <Text style={styles.h1Lbl}>Your trustworthiness rating: 4.8/5</Text>
-            <ScrollView 
-              style={styles.reviewsScroll} 
+            <ScrollView
+              style={styles.reviewsScroll}
               automaticallyAdjustInsets={true}
               horizontal={true}
               pagingEnabled={true}
@@ -81,53 +86,69 @@ class ProfileScreen extends Component {
               decelerationRate={0.5}
               scrollEventThrottle={16}
             >
-              <View style={styles.reviewCell}>
-                <Image 
-                  source={require("../../assets/icon-profile.png")}
-                  style={styles.reviewerImg}
-                  resizeMode="cover"
-                />
-                <Text style={styles.h1Lbl}>Robert</Text>
-                <Text style={styles.h1Lbl}>4/5</Text>
-                <Text style={styles.reviewerTxt}>"Item was exactly as described!"</Text>
-              </View>
-              <View style={styles.reviewCell}>
-                <Image 
-                  source={require("../../assets/icon-profile.png")}
-                  style={styles.reviewerImg}
-                  resizeMode="cover"
-                />
-                <Text style={styles.h1Lbl}>Trevor</Text>
-                <Text style={styles.h1Lbl}>5/5</Text>
-                <Text style={styles.reviewerTxt}>"Thanks for selling me your car!"</Text>
-              </View>
-              <View style={styles.reviewCell}>
-                <Image 
-                  source={require("../../assets/icon-profile.png")}
-                  style={styles.reviewerImg}
-                  resizeMode="cover"
-                />
-                <Text style={styles.h1Lbl}>Andrew</Text>
-                <Text style={styles.h1Lbl}>3/5</Text>
-                <Text style={styles.reviewerTxt}>"Kyle was very nice and reasonable."</Text>
-              </View>
-              <View style={styles.reviewCell}>
-                <Image 
-                  source={require("../../assets/icon-profile.png")}
-                  style={styles.reviewerImg}
-                  resizeMode="cover"
-                />
-                <Text style={styles.h1Lbl}>Joshua</Text>
-                <Text style={styles.h1Lbl}>5/5</Text>
-                <Text style={styles.reviewerTxt}>"Went out of his way to be helpful."</Text>
-              </View>
+              <TouchableOpacity
+                onPress={() => { navigate('seller'); }}
+              >
+                <View style={styles.reviewCell}>
+                  <Image
+                    source={require("../../assets/icon-profile.png")}
+                    style={styles.reviewerImg}
+                    resizeMode="cover"
+                  />
+                  <Text style={styles.h1Lbl}>Robert</Text>
+                  <Text style={styles.h1Lbl}>4/5</Text>
+                  <Text style={styles.reviewerTxt}>"Item was exactly as described!"</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => { navigate('seller'); }}
+              >
+                <View style={styles.reviewCell}>
+                  <Image
+                    source={require("../../assets/icon-profile.png")}
+                    style={styles.reviewerImg}
+                    resizeMode="cover"
+                  />
+                  <Text style={styles.h1Lbl}>Trevor</Text>
+                  <Text style={styles.h1Lbl}>5/5</Text>
+                  <Text style={styles.reviewerTxt}>"Thanks for selling me your car!"</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => { navigate('seller'); }}
+              >
+                <View style={styles.reviewCell}>
+                  <Image
+                    source={require("../../assets/icon-profile.png")}
+                    style={styles.reviewerImg}
+                    resizeMode="cover"
+                  />
+                  <Text style={styles.h1Lbl}>Andrew</Text>
+                  <Text style={styles.h1Lbl}>3/5</Text>
+                  <Text style={styles.reviewerTxt}>"Kyle was very nice and reasonable."</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => { navigate('seller'); }}
+              >
+                <View style={styles.reviewCell}>
+                  <Image
+                    source={require("../../assets/icon-profile.png")}
+                    style={styles.reviewerImg}
+                    resizeMode="cover"
+                  />
+                  <Text style={styles.h1Lbl}>Joshua</Text>
+                  <Text style={styles.h1Lbl}>5/5</Text>
+                  <Text style={styles.reviewerTxt}>"Went out of his way to be helpful."</Text>
+                </View>
+              </TouchableOpacity>
             </ScrollView>
           </View>
 
           <View style={styles.reviewsView}>
             <Text style={styles.h1Lbl}>Items you are selling</Text>
-            <ScrollView 
-              style={styles.horizontalScrollView} 
+            <ScrollView
+              style={styles.horizontalScrollView}
               automaticallyAdjustInsets={true}
               horizontal={true}
               pagingEnabled={true}
@@ -183,43 +204,43 @@ const profileImgWidth = 100;
 const reviewerImgWidth = 60;
 
 const styles = StyleSheet.create({
-  root: { 
-    backgroundColor: "#EFEFF4", 
-    flex: 1 
+  root: {
+    backgroundColor: "#EFEFF4",
+    flex: 1
   },
 
   /* Universal Styles */
-    h1Lbl: {
-      fontWeight: 'bold',
-      color: '#000',
-    },
+  h1Lbl: {
+    fontWeight: 'bold',
+    color: '#000',
+  },
   /* End Universal Styles */
 
   /* Header Section */
-    headerView: {
-      backgroundColor: '#37474F',
-      height: 200,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  headerView: {
+    backgroundColor: '#37474F',
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    profileImg: {
-      width: profileImgWidth,
-      height: profileImgWidth,
-      borderRadius: profileImgWidth / 2,
-    },
+  profileImg: {
+    width: profileImgWidth,
+    height: profileImgWidth,
+    borderRadius: profileImgWidth / 2,
+  },
 
-    userNameLbl: {
-      color: '#fff',
-      marginTop: 12,
-      fontWeight: 'bold',
-    },
+  userNameLbl: {
+    color: '#fff',
+    marginTop: 12,
+    fontWeight: 'bold',
+  },
 
-    userUniversityLbl: {
-      color: '#fff',
-      marginTop: 0,
-      fontStyle: 'italic',
-    },
+  userUniversityLbl: {
+    color: '#fff',
+    marginTop: 0,
+    fontStyle: 'italic',
+  },
   /* End Header Section */
 
   tableViewScroll: {
