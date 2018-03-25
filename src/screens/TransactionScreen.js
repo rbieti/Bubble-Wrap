@@ -2,196 +2,122 @@ import React, { Component } from "react";
 import { View, StyleSheet, Text, Button,TouchableOpacity, Image, ScrollView} from "react-native";
 import { PRIMARY_COLOR } from '../constants/style';
 export default class Untitled extends Component {
-    static navigationOptions = ({ navigation }) => ({
-        //tabBarVisible: false,
-        title: 'Transaction',
-        tabBarLabel: 'Transaction',
-        headerTitleStyle: {
-          textAlign: 'center',
-          alignSelf: 'center'
-        },
-        /*
-        headerLeft: (
-        
-          <Button
-          //  navigate={navigation.navigate}
-            large
-            icon={{ name: 'menu' }}
-            backgroundColor={PRIMARY_COLOR}
-            onPress={() => navigation.navigate('DrawerOpen')}
-          />
-         
-        ),
-        drawerIcon: ({ tintColor }) => (
-          <Icon name="home" size={25} color={tintColor} />
-        )
-        */
-      });
-     
-      //######################
-      //ADD YOUR CODE HERE!!!!!
-      //######################
-      render() {
-        const { navigate } = this.props.navigation;// THIS IS NECESSARY FOR NAVIGATION
-        return (
-          <View style={styles.root}>
-            <ScrollView
-            style={styles.scroll1} 
-            automaticallyAdjustInsets={true}
-            horizontal={false}
-            pagingEnabled={false}
-            scrollEnabled={true}
-            decelerationRate={0.5}
-            scrollEventThrottle={16}
-            >
-            <Text style={styles.confirmPaymentLbl}>Confirming payment to</Text>
-            <View style={styles.view001}>
-              <Image
-                source = {require("../../assets/logo.png")}
-                style={styles.image1}
-                resizeMode = "cover"
-                />
-              <Text style={styles.sellerNameLbl}>Seller Name</Text>
-            </View>
-            <Text style={styles.cost}>$50.00</Text>
-            <Image
-              source = {require("../../assets/logo.png")}
-              style={styles.image2}
-              resizeMode = "cover"
-              />
-              <TouchableOpacity style={styles.checkOutButton}>
-                <Text style={styles.checkOutText}>Check out with PayPal</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.cancelButton}>
-                <Text style={styles.cancelText}>Cancel</Text>
-              </TouchableOpacity>
-              </ScrollView>
-          </View>
-        );
-      }
+  static navigationOptions = ({ navigation }) => ({
+    //tabBarVisible: false,
+    title: 'Transaction',
+    tabBarLabel: 'Transaction',
+    headerTitleStyle: {
+      textAlign: 'center',
+      alignSelf: 'center'
     }
-    const styles = StyleSheet.create({
-      root: { 
-        backgroundColor: "white", 
-        flex: 1,
+  });
+    
+  render() {
+    const { navigate } = this.props.navigation;
+    return (
+      <View style={styles.root}>
+        <View style={styles.mainView}> 
+          <View style={styles.headerView}>
+            <View style={styles.horizontalText}>
+              <Text style={styles.headerTxt}>Confirm payment to </Text>
+              <Text style={styles.sellerNameTxt}>Kyle Nakamura</Text> 
+            </View>
+            <Text style={styles.priceTxt}>$50.00</Text>
+            <Text style={styles.itemTxt}>Canon T5i DSLR w/ 18-55 lens</Text> 
+          </View>
 
-      },
-      checkOutButton: {
-        backgroundColor: "blue",
-        height: 50.0,
-        width: 320.0,
-        //top: 350.07, //541.07
-        //left: 20.0,
-        justifyContent: 'center',
-        alignItems: 'center',
+          <Image style={styles.itemImg} source={require("../../assets/item01.jpg")}/>
 
-        opacity: 1,
+          <View style={styles.buttonsView}>
+            <TouchableOpacity style={styles.btnOpacity} onPress={() => {console.log("Button pressed")}}>
+              <Text style={styles.btnText}>Confirm Transaction</Text>
+            </TouchableOpacity>
+            <Text style={styles.orTxt}>or</Text> 
+            <TouchableOpacity style={styles.btnOpacity} onPress={() => {console.log("Button pressed")}}>
+              <Text style={styles.btnText}>Checkout with PayPal</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  }
+}
 
-  
-      },
-      checkOutText: {
-        //top: 0.0,
-        //left: 10.00,
+const Dimensions = require('Dimensions');
+const window = Dimensions.get('window');
 
-        backgroundColor: "transparent",
-        fontSize: 30,
-        color: "rgba(245,236,236,1)",
+const styles = StyleSheet.create({
+  root: { 
+    
+  },
 
-      },
-      cancelButton: {
+  mainView: {
+    position: 'relative',
+    height: "100%",
+    width: "100%",
+    flex: 1,
+  },
 
-        backgroundColor: "blue",
-        height: 50,
-        width: 320,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 20,
-        opacity: 1
-      },
-      cancelText: {
+  /* Header Area */
+  headerView: {
+    width: window.width,
+    height: 135,
+  },
+  horizontalText: {
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: 20,
+    alignSelf: 'center',
+  },
+  headerTxt: {
+    fontSize: 20,
+  },
+  sellerNameTxt: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  priceTxt: {
+    width: "100%",
+    fontSize: 40,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  itemTxt: {
+    width: "100%",
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  /* End: Header Area */
 
+  itemImg: {
+    width: window.width,
+    height: window.width,
+    marginBottom: 20,
+  },
 
-        backgroundColor: "transparent",
-        fontSize: 30,
-        color: "rgba(245,236,236,1)"
-      },
-      confirmPaymentLbl: {
-        
-        backgroundColor: "blue",
-        fontSize: 30,
-        color: "rgba(245,236,236,1)",
-      },
-      cost: {
+  buttonsView: {
+    flex: 1,
+    alignItems: 'center',
+  },
 
-        backgroundColor: "transparent",
-        fontSize: 50,
-        color: "rgba(0,0,0,1)",
+  btnOpacity: {
+    flex: 1,
+    paddingTop: 30,
+    paddingBottom: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    height: 70,
+    width: "80%",
+    backgroundColor: "#33a3f3",
+  },
+  btnText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
 
-      },
-      image1:
-      {
-        height: 50,
-        width: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white'
-      },
-      image2:
-      {
-        height: 500,
-        width: 500,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white'
-      },
-
-      view001:
-      {
-        height: 100,
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: '#7f7',
-        padding: 20,
-        justifyContent: 'center'
-      },
-
-      sellerNameLbl:
-      {
-        marginLeft: 20,
-        fontSize: 40
-      },
-
-
-
-
-
-      ////////////////////
-      rect1: {
-
-        backgroundColor: "rgb(230, 230, 230)",
-        height: 360.84,
-        width: 370.23,
-
-      },
-      rect2: {
-        backgroundColor: "rgb(230, 230, 230)",
-        height: 45.84,
-        width: 390.04,
-
-      },
-      text2: {
-        backgroundColor: "transparent",
-
-      },
-      text3: {
-        backgroundColor: "transparent",
-
-
-        height: 30.2,
-        width: 197.08
-      },
-      text4: {
-        backgroundColor: "transparent",
-
-      }
-    });
+  orTxt: {
+    marginTop: 10,
+    marginBottom: 10,
+  }
+});
