@@ -24,6 +24,7 @@ import {
 } from 'react-native-tableview-simple';
 import { connect } from 'react-redux';
 import { fetchItems } from '../actions/user_items_actions';
+import { fetchUser } from '../actions/user_profile_actions';
 
 class ProfileScreen extends Component {
 
@@ -39,6 +40,7 @@ class ProfileScreen extends Component {
 
   async componentDidMount() {
     this.props.fetchItems();
+    this.props.fetchUser();
   }
 
   renderItems() {
@@ -293,4 +295,4 @@ const mapStateToProps = (state) => {
   return { items };
 };
 
-export default connect(mapStateToProps, { fetchItems })(ProfileScreen);
+export default connect(mapStateToProps, { fetchItems, fetchUser })(ProfileScreen);
