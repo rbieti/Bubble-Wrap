@@ -43,6 +43,15 @@ class ProfileScreen extends Component {
     this.props.fetchUser();
   }
 
+  loadUser() {
+    const { name } = this.props;
+    console.log(this.props);
+    return (
+      <Text style={styles.userNameLbl}>{`${name}`}</Text>
+    )
+    
+  }
+
   renderItems() {
     const { items } = this.props;
     return items.map(({ key, name, price }) => (
@@ -72,7 +81,7 @@ class ProfileScreen extends Component {
             resizeMode="cover"
           />
 
-          <Text style={styles.userNameLbl}>Kyle Nakamura</Text>
+          {this.loadUser()}
           <Text style={styles.userUniversityLbl}>Azusa Pacific University</Text>
         </View>
 
