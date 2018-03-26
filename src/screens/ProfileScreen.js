@@ -72,8 +72,6 @@ class ProfileScreen extends Component {
   render() {
     const { navigate } = this.props.navigation;
     const { overallRating, profileURL, bubbleCommunity, numTransactions } = this.props;
-
-    console.log(overallRating);
     return (
       <View style={styles.root}>
         <View style={styles.headerView}>

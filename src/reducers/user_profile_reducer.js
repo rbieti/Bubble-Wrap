@@ -8,7 +8,7 @@ const INITIAL_STATE = {
     overallRating: 0,
     bubbleCommunity: '',
     numTransactions: 0,
-    profileURL: ''
+    profileURL: 'https://www.aisd.net/adams-elementary/wp-content/files/sites/44/2017/07/generic-profile-picture.png'
 };
 
 export default function (state = INITIAL_STATE, action) {
