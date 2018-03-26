@@ -1,7 +1,7 @@
 import {
 FETCH_USER,
 USER_UPDATE
-} from '..actions/types';
+} from '../actions/types';
 
 const INITIAL_STATE = {
     user: {},
@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
         case FETCH_USER:
-            return { ...state, name: action.payload.user};
+            return { ...state, name: action.payload.name};
         default:
             return state;
     }

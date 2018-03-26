@@ -45,7 +45,7 @@ class ProfileScreen extends Component {
 
   loadUser() {
     const { name } = this.props;
-    console.log(this.props);
+    console.log(name);
     return (
       <Text style={styles.userNameLbl}>{`${name}`}</Text>
     )
@@ -301,7 +301,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { items } = state.userItems;
-  return { items };
+  const { name } = state.name;
+  return { items, name };
 };
 
 export default connect(mapStateToProps, { fetchItems, fetchUser })(ProfileScreen);

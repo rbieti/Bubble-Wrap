@@ -6,19 +6,18 @@ import {
 
 export const fetchUser = () => dispatch => {
     const { uid } = firebase.auth().currentUser;
-    const names = "REEEEEEEEEEEEEE";
-    firebase.database().ref('/users')
+    console.log(uid);
+    firebase.database().ref(`/users/${uid}`)
     .on('value', snapshot => {
         const review = [];
-            snapshot.forEach(user => {
-                const { name, overallRating, reviews } = user.val();
-                const reviewsArray = Object.values(reviews);
-                review.push({ ...user.val(), reviews: reviewsArray, key: user.key });
-                
+                const { name } = snapshot.val()
+                // const { name, overallRating, reviews } = user.val();
+                // const reviewsArray = Object.values(reviews);
+                // review.push({ ...user.val(), reviews: reviewsArray, key: user.key });
+                dispatch({
+                    type: FETCH_USER,
+                    payload: { name }
+                });
             });
-        });
-        dispatch({
-            type: FETCH_USER,
-            payload: { names }
-        });
+        
 };
