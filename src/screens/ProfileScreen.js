@@ -53,13 +53,14 @@ class ProfileScreen extends Component {
 
   renderItems() {
     const { items } = this.props;
-    return items.map(({ key, name, price }) => (
+    return items.map(({ key, name, price, images }) => (
       <TouchableOpacity
+        key={key}
         onPress={() => { this.props.navigation.navigate('editItem'); }}
       >
-        <View style={styles.reviewCell} key={key}>
+        <View style={styles.reviewCell}>
           <Image
-            source={require("../../assets/logo.png")}
+            source={{ uri: images[0].url }}
             style={styles.reviewerImg}
             resizeMode="cover"
           />
