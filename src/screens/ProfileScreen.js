@@ -43,9 +43,8 @@ class ProfileScreen extends Component {
     this.props.fetchUser();
   }
 
-  loadUser() {
+  loadUsername() {
     const { name } = this.props;
-    console.log(name);
     return (
       <Text style={styles.userNameLbl}>{`${name}`}</Text>
     )
@@ -72,22 +71,25 @@ class ProfileScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const { overallRating, profileURL, bubbleCommunity, numTransactions } = this.props;
+
+    console.log(overallRating);
     return (
       <View style={styles.root}>
         <View style={styles.headerView}>
           <Image
-            source={require("../../assets/profile1.jpg")}
+            source={{ uri: profileURL }}
             style={styles.profileImg}
             resizeMode="cover"
           />
 
-          {this.loadUser()}
-          <Text style={styles.userUniversityLbl}>Azusa Pacific University</Text>
+          {this.loadUsername()}
+          <Text style={styles.userUniversityLbl}>Your bubble: {bubbleCommunity}</Text>
         </View>
 
         <ScrollView contentContainerStyle={styles.tableViewScroll}>
           <View style={styles.reviewsView}>
-            <Text style={styles.h1Lbl}>Your trustworthiness rating: 4.8/5</Text>
+            <Text style={styles.h1Lbl}>Your trustworthiness rating: {overallRating}/5</Text>
             <ScrollView
               style={styles.reviewsScroll}
               automaticallyAdjustInsets={true}
@@ -301,8 +303,16 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { items } = state.userItems;
-  const { name } = state.name;
-  return { items, name };
+  const { name, overallRating, 
+    bubbleCommunity, numTransactions, profileURL } = state.user;
+  return { 
+    items, 
+    name,
+    overallRating,
+    bubbleCommunity,
+    numTransactions,
+    profileURL
+   };
 };
 
 export default connect(mapStateToProps, { fetchItems, fetchUser })(ProfileScreen);
