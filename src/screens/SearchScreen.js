@@ -1,40 +1,25 @@
-import { 
-  connect 
-} from 'react-redux';
-import React, { 
-  Component 
-} from 'react';
-import { 
-  Icon, 
-  FormLabel, 
-  FormInput, 
-  Button 
-} from 'react-native-elements';
-import { 
-  PRIMARY_COLOR 
-} from '../constants/style';
-import {
-  ActivityIndicator,
-  AppRegistry,
-  Dimensions,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Switch,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-  FlatList
-} from 'react-native';
-import {
-  Cell,
-  Section,
-  TableView,
-} from 'react-native-tableview-simple';
+import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import { PRIMARY_COLOR } from '../constants/style';
+import firebase from 'firebase';
+import { Icon, FormLabel, FormInput, Button, List, ListItem} from 'react-native-elements';
+import { ActivityIndicator, AppRegistry, Dimensions, Image, ScrollView, StyleSheet, Switch, Text, TextInput, View, TouchableOpacity, FlatList} from 'react-native';
+import { Cell, Section, TableView} from 'react-native-tableview-simple';
+
+export const fetchAllItems = () => {
+  firebase.database().ref('/items') // NOT SCALABLE //
+    .on('value', snapshot => {
+      const items = [];
+      snapshot.forEach(item => {
+        const { /* user, */ images } = item.val();
+        const imageArray = Object.values(images).sort((a, b) => (a.index > b.index ? 1 : -1)); // sort by index
+        items.push({ ...item.val(), images: imageArray, key: item.key });
+        console.log(item.val());  // debug
+      });
+    });
+};
 
 export default class SearchScreen extends Component {
-
   static navigationOptions = ({ navigation }) => ({
     title: 'Search',
     tabBarLabel: 'Search',
@@ -62,140 +47,12 @@ export default class SearchScreen extends Component {
           title="Search"
           icon={{ name: 'search' }}
           backgroundColor={PRIMARY_COLOR}
-          onPress={() => { } }     
+          onPress={() => { } }
         />
 
         <View style={styles.bottom}>
           <TableView>
-            <Section header="PREFERENCES" footer="">
-              <Cell
-                onPress={() => console.log('Heyho!')}
-                contentContainerStyle={{ alignItems: 'center', height: 60 }}
-                cellContentView={
-                  <Text style={{ flex: 1, fontSize: 16 }}>
-                    Item Listing with Image
-                  </Text>
-                }
-                image={
-                  <Image
-                    style={{ borderRadius: 5 }}
-                    source={require("../../assets/logo.png")}
-                  />
-                }
-              />
-
-              <Cell
-                onPress={() => console.log('Heyho!')}
-                contentContainerStyle={{ alignItems: 'center', height: 60 }}
-                cellContentView={
-                  <Text style={{ flex: 1, fontSize: 16 }}>
-                    Item Listing with Image
-                  </Text>
-                }
-                image={
-                  <Image
-                    style={{ borderRadius: 5 }}
-                    source={require("../../assets/logo.png")}
-                  />
-                }
-              />
-
-              <Cell
-                onPress={() => console.log('Heyho!')}
-                contentContainerStyle={{ alignItems: 'center', height: 60 }}
-                cellContentView={
-                  <Text style={{ flex: 1, fontSize: 16 }}>
-                    Item Listing with Image
-                  </Text>
-                }
-                image={
-                  <Image
-                    style={{ borderRadius: 5 }}
-                    source={require("../../assets/logo.png")}
-                  />
-                }
-              />
-
-              <Cell
-                onPress={() => console.log('Heyho!')}
-                contentContainerStyle={{ alignItems: 'center', height: 60 }}
-                cellContentView={
-                  <Text style={{ flex: 1, fontSize: 16 }}>
-                    Item Listing with Image
-                  </Text>
-                }
-                image={
-                  <Image
-                    style={{ borderRadius: 5 }}
-                    source={require("../../assets/logo.png")}
-                  />
-                }
-              />
-
-              <Cell
-                onPress={() => console.log('Heyho!')}
-                contentContainerStyle={{ alignItems: 'center', height: 60 }}
-                cellContentView={
-                  <Text style={{ flex: 1, fontSize: 16 }}>
-                    Item Listing with Image
-                  </Text>
-                }
-                image={
-                  <Image
-                    style={{ borderRadius: 5 }}
-                    source={require("../../assets/logo.png")}
-                  />
-                }
-              />
-
-              <Cell
-                onPress={() => console.log('Heyho!')}
-                contentContainerStyle={{ alignItems: 'center', height: 60 }}
-                cellContentView={
-                  <Text style={{ flex: 1, fontSize: 16 }}>
-                    Item Listing with Image
-                  </Text>
-                }
-                image={
-                  <Image
-                    style={{ borderRadius: 5 }}
-                    source={require("../../assets/logo.png")}
-                  />
-                }
-              />
-
-              <Cell
-                onPress={() => console.log('Heyho!')}
-                contentContainerStyle={{ alignItems: 'center', height: 60 }}
-                cellContentView={
-                  <Text style={{ flex: 1, fontSize: 16 }}>
-                    Item Listing with Image
-                  </Text>
-                }
-                image={
-                  <Image
-                    style={{ borderRadius: 5 }}
-                    source={require("../../assets/logo.png")}
-                  />
-                }
-              />
-
-              <Cell
-                onPress={() => console.log('Heyho!')}
-                contentContainerStyle={{ alignItems: 'center', height: 60 }}
-                cellContentView={
-                  <Text style={{ flex: 1, fontSize: 16 }}>
-                    Item Listing with Image
-                  </Text>
-                }
-                image={
-                  <Image
-                    style={{ borderRadius: 5 }}
-                    source={require("../../assets/logo.png")}
-                  />
-                }
-              />
-
+            <Section header="" footer="">
               <Cell
                 onPress={() => console.log('Heyho!')}
                 contentContainerStyle={{ alignItems: 'center', height: 60 }}
