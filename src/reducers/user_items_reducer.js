@@ -1,7 +1,9 @@
-import { 
+import {
   ITEM_UPDATE,
   ITEM_CREATE,
-  FETCH_USER_ITEMS
+  FETCH_USER_ITEMS,
+  LOAD_EDIT_ITEM,
+  EDIT_ITEM
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -20,6 +22,10 @@ export default function (state = INITIAL_STATE, action) {
       return { ...state, item: action.payload.item };
     case FETCH_USER_ITEMS:
       return { ...state, items: action.payload.items };
+    case LOAD_EDIT_ITEM:
+      return { ...state, item: action.payload.item };
+    case EDIT_ITEM:
+      return { ...state, item: action.payload.item };
     default:
       return state;
   }

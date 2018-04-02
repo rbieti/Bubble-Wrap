@@ -2,7 +2,9 @@ import firebase from 'firebase';
 import {
   ITEM_UPDATE,
   ITEM_CREATE,
-  FETCH_USER_ITEMS
+  FETCH_USER_ITEMS,
+  LOAD_EDIT_ITEM,
+  EDIT_ITEM
 } from './types';
 
 export const itemUpdate = ({ prop, value }) => ({
@@ -76,6 +78,29 @@ export const fetchItems = () => dispatch => {
       dispatch({
         type: FETCH_USER_ITEMS,
         payload: { items }
+      });
+    });
+};
+
+export const loadItem = (item) => ({
+  type: LOAD_EDIT_ITEM,
+  payload: { item }
+});
+
+// Is not very efficient (just updates everything)
+// ERROR: just uploads fake image url for now
+export const editItem = (item) => dispatch => {
+  const { name, description, price, images, key } = item;
+  const imagesObj = {};
+  images.forEach(image => {
+    imagesObj[image.index] = image;
+  });
+  firebase.database().ref(`/items/${key}`)
+    .update({ name, description, price, images: imagesObj })
+    .then(() => {
+      dispatch({
+        type: EDIT_ITEM,
+        payload: { item }
       });
     });
 };

@@ -23,7 +23,7 @@ import {
   ListView
 } from 'react-native-tableview-simple';
 import { connect } from 'react-redux';
-import { fetchItems } from '../actions/user_items_actions';
+import { fetchItems, loadItem } from '../actions/user_items_actions';
 import { fetchUser } from '../actions/user_profile_actions';
 
 class ProfileScreen extends Component {
@@ -46,25 +46,27 @@ class ProfileScreen extends Component {
   loadUsername() {
     const { name } = this.props;
     return (
-      <Text style={styles.userNameLbl}>{`${name}`}</Text>
-    )
-    
+      <Text style={styles.userNameLbl}>{name}</Text>
+    );
   }
 
   renderItems() {
     const { items } = this.props;
-    return items.map(({ key, name, price, images }) => (
+    return items.map((item) => (
       <TouchableOpacity
-        key={key}
-        onPress={() => { this.props.navigation.navigate('editItem'); }}
+        key={item.key}
+        onPress={() => { 
+          this.props.loadItem(item);
+          this.props.navigation.navigate('editItem'); 
+        }}
       >
         <View style={styles.reviewCell}>
           <Image
-            source={{ uri: images[0].url }}
+            source={{ uri: item.images[0].url }}
             style={styles.reviewerImg}
             resizeMode="cover"
           />
-          <Text style={styles.h1Lbl}>{`${name} | $${price}`}</Text>
+          <Text style={styles.h1Lbl}>{`${item.name} | $${item.price}`}</Text>
         </View>
       </TouchableOpacity>
     ));
@@ -314,4 +316,4 @@ const mapStateToProps = (state) => {
    };
 };
 
-export default connect(mapStateToProps, { fetchItems, fetchUser })(ProfileScreen);
+export default connect(mapStateToProps, { fetchItems, loadItem, fetchUser })(ProfileScreen);
