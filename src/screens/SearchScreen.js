@@ -4,22 +4,9 @@ import { PRIMARY_COLOR } from '../constants/style';
 import firebase from 'firebase';
 import { Icon, FormLabel, FormInput, Button, List, ListItem} from 'react-native-elements';
 import { ActivityIndicator, AppRegistry, Dimensions, Image, ScrollView, StyleSheet, Switch, Text, TextInput, View, TouchableOpacity, FlatList} from 'react-native';
-import { Cell, Section, TableView} from 'react-native-tableview-simple';
+import { fetchAllItems } from '../actions/user_items_actions';
 
-export const fetchAllItems = () => {
-  firebase.database().ref('/items') // NOT SCALABLE //
-    .on('value', snapshot => {
-      const items = [];
-      snapshot.forEach(item => {
-        const { /* user, */ images } = item.val();
-        const imageArray = Object.values(images).sort((a, b) => (a.index > b.index ? 1 : -1)); // sort by index
-        items.push({ ...item.val(), images: imageArray, key: item.key });
-        console.log(item.val());  // debug
-      });
-    });
-};
-
-export default class SearchScreen extends Component {
+class SearchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Search',
     tabBarLabel: 'Search',
@@ -29,77 +16,97 @@ export default class SearchScreen extends Component {
     }
   });
 
-  state = { item: '', location: '' };
+  componentDidMount() {
+    this.props.fetchAllItems();
+  }
+
+  renderItems() {
+    const { all_items } = this.props;
+    return all_items.map(({ key, name, price, images }) => (
+      <TouchableOpacity onPress={() => { /*this.props.navigation.navigate('buyItem');*/ console.log(images[0].url) }}>
+        <View style={styles.itemCell} key={key}>
+          <Image
+            source={{ uri: images[0].url }}
+            style={styles.itemImg}
+            resizeMode="cover"
+          />
+          <Text style={styles.itemLbl}>{`${name} | $${price}`}</Text>
+        </View>
+      </TouchableOpacity>
+    ));
+  }
 
   render() {
     return (
       <View style={styles.root}>
-        <View style={{ marginBottom: 10 }}>
-          <FormLabel>Item Search</FormLabel>
-          <FormInput
-            itemholder="What are you looking for?"
-            value={this.state.item}
-            onChangeText={item => this.setState({ item })}
-          />
-        </View>
+        <FormLabel>Item Search</FormLabel>
+        <FormInput itemholder="What are you looking for?"/>
 
         <Button
           title="Search"
           icon={{ name: 'search' }}
           backgroundColor={PRIMARY_COLOR}
-          onPress={() => { } }
+          onPress={() => { }}
         />
 
-        <View style={styles.bottom}>
-          <TableView>
-            <Section header="" footer="">
-              <Cell
-                onPress={() => console.log('Heyho!')}
-                contentContainerStyle={{ alignItems: 'center', height: 60 }}
-                cellContentView={
-                  <Text style={{ flex: 1, fontSize: 16 }}>
-                    Item Listing with Image
-                  </Text>
-                }
-                image={
-                  <Image
-                    style={{ borderRadius: 5 }}
-                    source={require("../../assets/logo.png")}
-                  />
-                }
-              />
-
-              <Cell
-                onPress={() => console.log('Heyho!')}
-                contentContainerStyle={{ alignItems: 'center', height: 60 }}
-                cellContentView={
-                  <Text style={{ flex: 1, fontSize: 16 }}>
-                    Item Listing with Image
-                  </Text>
-                }
-                image={
-                  <Image
-                    style={{ borderRadius: 5 }}
-                    source={require("../../assets/logo.png")}
-                  />
-                }
-              />
-            </Section>
-          </TableView>
-        </View>
-      </View>
+      <View style={styles.bottom}>
+        <ScrollView
+          contentContainerStyle={{flexGrow: 1, alignItems: 'center'}}
+          style={styles.items}
+          pagingEnabled={false}
+        >
+          {this.renderItems()}
+          <View style={{ height: 130 }} />
+        </ScrollView>
+      </View> 
+    </View> 
     );
   }
 }
 
+const mapStateToProps = (state) => {
+  const { items, all_items } = state.userItems;
+  return { items, all_items };
+};
+
 const styles = StyleSheet.create({
   root: { 
     backgroundColor: "#EFEFF4", 
-    flex: 1 
+    flex: 1
   },
 
   bottom: {
     width: "100%",
     height: "100%",
+    marginTop: 20,
+  },
+
+  items: {
+    height: "100%",
+    width: "100%",
+    backgroundColor: '#fff',
+  },
+
+  itemCell: {
+    alignItems: 'center',
+    padding: 12,
+    backgroundColor: "#fafafa",
+    width: 300,
+    height: 250,
+    marginBottom: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 3 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3,
+  },
+  itemImg: {
+    width: "80%",
+    height: "80%",
+  },
+  itemLbl: {
+    marginTop: 12,
+    fontSize: 20
   }
 });
+
+export default connect(mapStateToProps, { fetchAllItems })(SearchScreen);
