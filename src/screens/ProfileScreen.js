@@ -123,62 +123,7 @@ class ProfileScreen extends Component {
               scrollEventThrottle={16}
             >
             {this.loadReviews()}
-              <TouchableOpacity
-                onPress={() => { navigate('seller'); }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require("../../assets/icon-profile.png")}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Robert</Text>
-                  <Text style={styles.h1Lbl}>4/5</Text>
-                  <Text style={styles.reviewerTxt}>"Item was exactly as described!"</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => { navigate('seller'); }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require("../../assets/icon-profile.png")}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Trevor</Text>
-                  <Text style={styles.h1Lbl}>5/5</Text>
-                  <Text style={styles.reviewerTxt}>"Thanks for selling me your car!"</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => { navigate('seller'); }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require("../../assets/icon-profile.png")}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Andrew</Text>
-                  <Text style={styles.h1Lbl}>3/5</Text>
-                  <Text style={styles.reviewerTxt}>"Kyle was very nice and reasonable."</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => { navigate('seller'); }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require("../../assets/icon-profile.png")}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Joshua</Text>
-                  <Text style={styles.h1Lbl}>5/5</Text>
-                  <Text style={styles.reviewerTxt}>"Went out of his way to be helpful."</Text>
-                </View>
-              </TouchableOpacity>
+              
             </ScrollView>
           </View>
 
