@@ -27,3 +27,5 @@ export const FETCH_ITEMS = 'fetch_items';
 
 export const FETCH_USER = 'fetch_user';
 export const USER_UPDATE = 'user_update';
+export const LOAD_UID = 'load_uid';
+export const FETCH_USER_REVIEWS = 'fetch_user_reviews';

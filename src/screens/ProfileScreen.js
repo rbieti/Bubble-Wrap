@@ -24,7 +24,7 @@ import {
 } from 'react-native-tableview-simple';
 import { connect } from 'react-redux';
 import { fetchItems } from '../actions/user_items_actions';
-import { fetchUser } from '../actions/user_profile_actions';
+import { fetchUser, loadUID, fetchUserReviews } from '../actions/user_profile_actions';
 
 class ProfileScreen extends Component {
 
@@ -41,6 +41,8 @@ class ProfileScreen extends Component {
   async componentDidMount() {
     this.props.fetchItems();
     this.props.fetchUser();
+    this.props.loadUID();
+    this.props.fetchUserReviews();
   }
 
   loadUsername() {
@@ -51,13 +53,36 @@ class ProfileScreen extends Component {
     
   }
 
+  loadReviews() {
+    const { reviews } = this.props;
+    return reviews.map(({ key, comment, rating, userId }) => (
+      <TouchableOpacity
+        onPress={() => { this.props.navigation.navigate('seller'); }}
+        key={key}
+      >
+        <View style={styles.reviewCell} >
+          <Image
+            source={require("../../assets/logo.png")}
+            style={styles.reviewerImg}
+            resizeMode="cover"
+          />
+          <Text style={styles.h1Lbl}>{`Person`}</Text>
+          <Text style={styles.h1Lbl}>{`${rating}/5`}</Text>
+          <Text style={styles.h1Lbl}>{`${comment}`}</Text>
+        </View>
+      </TouchableOpacity>
+    ));
+  }
+
+
   renderItems() {
     const { items } = this.props;
     return items.map(({ key, name, price }) => (
       <TouchableOpacity
         onPress={() => { this.props.navigation.navigate('editItem'); }}
+        key={key}
       >
-        <View style={styles.reviewCell} key={key}>
+        <View style={styles.reviewCell} >
           <Image
             source={require("../../assets/logo.png")}
             style={styles.reviewerImg}
@@ -97,6 +122,7 @@ class ProfileScreen extends Component {
               decelerationRate={0.5}
               scrollEventThrottle={16}
             >
+            {this.loadReviews()}
               <TouchableOpacity
                 onPress={() => { navigate('seller'); }}
               >
@@ -303,14 +329,18 @@ const mapStateToProps = (state) => {
   const { items } = state.userItems;
   const { name, overallRating, 
     bubbleCommunity, numTransactions, profileURL } = state.user;
+  const { userID } = state.load_uid;
+  const { reviews } = state.fetch_user_reviews;
   return { 
     items, 
     name,
     overallRating,
     bubbleCommunity,
     numTransactions,
-    profileURL
+    profileURL,
+    userID,
+    reviews
    };
 };
 
-export default connect(mapStateToProps, { fetchItems, fetchUser })(ProfileScreen);
+export default connect(mapStateToProps, { fetchItems, fetchUser, loadUID, fetchUserReviews })(ProfileScreen);
