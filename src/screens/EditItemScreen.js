@@ -1,59 +1,77 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
 import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
 
-class BuyItemScreen extends Component {
+export default class CreateItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Buy Item',
-    tabBarLabel: 'Buy',
+    title: 'Edit Item',
+    tabBarLabel: 'Edit',
     headerTitleStyle: {
       textAlign: 'center',
       alignSelf: 'center'
     }
   });
 
-  renderImgThumbnails = () => {
-    return this.props.item.images.slice(1).map(({ url, index }) => (
-      <View style={styles.thumbnailView} key={index}>
-        <Image
-          style={styles.thumbnailImage}
-          source={{ uri: url }}
-        />
-      </View>
-    ));
-  };
-
   render() {
-    const { name, description, price, images } = this.props.item;
     return (
       <View style={styles.root}>
         <View style={styles.imageContainer}>
           <Image
             style={styles.mainImg}
-            source={{ uri: images[0].url }}
+            source={require("../../assets/478x478-reeses.jpg")}
             resizeMode="cover"
           />
 
-          <Text style={styles.priceTxt}>${price}</Text>
-
           <View style={styles.thumbnailContainer}>
-            {this.renderImgThumbnails()}
+            <View style={styles.thumbnailView}></View>
+
+            <View style={styles.thumbnailView}></View>
+
+            <View style={styles.thumbnailView}></View>
           </View>
         </View>
 
+        <View style={styles.iconContainer}>
+          <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
+          <Icon style={styles.iconImg} name="ios-add" size={40} />
+        </View>
+
         <View style={styles.textContainer}>
-          <Text style={styles.itemTitleTxt}>{name}</Text>
-          <Text style={styles.descriptionTxt}>{description}</Text>
+          <View style={styles.textCell}>
+            <Text style={styles.text}>Name</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="The name of your product"
+              onChangeText={(text) => this.setState({text})}
+            />
+          </View>
+
+          <View style={styles.textCell}>
+            <Text style={styles.text}>Description</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="A short description"
+              onChangeText={(text) => this.setState({text})}
+            />
+          </View>
+
+          <View style={styles.textCell}>
+            <Text style={styles.text}>Price</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Set your price"
+              onChangeText={(text) => this.setState({text})}
+            />
+          </View>
         </View>
 
         <View style={styles.btnContainer}>
-          <TouchableOpacity
+          <TouchableOpacity 
             style={styles.btnOpacity}
-            onPress={() => { console.log("Button pressed") }}
-          >
+            onPress={() => {console.log("Button pressed")}}
+            >
             <Text style={styles.btnText}>
-              Make an offer
+              Post Item
             </Text>
           </TouchableOpacity>
         </View>
@@ -81,18 +99,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  priceTxt: {
-    fontWeight: 'bold',
-    fontSize: 50,
-    backgroundColor: "#00000030",
-    padding: 15,
-    paddingLeft: 50,
-    width: 180,
-    color: "#fff",
-    position: "absolute",
-    top: 30,
-    left: 0,
-  },
 
   thumbnailContainer: {
     maxHeight: 80,
@@ -111,17 +117,31 @@ const styles = StyleSheet.create({
   thumbnailView: {
     width: 80,
     height: 80,
-    // padding: 20,
+    padding: 20,
     backgroundColor: "#FFFFFF30", // 30% oppacity
     borderStyle: "dashed",
     borderWidth: 2,
     borderColor: "#ddd",
     borderRadius: 5,
   },
-  thumbnailImage: {
-    width: 76,
-    height: 76,
-    borderRadius: 5
+
+  iconContainer: {
+    flex: 1,
+    maxHeight: 70,
+    flexDirection: "row",
+    paddingRight: "25%",
+    paddingLeft: "25%",
+    backgroundColor: "#f6f6f6",
+    borderColor: "#ddd",
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+    alignItems: 'center',
+    justifyContent: "space-between",
+  },
+  iconImg: {
+    height: 50,
+    width: 50,
+    marginTop: 15,
   },
 
   textContainer: {
@@ -129,14 +149,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     height: 150,
   },
-  itemTitleTxt: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    paddingTop: 10,
+  textCell: {
+    flex: 1,
+    flexDirection: 'row',
   },
-  descriptionTxt: {
+  text: {
+    fontWeight: 'bold',
     paddingTop: 10,
     paddingBottom: 5,
+  },
+  textInput: {
+    height: 40,
+    position: "absolute",
+    left: 100,
   },
 
   btnContainer: {
@@ -158,10 +183,3 @@ const styles = StyleSheet.create({
     fontSize: 20,
   }
 });
-
-const mapStateToProps = (state) => {
-  const { item } = state.buyItems;
-  return { item };
-};
-
-export default connect(mapStateToProps)(BuyItemScreen);

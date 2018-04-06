@@ -1,97 +1,92 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text, ScrollView, Image } from "react-native";
+import { View, StyleSheet, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import MapView, { Marker } from 'react-native-maps';
+
 export default class CampusSafety extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Campus Safety',
+    tabBarLabel: 'Campus Safety',
+    headerTitleStyle: {
+      textAlign: 'center',
+      alignSelf: 'center'
+    }
+  });
   render() {
     return (
       <View style={styles.root}>
-        <View style={styles.rect1} />
-        <Text style={styles.text2}>Call</Text>
-        <View style={styles.rect2} />
-        <Text style={styles.text1}>Campus Safety</Text>
-        <View style={styles.rect3} />
-        <Text style={styles.text3}>Campus Safety Info</Text>
-        <Text style={styles.text4}>Location: </Text>
-        <Text style={styles.text5}>Phone Number:555-555-5555</Text>
-        <Image
-          source={require("../../assets/logo.png")}
-          style={styles.image1}
+        <View style={styles.contactInformation}>
+          <Text style={styles.contactTxt}> Contact Information: </Text>
+          <Text style={styles.contactTxt}> </Text>
+          <Text style={styles.contactTxt}> Email: campussafety@apu.edu </Text>
+          <Text style={styles.contactTxt}> General Phone #: 626-388-5416 </Text>
+          <Text style={styles.contactTxt}> Emergency Phone #: 626-388-5416 </Text>
+          <Text style={styles.contactTxt}> </Text>
+          <Text style={styles.contactTxt}> For critical emergencies, call 911 </Text>
+        </View>
+
+        <MapView
+          initialRegion={{
+            latitude: 34.130075,
+            longitude: -117.888359,
+            latitudeDelta: 0.0461 * 0.5,    // Controls the scale
+            longitudeDelta: 0.02105 * 0.5,  // Controls the scale
+          }}
+          style={styles.map}
         />
+
+        <TouchableOpacity 
+          style={styles.btnOpacity}
+          onPress={() => {console.log("Button pressed")}}
+          >
+          <Text style={styles.btnText}>
+            Contact Campus Safety
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
 }
+
+const Dimensions = require('Dimensions');
+const window = Dimensions.get('window');
+
 const styles = StyleSheet.create({
-  root: { backgroundColor: "white", flex: 1 },
-  text1: {
-    backgroundColor: "transparent",
-    top: 51.71,
-    left: 19.44,
-    position: "absolute",
-    height: 70.92,
-    width: 336.12,
-    fontSize: 30,
-    textAlign: "center"
+  root: { 
+    backgroundColor: "white", 
+    flex: 1,
+    alignItems: "center",
   },
-  rect1: {
-    backgroundColor: "rgba(10,46,243,1)",
-    height: 128.97,
-    width: 329.53,
-    top: 583.45,
-    left: 18.6,
-    position: "absolute",
-    opacity: 1
+
+  contactInformation: {
+    width: window.width,
+    backgroundColor: "#3d4756",
+    padding: 25,
+    paddingLeft: 50,
   },
-  text2: {
-    backgroundColor: "transparent",
-    top: 620.38,
-    left: 60.84,
-    position: "absolute",
-    height: 31.34,
-    width: 245.06,
-    fontSize: 50,
-    textAlign: "center",
-    color: "rgba(255,255,255,1)"
+  contactTxt: {
+    color: "#fff",
+    fontWeight: "bold",
   },
-  rect2: {
-    backgroundColor: "rgb(230, 230, 230)",
-    height: 55.09,
-    width: 377.03,
-    top: 41.15,
-    left: 0.29,
-    position: "absolute"
+
+  map: {
+    width: window.width,
+    height: window.width,
   },
-  rect3: {
-    backgroundColor: "rgb(230, 230, 230)",
-    height: 374.39,
-    width: 380.96,
-    top: 142.75,
-    left: 0.1,
-    position: "absolute"
+
+  btnOpacity: {
+    backgroundColor: "#2ecc71", // green
+    width: 250,
+    padding: 15,
+    marginTop: 20,
+    marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
   },
-  text3: {
-    backgroundColor: "transparent",
-    top: 165.2,
-    left: 93.44,
-    position: "absolute",
-    fontSize: 23
-  },
-  text4: {
-    backgroundColor: "transparent",
-    top: 211.38,
-    left: 20,
-    position: "absolute"
-  },
-  text5: {
-    top: 239.85,
-    left: 20,
-    position: "absolute",
-    backgroundColor: "transparent"
-  },
-  image1: {
-    position: "absolute",
-    width: 380.26,
-    height: 234.53,
-    top: 282.32,
-    left: -7.92
+  btnText: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#fff',
+    fontSize: 20,
   }
 });

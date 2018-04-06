@@ -1,33 +1,19 @@
-import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Platform,
-  AsyncStorage,
-  ScrollView,
-  Text,
-  Image
-} from 'react-native';
-import {
-  TabNavigator,
-  StackNavigator,
-  DrawerNavigator,
-  DrawerItems
-} from 'react-navigation';
+import React, { Component } from 'react';
+import { StyleSheet, View, Platform, AsyncStorage, ScrollView, Text, Image, StatusBar } from 'react-native';
+import { TabNavigator, StackNavigator, DrawerNavigator, DrawerItems } from 'react-navigation';
 import { Divider } from 'react-native-elements';
 import { Provider } from 'react-redux';
 import firebase from 'firebase';
 import { Font } from 'expo';
+import Icon from 'react-native-vector-icons/Entypo';
 import store from './src/store';
 import SearchScreen from './src/screens/SearchScreen';
-import SearchResultsScreen from './src/screens/SearchResultsScreen';
 import VendorScreen from './src/screens/VendorScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import AuthScreen from './src/screens/AuthScreen';
 import SignoutScreen from './src/screens/SignoutScreen';
-import CreateItemScreen from './src/artboards/CreateItemScreen';
-import BuyItemScreen from './src/artboards/BuyItemScreen';
-import TestScreen from './src/screens/TestScreen';
+import CreateItemScreen from './src/screens/CreateItemScreen';
+import BuyItemScreen from './src/screens/BuyItemScreen';
 import ListOfOffers from './src/screens/ListOfOffers';
 import SingleOfferViewScreen from './src/screens/SingleOfferViewScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
@@ -41,9 +27,9 @@ import TransactionScreen from './src/screens/TransactionScreen';
 import CampusSafetyScreen from './src/screens/CampusSafety';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
-import EditItemScreen from './src/artboards/EditItemScreen';
+import EditItemScreen from './src/screens/EditItemScreen';
 
-export default class App extends React.Component {
+export default class App extends Component {
   //////////////////////////////////////////////////////////////////////////////
   // Setup some warnings to ignore
   // https://github.com/firebase/firebase-js-sdk/issues/97
@@ -53,6 +39,7 @@ export default class App extends React.Component {
       fontLoaded: false
     };
     console.ignoredYellowBox = ['Setting a timer'];
+    console.disableYellowBox = true;
   }
   //////////////////////////////////////////////////////////////////////////////
   // Upon loading app, initialize firebase
@@ -74,7 +61,7 @@ export default class App extends React.Component {
       FontAwesome: require('./node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf'),
       'Material Icons': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
       MaterialIcons: require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
-      Ionicons: require('./node_modules/react-native-vector-icons/Fonts/Ionicons.ttf'),
+      Ionicons: require('./node_modules/react-native-vector-icons/Fonts/Ionicons.ttf')
     });
     this.setState({ fontLoaded: true });
   }
@@ -87,13 +74,48 @@ export default class App extends React.Component {
       return null;
     }
 
+    const { icon } = styles;
+
     //////////////////////////////////////////////////////////////////////////////
     // Inner StackNavigator for search results
-    const HomeScene = StackNavigator(
+    //////////////////////////////////////////////////////////////////////////////
+    // Inner StackNavigator for search results
+    const SearchScene = StackNavigator(
       {
         search: { screen: SearchScreen },
-        searchResults: { screen: SearchResultsScreen },
-        vendor: { screen: VendorScreen }
+        buyItem: { screen: BuyItemScreen },
+        shakenbake: { screen: HandShakeScreen },
+        loo: { screen: ListOfOffers },
+        soview: { screen: SingleOfferViewScreen },
+        profile: { screen: ProfileScreen },
+        seller: { screen: SellerScreen },
+        messenger: { screen: ChatMessengerScreen },
+        trans: { screen: TransactionScreen },
+        mos: { screen: MakeOfferScreen },
+
+        campusSafety: { screen: CampusSafetyScreen }
+      },
+      {
+        navigationOptions: {
+          headerStyle: { backgroundColor: PRIMARY_COLOR },
+          headerBackTitleStyle: { color: '#FFF' },
+          headerTitleStyle: { color: '#FFF' },
+          headerTintColor: '#FFF',
+        }
+      }
+    );
+    const OfferScene = StackNavigator(
+      {
+        loo: { screen: ListOfOffers },
+        soview: { screen: SingleOfferViewScreen },
+        profile: { screen: ProfileScreen },
+        seller: { screen: SellerScreen },
+        settings: { screen: SettingsScreen },
+        messenger: { screen: ChatMessengerScreen },
+        trans: { screen: TransactionScreen },
+        mos: { screen: MakeOfferScreen },
+        shakenbake: { screen: HandShakeScreen },
+        campusSafety: { screen: CampusSafetyScreen }
       },
       {
         navigationOptions: {
@@ -104,6 +126,80 @@ export default class App extends React.Component {
         }
       }
     );
+    const ProfileScene = StackNavigator(
+      {
+        profile: { screen: ProfileScreen },
+        seller: { screen: SellerScreen },
+        buyItem: { screen: BuyItemScreen },
+        editItem: { screen: EditItemScreen },
+        settings: { screen: SettingsScreen },
+        messenger: { screen: ChatMessengerScreen },
+        trans: { screen: TransactionScreen },
+        soview: { screen: SingleOfferViewScreen },
+        mos: { screen: MakeOfferScreen },
+        search: { screen: SearchScreen },
+
+        campusSafety: { screen: CampusSafetyScreen }
+      },
+      {
+        navigationOptions: {
+          headerStyle: { backgroundColor: PRIMARY_COLOR },
+          headerBackTitleStyle: { color: '#FFF' },
+          headerTitleStyle: { color: '#FFF' },
+          headerTintColor: '#FFF'
+        }
+      }
+    );
+    const HomeScene = TabNavigator(
+      {
+        Home: {
+          screen: SearchScene,
+          navigationOptions: {
+            tabBarIcon: () => <Icon name="home" style={icon} />
+          }
+        },
+        Messages: {
+          screen: ChatMessengerScreen,
+          navigationOptions: {
+            tabBarIcon: () => <Icon name="message" style={icon} />
+          }
+        },
+        NewItem: {
+          screen: CreateItemScreen,
+          navigationOptions: {
+            tabBarIcon: () => <Icon name="camera" style={icon} />
+          }
+        },
+        Offers: {
+          screen: OfferScene,
+          navigationOptions: {
+            tabBarIcon: () => <Icon name="price-tag" style={icon} />
+          }
+        },
+        Profile: {
+          screen: ProfileScene,
+          navigationOptions: {
+            tabBarIcon: () => <Icon name="user" style={icon} />
+          }
+        }
+      },
+      {
+        navigationOptions: {
+          headerStyle: { backgroundColor: PRIMARY_COLOR },
+          headerBackTitleStyle: { color: '#FFF' },
+          headerTitleStyle: { color: '#FFF' },
+          headerTintColor: '#FFF',
+        },
+        // cardStyle: {
+        //   paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
+        // },
+        tabBarPosition: 'bottom', // Android
+        tabBarOptions: {
+          showIcon: true, // Android
+          showLabel: false,
+        },
+      }
+    );
     const ScaffoldingScene = StackNavigator(
       {
         locator: { screen: ScaffoldingScreen },
@@ -111,17 +207,16 @@ export default class App extends React.Component {
         editItem: { screen: EditItemScreen },
         buyItem: { screen: BuyItemScreen },
         shakenbake: { screen: HandShakeScreen },
-        loo: { screen: ListOfOffers},
+        loo: { screen: ListOfOffers },
         soview: { screen: SingleOfferViewScreen },
         profile: { screen: ProfileScreen },
         seller: { screen: SellerScreen },
         settings: { screen: SettingsScreen },
         messenger: { screen: ChatMessengerScreen },
-        trans: { screen:TransactionScreen },
-        mos: { screen:MakeOfferScreen },
-        search: { screen:SearchScreen },
-        searchRes:{ screen:SearchResultsScreen },
-        campusSafety: {screen: CampusSafetyScreen }
+        trans: { screen: TransactionScreen },
+        mos: { screen: MakeOfferScreen },
+        search: { screen: SearchScreen },
+        campusSafety: { screen: CampusSafetyScreen }
       },
       {
         navigationOptions: {
@@ -135,7 +230,7 @@ export default class App extends React.Component {
 
     //////////////////////////////////////////////////////////////////////////////
     // This component dictates the configuration of the drawer
-    const customDrawerComponent = props => (
+    const customDrawerComponent = (props) => (
       <ScrollView>
         <View
           style={{
@@ -145,16 +240,13 @@ export default class App extends React.Component {
             alignContent: 'center'
           }}
         >
-          <Image
-            style={{ width: 150, height: 150 }}
-            source={require('./assets/logo.png')}
-          />
+          <Image style={{ width: 150, height: 150 }} source={require('./assets/logo.png')} />
         </View>
 
         <View>
           <Text h1 style={{ textAlign: 'center', marginTop: 10 }}>
             MENU
-          </Text>
+					</Text>
           <Divider style={{ backgroundColor: PRIMARY_COLOR }} />
           <DrawerItems {...props} />
         </View>
@@ -176,7 +268,7 @@ export default class App extends React.Component {
         // TR: https://github.com/react-navigation/react-navigation/issues/3148
         drawerOpenRoute: 'DrawerOpen',
         drawerCloseRoute: 'DrawerClose',
-        drawerToggleRoute: 'DrawerToggle',
+        drawerToggleRoute: 'DrawerToggle'
       }
       
     );
@@ -187,13 +279,13 @@ export default class App extends React.Component {
       {
         welcome: { screen: WelcomeScreen },
         navigate: { screen: ScaffoldingScene },
-        
+
         auth: { screen: AuthScreen },
         main: { screen: MainDrawer }
       },
       {
         navigationOptions: {
-          tabBarVisible: true
+          tabBarVisible: false
         },
         tabBarPosition: 'bottom',
         swipeEnabled: true,
@@ -223,5 +315,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     //marginTop: 25
     marginTop: Platform.OS === 'android' ? 24 : 0
+  },
+  icon: {
+    color: '#000',
+    fontSize: 24
   }
 });
