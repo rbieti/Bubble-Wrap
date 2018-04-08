@@ -6,6 +6,7 @@ import buyItems from './buy_items_reducer';
 import user from './user_profile_reducer';
 import load_uid from './user_profile_reducer';
 import fetch_user_reviews from './user_profile_reducer';
+import find_user_name from './user_profile_reducer';
 
 ////////////////////////////////////////////////////////////////////////
 // Combines reducers and assigns reducer names
@@ -16,5 +17,6 @@ export default combineReducers({
   buyItems,
   user,
   load_uid,
-  fetch_user_reviews
+  fetch_user_reviews,
+  find_user_name
 });

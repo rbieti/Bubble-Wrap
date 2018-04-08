@@ -3,7 +3,8 @@ import {
     USER_UPDATE,
     FETCH_USER,
     LOAD_UID,
-    FETCH_USER_REVIEWS
+    FETCH_USER_REVIEWS,
+    FIND_USER_NAME
 } from './types';
 
 export const fetchUser = () => dispatch => {
@@ -48,3 +49,24 @@ export const loadUID = (userID) => {
     payload: { userID }
   }
 };
+
+//can I call this inside another method so I can return the
+//username in review rather than the user key?
+//that way it allows me to send the username to the state rather than
+//having to find the username through code on that screen
+export const findUserName = (userId) => {
+  const username = '';
+    firebase.database().ref(`/users`)
+    .on('value', snapshot => {
+        snapshot.forEach(user => {
+            if (userId === user.key) {
+                // username = user.name; //Error: username is read-only
+                console.log(username);
+            }
+        });
+        return {
+            type: FIND_USER_NAME,
+            payload: { username }
+        }
+    });
+}

@@ -2,7 +2,8 @@ import {
 FETCH_USER,
 //USER_UPDATE
 LOAD_UID,
-FETCH_USER_REVIEWS
+FETCH_USER_REVIEWS,
+FIND_USER_NAME
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -12,7 +13,8 @@ const INITIAL_STATE = {
     numTransactions: 0,
     profileURL: 'https://www.aisd.net/adams-elementary/wp-content/files/sites/44/2017/07/generic-profile-picture.png',
     userID: '',
-    reviews: []
+    reviews: [],
+    username: ''
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -34,6 +36,11 @@ export default function (state = INITIAL_STATE, action) {
             return {
                 ...state,
                 reviews: action.payload.reviewsArray
+            }
+        case FIND_USER_NAME:
+            return {
+                ...state,
+                username: action.payload.username
             }
         default:
             return state;

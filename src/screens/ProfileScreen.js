@@ -24,7 +24,7 @@ import {
 } from 'react-native-tableview-simple';
 import { connect } from 'react-redux';
 import { fetchItems } from '../actions/user_items_actions';
-import { fetchUser, loadUID, fetchUserReviews } from '../actions/user_profile_actions';
+import { fetchUser, loadUID, fetchUserReviews, findUserName } from '../actions/user_profile_actions';
 
 class ProfileScreen extends Component {
 
@@ -43,6 +43,7 @@ class ProfileScreen extends Component {
     this.props.fetchUser();
     this.props.loadUID();
     this.props.fetchUserReviews();
+    // this.props.findUserName(); //This needs to be updated
   }
 
   loadUsername() {
@@ -55,6 +56,7 @@ class ProfileScreen extends Component {
 
   loadReviews() {
     const { reviews } = this.props;
+    const username = '';
     return reviews.map(({ key, comment, rating, userId }) => (
       <TouchableOpacity
         onPress={() => { this.props.navigation.navigate('seller'); }}
@@ -276,6 +278,7 @@ const mapStateToProps = (state) => {
     bubbleCommunity, numTransactions, profileURL } = state.user;
   const { userID } = state.load_uid;
   const { reviews } = state.fetch_user_reviews;
+  const { username } = state.find_user_name;
   return { 
     items, 
     name,
@@ -284,8 +287,9 @@ const mapStateToProps = (state) => {
     numTransactions,
     profileURL,
     userID,
-    reviews
+    reviews,
+    username
    };
 };
 
-export default connect(mapStateToProps, { fetchItems, fetchUser, loadUID, fetchUserReviews })(ProfileScreen);
+export default connect(mapStateToProps, { fetchItems, fetchUser, loadUID, fetchUserReviews, findUserName })(ProfileScreen);
