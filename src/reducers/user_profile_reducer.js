@@ -25,7 +25,8 @@ export default function (state = INITIAL_STATE, action) {
                 overallRating: action.payload.overallRating,
                 bubbleCommunity: action.payload.bubbleCommunity,
                 numTransactions: action.payload.numTransactions,
-                profileURL: action.payload.profileURL
+                profileURL: action.payload.profileURL,
+                email: action.payload.email
             };
         case LOAD_UID:
             return {

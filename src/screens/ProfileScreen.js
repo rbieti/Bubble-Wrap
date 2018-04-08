@@ -98,7 +98,7 @@ class ProfileScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { overallRating, profileURL, bubbleCommunity, numTransactions } = this.props;
+    const { overallRating, profileURL, bubbleCommunity, numTransactions, email } = this.props;
     return (
       <View style={styles.root}>
         <View style={styles.headerView}>
@@ -110,6 +110,7 @@ class ProfileScreen extends Component {
 
           {this.loadUsername()}
           <Text style={styles.userUniversityLbl}>Your bubble: {bubbleCommunity}</Text>
+          <Text style={styles.userUniversityLbl}>{email}</Text>
         </View>
 
         <ScrollView contentContainerStyle={styles.tableViewScroll}>
@@ -143,41 +144,6 @@ class ProfileScreen extends Component {
               {this.renderItems()}
             </ScrollView>
           </View>
-
-          <TableView>
-            <Section header="CONTACT INFORMATION" footer="">
-              <Cell
-                cellStyle="Basic"
-                title="Update your profile picture"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-              <Cell
-                cellStyle="Basic"
-                title="Add a phone number"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-              <Cell
-                cellStyle="Basic"
-                title="Add an email address"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-              <Cell
-                cellStyle="Basic"
-                title="Add a payment method"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-              <Cell
-                cellStyle="Basic"
-                title="Connect your Facebook account"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-            </Section>
-          </TableView>
         </ScrollView>
       </View>
     );
@@ -275,7 +241,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   const { items } = state.userItems;
   const { name, overallRating, 
-    bubbleCommunity, numTransactions, profileURL } = state.user;
+    bubbleCommunity, numTransactions, profileURL, email } = state.user;
   const { userID } = state.load_uid;
   const { reviews } = state.fetch_user_reviews;
   const { username } = state.find_user_name;
@@ -288,7 +254,8 @@ const mapStateToProps = (state) => {
     profileURL,
     userID,
     reviews,
-    username
+    username,
+    email
    };
 };
 

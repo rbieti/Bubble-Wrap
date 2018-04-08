@@ -12,13 +12,13 @@ export const fetchUser = () => dispatch => {
   firebase.database().ref(`/users/${uid}`)
   .on('value', snapshot => {
     const review = [];
-      const { name, bubbleCommunity, numTransactions, overallRating, profileURL } = snapshot.val()
+      const { name, bubbleCommunity, numTransactions, overallRating, profileURL, email } = snapshot.val()
       // const { name, overallRating, reviews } = user.val();
       // const reviewsArray = Object.values(reviews);
       // review.push({ ...user.val(), reviews: reviewsArray, key: user.key });
       dispatch({
         type: FETCH_USER,
-        payload: { name, bubbleCommunity, numTransactions, overallRating, profileURL }
+        payload: { name, bubbleCommunity, numTransactions, overallRating, profileURL, email }
       });
   });
 };
