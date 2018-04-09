@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text, Button,TouchableOpacity, Image, ScrollView } from "react-native";
+import { connect } from 'react-redux';
+import { View, StyleSheet, Text, Button, TouchableOpacity, Image, ScrollView } from "react-native";
 import { PRIMARY_COLOR } from '../constants/style';
-export default class Untitled extends Component {
+
+class SingleOfferViewScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     //tabBarVisible: false,
     title: 'Single Offer View Screen',
@@ -11,72 +13,57 @@ export default class Untitled extends Component {
       alignSelf: 'center'
     },
   });
-  
+
+  renderOffers() {
+    const { users } = this.props;
+    const { offers } = this.props.item;
+    if (offers !== undefined) {
+      return offers.map(({ amount, user, key }) => (
+        <View style={styles.cardView}>
+          <View style={styles.sections}>
+            <View
+              style={styles.cardSection}
+              key={key}
+            >
+              <Text style={styles.cardText}> {users[user]} offered: ${amount} </Text>
+            </View>
+          </View>
+        </View>
+      ));
+    }
+    return (
+      <View style={styles.cardView}>
+        <View style={styles.sections}>
+          <View style={styles.cardSection}>
+            <Text style={styles.cardText}> No offers </Text>
+          </View>
+        </View>
+      </View>
+    );
+  }
+
   render() {
+    console.log(this.props.item);
+    const { name, price, images } = this.props.item;
     return (
       <View style={styles.root}>
 
         <View style={styles.headerView}>
-          <Image 
-            source={require("../../assets/logo.png")}
+          <Image
+            source={{ uri: images[0].url }}
             style={styles.profileImg}
             resizeMode="cover"
-          />          
+          />
           <View style={styles.titleArea}>
-            <Text style={styles.userNameLbl}> iPhone 6 </Text>
-            <Text style={styles.userUniversityLbl}> asking price: $245 </Text>
+            <Text style={styles.userNameLbl}> {name} </Text>
+            <Text style={styles.userUniversityLbl}> asking price: ${price} </Text>
           </View>
         </View>
 
         <ScrollView style={styles.scrollView}>
 
-          <View style={styles.cardView}>
-            <View style={styles.sections}>
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-            </View>
-          </View>
+              {this.renderOffers()}
 
-          <View style={styles.cardView}>
-            <View style={styles.sections}>
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.cardView}>
-            <View style={styles.sections}>
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.cardView}>
-            <View style={styles.sections}>
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.cardView}>
-            <View style={styles.sections}>
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.cardView}>
-            <View style={styles.sections}>
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-            </View>
-          </View>
         </ScrollView>
       </View>
     );
@@ -128,8 +115,8 @@ const styles = {
     height: 50,
     margin: 20,
     marginBottom: 10,
-    flexDirection: 'column', 
-    flex: 1, 
+    flexDirection: 'column',
+    flex: 1,
     borderRadius: 5,
     backgroundColor: "#fff",
     shadowColor: '#000',
@@ -153,3 +140,11 @@ const styles = {
     marginLeft: 15
   }
 };
+
+const mapStateToProps = (state) => {
+  const { item } = state.buyItems;
+  const { users } = state.users;
+  return { item, users };
+};
+
+export default connect(mapStateToProps)(SingleOfferViewScreen);
