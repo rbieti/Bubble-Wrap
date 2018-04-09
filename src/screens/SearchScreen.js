@@ -5,6 +5,7 @@ import firebase from 'firebase';
 import { Icon, FormLabel, FormInput, Button, List, ListItem} from 'react-native-elements';
 import { ActivityIndicator, AppRegistry, Dimensions, Image, ScrollView, StyleSheet, Switch, Text, TextInput, View, TouchableOpacity, FlatList} from 'react-native';
 import { fetchAllItems } from '../actions/user_items_actions';
+import { loadItem } from '../actions/buy_items_actions';
 
 class SearchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -22,15 +23,15 @@ class SearchScreen extends Component {
 
   renderItems() {
     const { all_items } = this.props;
-    return all_items.map(({ key, name, price, images }) => (
-      <TouchableOpacity onPress={() => { /*this.props.navigation.navigate('buyItem');*/ console.log(images[0].url) }}>
-        <View style={styles.itemCell} key={key}>
+    return all_items.map((item) => (
+      <TouchableOpacity onPress={() => { this.props.loadItem(item); this.props.navigation.navigate('buyItem'); }}>
+        <View style={styles.itemCell} key={{item}.key}>
           <Image
-            source={{ uri: images[0].url }}
+            source={{ uri: item.images[0].url }}
             style={styles.itemImg}
             resizeMode="cover"
           />
-          <Text style={styles.itemLbl}>{`${name} | $${price}`}</Text>
+          <Text style={styles.itemLbl}>{`${item.name} | $${item.price}`}</Text>
         </View>
       </TouchableOpacity>
     ));
@@ -109,4 +110,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps, { fetchAllItems })(SearchScreen);
+export default connect(mapStateToProps, { fetchAllItems, loadItem })(SearchScreen);

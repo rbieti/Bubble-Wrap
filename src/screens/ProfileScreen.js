@@ -64,11 +64,15 @@ class ProfileScreen extends Component {
     return (
       <View style={styles.root}>
         <View style={styles.headerView}>
+          <TouchableOpacity
+            onPress={() => { console.log(this.props.profileURL)}}
+          >
           <Image
             source={require("../../assets/profile1.jpg")}
             style={styles.profileImg}
             resizeMode="cover"
           />
+          </TouchableOpacity>
 
           <Text style={styles.userNameLbl}>Kyle Nakamura</Text>
           <Text style={styles.userUniversityLbl}>Azusa Pacific University</Text>
