@@ -24,7 +24,7 @@ import {
 } from 'react-native-tableview-simple';
 import { connect } from 'react-redux';
 import { fetchItems } from '../actions/user_items_actions';
-import { fetchUser } from '../actions/user_profile_actions';
+import { fetchUser, loadUID, fetchUserReviews, findUserName } from '../actions/user_profile_actions';
 
 class ProfileScreen extends Component {
 
@@ -41,6 +41,9 @@ class ProfileScreen extends Component {
   async componentDidMount() {
     this.props.fetchItems();
     this.props.fetchUser();
+    this.props.loadUID();
+    this.props.fetchUserReviews();
+    //this.props.findUserName(); //This needs to be updated
   }
 
   loadUsername() {
@@ -51,13 +54,38 @@ class ProfileScreen extends Component {
     
   }
 
+  loadReviews() {
+    const { reviews } = this.props;
+    const username = '';
+    return reviews.map(({ key, comment, rating, userId }) => (
+      <TouchableOpacity
+        onPress={() => { this.props.navigation.navigate('seller'); }}
+        key={key}
+      >
+        <View style={styles.reviewCell} >
+          <Image
+            source={{url: 'https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/12669716_1237006402982393_3217046914981297038_n.jpg?_nc_cat=0&oh=b05a93c391dc723f390016b5eef6122b&oe=5B65D228'}}
+            style={styles.reviewerImg}
+            resizeMode="cover"
+          />
+          <Text style={styles.h1Lbl}>{`Person`}</Text>
+          <Text style={styles.h1Lbl}>{`${rating}/5`}</Text>
+          <Text style={styles.h1Lbl}>{`${comment}`}</Text>
+        </View>
+      </TouchableOpacity>
+    ));
+  }
+
+
+
   renderItems() {
     const { items } = this.props;
     return items.map(({ key, name, price }) => (
       <TouchableOpacity
         onPress={() => { this.props.navigation.navigate('editItem'); }}
+        key={key}
       >
-        <View style={styles.reviewCell} key={key}>
+        <View style={styles.reviewCell} >
           <Image
             source={require("../../assets/logo.png")}
             style={styles.reviewerImg}
@@ -71,10 +99,17 @@ class ProfileScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { overallRating, profileURL, bubbleCommunity, numTransactions } = this.props;
+    const { overallRating, profileURL, bubbleCommunity, numTransactions, email } = this.props;
     return (
       <View style={styles.root}>
         <View style={styles.headerView}>
+            <TouchableOpacity style = {styles.editProfile}
+            onPress={() => { this.props.navigation.navigate('editProfile'); }}
+            >
+              <Image style = {styles.icon}
+                source={require("../../assets/edit-profile-icon.png")}
+              />
+            </TouchableOpacity>
           <Image
             source={{ uri: profileURL }}
             style={styles.profileImg}
@@ -83,8 +118,9 @@ class ProfileScreen extends Component {
 
           {this.loadUsername()}
           <Text style={styles.userUniversityLbl}>Your bubble: {bubbleCommunity}</Text>
+          <Text style={styles.userUniversityLbl}>{email}</Text>
         </View>
-
+        
         <ScrollView contentContainerStyle={styles.tableViewScroll}>
           <View style={styles.reviewsView}>
             <Text style={styles.h1Lbl}>Your trustworthiness rating: {overallRating}/5</Text>
@@ -97,62 +133,8 @@ class ProfileScreen extends Component {
               decelerationRate={0.5}
               scrollEventThrottle={16}
             >
-              <TouchableOpacity
-                onPress={() => { navigate('seller'); }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require("../../assets/icon-profile.png")}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Robert</Text>
-                  <Text style={styles.h1Lbl}>4/5</Text>
-                  <Text style={styles.reviewerTxt}>"Item was exactly as described!"</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => { navigate('seller'); }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require("../../assets/icon-profile.png")}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Trevor</Text>
-                  <Text style={styles.h1Lbl}>5/5</Text>
-                  <Text style={styles.reviewerTxt}>"Thanks for selling me your car!"</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => { navigate('seller'); }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require("../../assets/icon-profile.png")}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Andrew</Text>
-                  <Text style={styles.h1Lbl}>3/5</Text>
-                  <Text style={styles.reviewerTxt}>"Kyle was very nice and reasonable."</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => { navigate('seller'); }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require("../../assets/icon-profile.png")}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Joshua</Text>
-                  <Text style={styles.h1Lbl}>5/5</Text>
-                  <Text style={styles.reviewerTxt}>"Went out of his way to be helpful."</Text>
-                </View>
-              </TouchableOpacity>
+            {this.loadReviews()}
+              
             </ScrollView>
           </View>
 
@@ -170,41 +152,6 @@ class ProfileScreen extends Component {
               {this.renderItems()}
             </ScrollView>
           </View>
-
-          <TableView>
-            <Section header="CONTACT INFORMATION" footer="">
-              <Cell
-                cellStyle="Basic"
-                title="Update your profile picture"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-              <Cell
-                cellStyle="Basic"
-                title="Add a phone number"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-              <Cell
-                cellStyle="Basic"
-                title="Add an email address"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-              <Cell
-                cellStyle="Basic"
-                title="Add a payment method"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-              <Cell
-                cellStyle="Basic"
-                title="Connect your Facebook account"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-            </Section>
-          </TableView>
         </ScrollView>
       </View>
     );
@@ -239,6 +186,20 @@ const styles = StyleSheet.create({
     width: profileImgWidth,
     height: profileImgWidth,
     borderRadius: profileImgWidth / 2,
+  },
+
+  editProfile: {
+    position: 'absolute',
+    top:12,
+    right:12,
+    height:25,
+    width: 25,
+    zIndex: 2
+  },
+
+  icon:{
+    height: '100%',
+    width: '100%'
   },
 
   userNameLbl: {
@@ -302,15 +263,22 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   const { items } = state.userItems;
   const { name, overallRating, 
-    bubbleCommunity, numTransactions, profileURL } = state.user;
+    bubbleCommunity, numTransactions, profileURL, email } = state.user;
+  const { userID } = state.load_uid;
+  const { reviews } = state.fetch_user_reviews;
+  const { username } = state.find_user_name;
   return { 
     items, 
     name,
     overallRating,
     bubbleCommunity,
     numTransactions,
-    profileURL
+    profileURL,
+    userID,
+    reviews,
+    username,
+    email
    };
 };
 
-export default connect(mapStateToProps, { fetchItems, fetchUser })(ProfileScreen);
+export default connect(mapStateToProps, { fetchItems, fetchUser, loadUID, fetchUserReviews, findUserName })(ProfileScreen);
