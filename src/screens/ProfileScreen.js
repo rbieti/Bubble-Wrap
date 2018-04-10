@@ -76,11 +76,15 @@ class ProfileScreen extends Component {
     return (
       <View style={styles.root}>
         <View style={styles.headerView}>
+          <TouchableOpacity
+            onPress={() => { console.log(this.props.profileURL)}}
+          >
           <Image
             source={{ uri: profileURL }}
             style={styles.profileImg}
             resizeMode="cover"
           />
+          </TouchableOpacity>
 
           {this.loadUsername()}
           <Text style={styles.userUniversityLbl}>Your bubble: {bubbleCommunity}</Text>
