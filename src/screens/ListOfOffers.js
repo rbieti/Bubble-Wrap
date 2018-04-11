@@ -1,30 +1,14 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { View, StyleSheet, Text, TouchableOpacity, Image, ScrollView, ActivityIndicator, AppRegistry, Dimensions, Switch, TextInput, Button} from "react-native";
-import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/style';
 import { Cell, Section, TableView, } from 'react-native-tableview-simple';
-import firebase from 'firebase';
-import { fetchAllItems } from '../actions/user_items_actions';
 import Carousel from 'react-native-snap-carousel';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/style';
+import { fetchAllItems } from '../actions/user_items_actions';
+import { loadItem } from '../actions/buy_items_actions';
+import { fetchOffers } from '../actions/user_items_actions';
 
-const CellVariant = (props) => (
-  <Cell
-    {...props}
-    cellContentView = {
-      <View style={styles.customCell} >
-        <Text
-          allowFontScaling
-          numberOfLines={1}
-          style={styles.cellText}
-        >
-          {props.title}
-        </Text>
-      </View>
-    }
-  />
-);
-
-class Untitled extends Component {
+class ListOfOffers extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Offers',
     tabBarLabel: 'Offers',
@@ -35,13 +19,18 @@ class Untitled extends Component {
   });
 
   componentDidMount() {
-    this.props.fetchAllItems();
+    // this.props.fetchAllItems();
+    this.props.fetchOffers(this.props.all_items);
   }
 
-  _renderItem ({item}) {
+  _renderItem({ item, index }) {
     return (
-      <TouchableOpacity style={styles.card} onPress={() => { try {alert(item.name)} catch(e){alert(e)} }}>
-        <Image style={styles.cardImg} source={{ uri: item.images[0].url }}/>
+      <TouchableOpacity 
+        style={styles.card} 
+        onPress={() => { this.props.loadItem(item); this.props.navigation.navigate('soview'); }}
+        key={index}
+      >
+        <Image style={styles.cardImg} source={{ uri: item.images[0].url }} />
         <View style={styles.textBackground}>
           <Text style={styles.cardText}>{`${item.name} \n $${item.price}`}</Text>
         </View>
@@ -56,20 +45,20 @@ class Untitled extends Component {
         <Carousel
           ref={(c) => { this._carousel = c; }}
           data={this.props.all_items}
-          renderItem={this._renderItem}
+          renderItem={this._renderItem.bind(this)}
           sliderWidth={375}
           itemWidth={cardWidth}
           layout={'default'} 
           activeSlideAlignment={'center'}
           containerCustomStyle={styles.horizontalCarousel}
-          enableSnap={'false'}
+          enableSnap={false}
         />
 
         <Text style={styles.carouselTitle}>Offers you have made</Text>
         <Carousel
           ref={(c) => { this._carousel = c; }}
           data={this.props.all_items}
-          renderItem={this._renderItem}
+          renderItem={this._renderItem.bind(this)}
           sliderWidth={375}
           itemWidth={cardWidth}
           layout={'default'} 
@@ -80,11 +69,6 @@ class Untitled extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  const { items, all_items } = state.userItems;
-  return { items, all_items };
-};
 
 const cardWidth = 250;
 const cardHeight = cardWidth;
@@ -135,4 +119,10 @@ const styles = {
   }
 };
 
-export default connect(mapStateToProps, { fetchAllItems })(Untitled);
+const mapStateToProps = (state) => {
+  const { all_items } = state.userItems;
+  const { item } = state.buyItems;
+  return { item, all_items };
+};
+
+export default connect(mapStateToProps, { fetchAllItems, fetchOffers, loadItem })(ListOfOffers);

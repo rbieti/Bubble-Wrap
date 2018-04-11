@@ -3,7 +3,8 @@ import {
   ITEM_UPDATE,
   ITEM_CREATE,
   FETCH_USER_ITEMS,
-  FETCH_ALL_ITEMS
+  FETCH_ALL_ITEMS,
+  FETCH_OFFERS
 } from './types';
 
 export const itemUpdate = ({ prop, value }) => ({
@@ -94,6 +95,29 @@ export const fetchAllItems = () => dispatch => {
       dispatch({
         type: FETCH_ALL_ITEMS,
         payload: { all_items }
+      });
+    });
+};
+
+export const fetchOffers = (prevItems) => dispatch => {
+  const itemKeys = prevItems.map((item => item.key));
+  firebase.database().ref('/offers')
+    .on('value', snapshot => {
+      const items = prevItems.slice(); // copy
+      snapshot.forEach(o => {
+        const offer = o.val();
+        const itemKey = offer.item; // item is the itemKey
+        if (itemKeys.includes(itemKey)) {
+          const item = items.find(i => i.key === itemKey);
+          if (!('offers' in item)) {
+            item.offers = []; // create offers array if it doesn't exist
+          }
+          item.offers.push({ ...offer, key: o.key });
+        }
+      });
+      dispatch({
+        type: FETCH_OFFERS,
+        payload: { items }
       });
     });
 };
