@@ -28,3 +28,5 @@ export const FETCH_ITEMS = 'fetch_items';
 export const FETCH_USER = 'fetch_user';
 export const USER_UPDATE = 'user_update';
 export const FETCH_ALL_ITEMS = 'fetch_all_items';
+
+export const FETCH_USERS = 'fetch_users';
