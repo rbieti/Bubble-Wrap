@@ -38,16 +38,6 @@ class Untitled extends Component {
     this.props.fetchAllItems();
   }
 
-  renderItems() {
-    const { all_items } = this.props;
-    return all_items.map((item) => (
-      <TouchableOpacity style={styles.card} onPress={() => { try {this.props.loadItem(item); navigate('seller')} catch(e){alert(e)} }}>
-        <Image style={styles.cardImg} source={{ uri: item.images[0].url }}/>
-        <Text style={styles.cardText}>{`${item.name} | $${item.price}`}</Text>
-      </TouchableOpacity>
-    ));
-  }
-
   _renderItem ({item}) {
     return (
       <TouchableOpacity style={styles.card} onPress={() => { try {alert(item.name)} catch(e){alert(e)} }}>
@@ -62,6 +52,7 @@ class Untitled extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.verticalScroll}>
+        <Text style={styles.carouselTitle}>Items you are selling</Text>
         <Carousel
           ref={(c) => { this._carousel = c; }}
           data={this.props.all_items}
@@ -74,13 +65,14 @@ class Untitled extends Component {
           enableSnap={'false'}
         />
 
+        <Text style={styles.carouselTitle}>Offers you have made</Text>
         <Carousel
           ref={(c) => { this._carousel = c; }}
           data={this.props.all_items}
           renderItem={this._renderItem}
           sliderWidth={375}
           itemWidth={cardWidth}
-          layout={'stack'} 
+          layout={'default'} 
           activeSlideAlignment={'center'}
           containerCustomStyle={styles.horizontalCarousel}
         />
