@@ -81,27 +81,25 @@ export const fetchItems = () => dispatch => {
     });
 };
 
-export const fetchOffers = (items) => dispatch => {
-  const itemKeys = items.map((item => item.key));
+export const fetchOffers = (prevItems) => dispatch => {
+  const itemKeys = prevItems.map((item => item.key));
   firebase.database().ref('/offers')
     .on('value', snapshot => {
-      const newItems = items.slice(); // copy
+      const items = prevItems.slice(); // copy
       snapshot.forEach(o => {
         const offer = o.val();
-        const itemKey = offer.val().item; // item is the itemKey
+        const itemKey = offer.item; // item is the itemKey
         if (itemKeys.includes(itemKey)) {
           const item = items.find(i => i.key === itemKey);
           if (!('offers' in item)) {
-            item.offers = [];
+            item.offers = []; // create offers array if it doesn't exist
           }
-          if (/* offer isn't already in offers */) {
-            item.offers.push({ ...offer, key: o.key });
-          }
+          item.offers.push({ ...offer, key: o.key });
         }
       });
       dispatch({
         type: FETCH_OFFERS,
-        payload: { items: newItems }
+        payload: { items }
       });
     });
 };

@@ -39,10 +39,9 @@ class ListOfOffers extends Component {
     this.props.fetchUsers();
   }
 
-  componentWillUpdate(nextProps) {
-    console.log('we hit this');
+  componentDidUpdate(prevProps) {
     // if items is no longer empty
-    if (nextProps.items.length <= 0) {
+    if (prevProps.items.length <= 0) {
       this.props.fetchOffers(this.props.items);
     }
   }
