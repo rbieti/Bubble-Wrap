@@ -24,7 +24,7 @@ import React, {
   } from 'react-native-tableview-simple';
   import { connect } from 'react-redux';
   import { fetchItems } from '../actions/user_items_actions';
-  import { fetchUser, loadUID, fetchUserReviews, findUserName } from '../actions/user_profile_actions';
+  import { fetchUser, fetchUserReviews, findUserName } from '../actions/user_profile_actions';
   
   class ProfileScreen extends Component {
   
@@ -40,7 +40,7 @@ import React, {
   
     async componentDidMount() {
       this.props.fetchUser();
-      this.props.loadUID();
+      //this.props.loadUID();
       //this.props.findUserName(); //This needs to be updated
     }
   
@@ -148,7 +148,6 @@ import React, {
     const { items } = state.userItems;
     const { name, overallRating, 
       bubbleCommunity, numTransactions, profileURL, email } = state.user;
-    const { userID } = state.load_uid;
     const { reviews } = state.fetch_user_reviews;
     const { username } = state.find_user_name;
     return { 
@@ -158,12 +157,11 @@ import React, {
       bubbleCommunity,
       numTransactions,
       profileURL,
-      userID,
       reviews,
       username,
       email
      };
   };
   
-  export default connect(mapStateToProps, { fetchItems, fetchUser, loadUID, fetchUserReviews, findUserName })(ProfileScreen);
+  export default connect(mapStateToProps, { fetchItems, fetchUser, fetchUserReviews, findUserName })(ProfileScreen);
   
