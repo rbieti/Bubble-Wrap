@@ -4,9 +4,8 @@ import { View, StyleSheet, Text, TouchableOpacity, Image, ScrollView, ActivityIn
 import { Cell, Section, TableView, } from 'react-native-tableview-simple';
 import Carousel from 'react-native-snap-carousel';
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/style';
-import { fetchAllItems } from '../actions/user_items_actions';
+import { fetchAllItems, fetchOffers, getUserItems, getOfferItems } from '../actions/user_items_actions';
 import { loadItem } from '../actions/buy_items_actions';
-import { fetchOffers } from '../actions/user_items_actions';
 
 class ListOfOffers extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,10 +19,17 @@ class ListOfOffers extends Component {
 
   componentDidMount() {
     // this.props.fetchAllItems();
+    this.props.getUserItems(this.props.all_items);
     this.props.fetchOffers(this.props.all_items);
   }
 
-  _renderItem({ item, index }) {
+  componentDidUpdate(prevProps) {
+    if (this.props.offersFetched && prevProps.offerItems.length <= 0) {
+      this.props.getOfferItems(this.props.all_items);
+    }
+  }
+
+  _renderUserItem({ item, index }) {
     return (
       <TouchableOpacity 
         style={styles.card} 
@@ -38,14 +44,29 @@ class ListOfOffers extends Component {
     );
   }
 
+  _renderSellerItem({ item, index }) {
+    return (
+      <TouchableOpacity 
+        style={styles.card}
+        onPress={() => { this.props.loadItem(item); this.props.navigation.navigate('buyItem'); }}
+        key={index}
+      >
+        <Image style={styles.cardImg} source={{ uri: item.images[0].url }} />
+        <View style={styles.textBackground}>
+          <Text style={styles.cardText}>{`${item.name} \n You Offered: $${item.offers[0].amount}`}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
   render() {
     return (
       <ScrollView contentContainerStyle={styles.verticalScroll}>
         <Text style={styles.carouselTitle}>Items you are selling</Text>
         <Carousel
           ref={(c) => { this._carousel = c; }}
-          data={this.props.all_items}
-          renderItem={this._renderItem.bind(this)}
+          data={this.props.userItems}
+          renderItem={this._renderUserItem.bind(this)}
           sliderWidth={375}
           itemWidth={cardWidth}
           layout={'default'} 
@@ -57,8 +78,8 @@ class ListOfOffers extends Component {
         <Text style={styles.carouselTitle}>Offers you have made</Text>
         <Carousel
           ref={(c) => { this._carousel = c; }}
-          data={this.props.all_items}
-          renderItem={this._renderItem.bind(this)}
+          data={this.props.offerItems}
+          renderItem={this._renderSellerItem.bind(this)}
           sliderWidth={375}
           itemWidth={cardWidth}
           layout={'default'} 
@@ -120,9 +141,9 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const { all_items } = state.userItems;
+  const { items, all_items, userItems, offerItems, offersFetched } = state.userItems;
   const { item } = state.buyItems;
-  return { item, all_items };
+  return { items, item, all_items, userItems, offerItems, offersFetched };
 };
 
-export default connect(mapStateToProps, { fetchAllItems, fetchOffers, loadItem })(ListOfOffers);
+export default connect(mapStateToProps, { fetchAllItems, fetchOffers, loadItem, getUserItems, getOfferItems })(ListOfOffers);

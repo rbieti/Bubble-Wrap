@@ -108,6 +108,7 @@ export default class App extends Component {
       {
         loo: { screen: ListOfOffers },
         soview: { screen: SingleOfferViewScreen },
+        buyItem: { screen: BuyItemScreen },
         profile: { screen: ProfileScreen },
         seller: { screen: SellerScreen },
         settings: { screen: SettingsScreen },

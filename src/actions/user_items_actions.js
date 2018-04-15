@@ -4,7 +4,9 @@ import {
   ITEM_CREATE,
   FETCH_USER_ITEMS,
   FETCH_ALL_ITEMS,
-  FETCH_OFFERS
+  FETCH_OFFERS,
+  GET_USER_ITEMS,
+  GET_OFFER_ITEMS
 } from './types';
 
 export const itemUpdate = ({ prop, value }) => ({
@@ -120,4 +122,30 @@ export const fetchOffers = (prevItems) => dispatch => {
         payload: { items }
       });
     });
+};
+
+export const getUserItems = (items) => {
+  const { uid } = firebase.auth().currentUser;
+  const userItems = [];
+  items.forEach(item => {
+    if (item.owner === uid) {
+      userItems.push(item);
+    }
+  });
+  return {
+    type: GET_USER_ITEMS,
+    payload: { userItems }
+  };
+};
+
+export const getOfferItems = (items) => {
+  const { uid } = firebase.auth().currentUser;
+  const offerItems = items.filter(({ offers }) => offers && offers.some(({ user }) => user === uid))
+    .map(item => {
+      return { ...item, offers: item.offers.filter(({ user }) => user === uid) };
+    });
+  return {
+    type: GET_OFFER_ITEMS,
+    payload: { offerItems }
+  };
 };

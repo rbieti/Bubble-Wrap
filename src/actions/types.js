@@ -22,6 +22,8 @@ export const ITEM_UPDATE = 'item_update';
 export const ITEM_CREATE = 'item_create';
 export const FETCH_USER_ITEMS = 'fetch_user_items';
 export const FETCH_OFFERS = 'fetch_offers';
+export const GET_USER_ITEMS = 'get_user_items';
+export const GET_OFFER_ITEMS = 'get_offer_items';
 
 export const LOAD_ITEM = 'load_item';
 export const FETCH_ITEMS = 'fetch_items';
