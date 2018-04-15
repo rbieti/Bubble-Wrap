@@ -15,7 +15,6 @@ export default combineReducers({
   userItems,
   buyItems,
   user,
-  load_uid,
   fetch_user_reviews,
   find_user_name
 });

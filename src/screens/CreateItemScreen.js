@@ -33,7 +33,8 @@ class CreateItemScreen extends Component {
     else {
       const { name, description, price } = this.props;
       const { images } = this.state;
-      this.props.itemCreate({ name, description, price, images });
+      const isPending = true;
+      this.props.itemCreate({ name, description, price, images, isPending});
       Alert.alert("Your item has been posted");
     }
   }

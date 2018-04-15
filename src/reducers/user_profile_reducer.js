@@ -1,7 +1,7 @@
 import {
 FETCH_USER,
 //USER_UPDATE
-LOAD_UID,
+// LOAD_UID,
 FETCH_USER_REVIEWS,
 FIND_USER_NAME
 } from '../actions/types';
@@ -27,12 +27,12 @@ export default function (state = INITIAL_STATE, action) {
                 numTransactions: action.payload.numTransactions,
                 profileURL: action.payload.profileURL,
                 email: action.payload.email
-            };
-        case LOAD_UID:
-            return {
-                ...state,
-                userID: action.payload.userID
             }
+        // case LOAD_UID:
+        //     return {
+        //         ...state,
+        //         userID: action.payload.userID
+        //     }
         case FETCH_USER_REVIEWS:
             return {
                 ...state,

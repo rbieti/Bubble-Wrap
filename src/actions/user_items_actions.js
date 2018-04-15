@@ -10,7 +10,7 @@ export const itemUpdate = ({ prop, value }) => ({
   payload: { prop, value }
 });
 
-export const itemCreate = ({ name, description, price, images }) => dispatch => {
+export const itemCreate = ({ name, description, price, images, isPending }) => dispatch => {
   // Push item details
   const owner = firebase.auth().currentUser.uid;
   const itemRef = firebase.database().ref('/items')
@@ -50,7 +50,7 @@ export const itemCreate = ({ name, description, price, images }) => dispatch => 
           if (counter === imgs.length) {
             // dispatch the item
             const imageArray = Object.values(imagesObj).sort((a, b) => (a.index > b.index ? 1 : -1));
-            item = { name, description, price, owner, key, images: imageArray };
+            item = { name, description, price, owner, key, images: imageArray, isPending };
             dispatch({
               type: ITEM_CREATE,
               payload: { item }
