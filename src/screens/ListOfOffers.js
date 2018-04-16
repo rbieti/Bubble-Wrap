@@ -24,7 +24,7 @@ class ListOfOffers extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.offersFetched && prevProps.offerItems.length <= 0) {
+    if (prevProps.offersFetched !== this.props.offersFetched) {
       this.props.getOfferItems(this.props.all_items);
     }
   }
