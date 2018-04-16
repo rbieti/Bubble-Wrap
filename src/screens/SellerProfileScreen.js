@@ -30,7 +30,7 @@ class SellerProfileScreen extends Component {
 
   async componentDidMount() {
     // TR: hard coded user id of the current seller
-    const uid = { uid: '9noTvky17kfVx2KRXIUIOjhDkW82' };
+    const uid = { uid: 'vwFIYPQnssUpRACcwkTY0GRtcdm1' };
     this.props.fetchItems(uid);
   }
 

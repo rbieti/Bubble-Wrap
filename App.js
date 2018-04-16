@@ -278,7 +278,7 @@ export default class App extends Component {
     // Top Level Navigator
     const MainNavigator = TabNavigator(
       {
-        welcome: { screen: WelcomeScreen },
+        // welcome: { screen: WelcomeScreen },
         navigate: { screen: ScaffoldingScene },
 
         auth: { screen: AuthScreen },

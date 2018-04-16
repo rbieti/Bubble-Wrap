@@ -2,7 +2,8 @@ import firebase from 'firebase';
 import {
   ITEM_UPDATE,
   ITEM_CREATE,
-  FETCH_USER_ITEMS
+  FETCH_USER_ITEMS,
+  FETCH_ALL_ITEMS
 } from './types';
 
 export const itemUpdate = ({ prop, value }) => ({
@@ -76,6 +77,23 @@ export const fetchItems = () => dispatch => {
       dispatch({
         type: FETCH_USER_ITEMS,
         payload: { items }
+      });
+    });
+};
+
+export const fetchAllItems = () => dispatch => {
+  // const { uid } = firebase.auth().currentUser;
+  firebase.database().ref('/items')
+    .on('value', snapshot => {
+      const all_items = [];
+      snapshot.forEach(item => {
+        const { images } = item.val();
+        const imageArray = Object.values(images).sort((a, b) => (a.index > b.index ? 1 : -1));
+        all_items.push({ ...item.val(), images: imageArray, key: item.key });
+      });
+      dispatch({
+        type: FETCH_ALL_ITEMS,
+        payload: { all_items }
       });
     });
 };

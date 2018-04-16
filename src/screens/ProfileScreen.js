@@ -80,14 +80,15 @@ class ProfileScreen extends Component {
 
   renderItems() {
     const { items } = this.props;
-    return items.map(({ key, name, price }) => (
+    return items.map(({ key, name, price, images }) => (
       <TouchableOpacity
+        key={key}
         onPress={() => { this.props.navigation.navigate('editItem'); }}
         key={key}
       >
         <View style={styles.reviewCell} >
           <Image
-            source={require("../../assets/logo.png")}
+            source={{ uri: images[0].url }}
             style={styles.reviewerImg}
             resizeMode="cover"
           />
@@ -110,11 +111,15 @@ class ProfileScreen extends Component {
                 source={require("../../assets/edit-profile-icon.png")}
               />
             </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => { console.log(this.props.profileURL)}}
+          >
           <Image
             source={{ uri: profileURL }}
             style={styles.profileImg}
             resizeMode="cover"
           />
+          </TouchableOpacity>
 
           {this.loadUsername()}
           <Text style={styles.userUniversityLbl}>Your bubble: {bubbleCommunity}</Text>

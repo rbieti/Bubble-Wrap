@@ -1,11 +1,13 @@
 import { 
   ITEM_UPDATE,
   ITEM_CREATE,
-  FETCH_USER_ITEMS
+  FETCH_USER_ITEMS,
+  FETCH_ALL_ITEMS
 } from '../actions/types';
 
 const INITIAL_STATE = {
   items: [],
+  all_items: [],
   item: {},
   name: '',
   description: '',
@@ -20,6 +22,8 @@ export default function (state = INITIAL_STATE, action) {
       return { ...state, item: action.payload.item };
     case FETCH_USER_ITEMS:
       return { ...state, items: action.payload.items };
+    case FETCH_ALL_ITEMS:
+      return { ...state, all_items: action.payload.all_items };
     default:
       return state;
   }
