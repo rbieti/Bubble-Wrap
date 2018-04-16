@@ -60,7 +60,6 @@ class ProfileScreen extends Component {
     return reviews.map(({ key, comment, rating, userId }) => (
       <TouchableOpacity
         onPress={() => {
-          console.log(userId);
           this.props.loadSeller(userId);
           this.props.navigation.navigate('seller'); 
         }}

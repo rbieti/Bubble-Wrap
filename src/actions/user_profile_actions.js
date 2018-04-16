@@ -12,11 +12,10 @@ export const loadSeller = (sellerID) => dispatch => {
     let seller = {};
     snapshot.forEach(user => {
       if (user.key === sellerID)
-        seller = user;
-    });
-    dispatch ({
-      type: LOAD_SELLER,
-      payload: { seller }
+        dispatch ({
+          type: LOAD_SELLER,
+          payload: { seller: {...user.val(), key: user.key} }
+        });
     });
   });
 };
@@ -37,8 +36,8 @@ export const fetchUser = () => dispatch => {
   });
 };
 
-export const fetchUserReviews = () => dispatch => {
-  const { uid } = firebase.auth().currentUser;
+export const fetchUserReviews = (uid = firebase.auth().currentUser.uid) => dispatch => {
+  // const { uid } = firebase.auth().currentUser;
   firebase.database().ref(`/users/${uid}/reviews`)
   .on('value', snapshot => {
     const reviewsArray = [];
