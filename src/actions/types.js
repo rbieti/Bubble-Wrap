@@ -30,3 +30,5 @@ export const USER_UPDATE = 'user_update';
 export const FETCH_USER_REVIEWS = 'fetch_user_reviews';
 
 export const FETCH_USERS = 'fetch_users';
+
+export const LOAD_SELLER = 'load_seller';

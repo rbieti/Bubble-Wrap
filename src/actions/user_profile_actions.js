@@ -2,8 +2,24 @@ import firebase from 'firebase';
 import {
     USER_UPDATE,
     FETCH_USER,
-    FETCH_USER_REVIEWS
+    FETCH_USER_REVIEWS,
+    LOAD_SELLER
 } from './types';
+
+export const loadSeller = (sellerID) => dispatch => {
+  firebase.database().ref(`/users`)
+  .on('value', snapshot => {
+    let seller = {};
+    snapshot.forEach(user => {
+      if (user.key === sellerID)
+        seller = user;
+    });
+    dispatch ({
+      type: LOAD_SELLER,
+      payload: { seller }
+    });
+  });
+};
 
 export const fetchUser = () => dispatch => {
   const { uid } = firebase.auth().currentUser;

@@ -3,7 +3,8 @@ FETCH_USER,
 //USER_UPDATE
 LOAD_UID,
 FETCH_USER_REVIEWS,
-FIND_USER_NAME
+FIND_USER_NAME,
+LOAD_SELLER
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -14,7 +15,8 @@ const INITIAL_STATE = {
     profileURL: 'https://www.aisd.net/adams-elementary/wp-content/files/sites/44/2017/07/generic-profile-picture.png',
     userID: '',
     reviews: [],
-    username: ''
+    username: '',
+    seller: {},
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -37,6 +39,11 @@ export default function (state = INITIAL_STATE, action) {
             return {
                 ...state,
                 username: action.payload.username
+            }
+        case LOAD_SELLER:
+            return {
+                ...state,
+                seller: action.payload.seller
             }
         default:
             return state;

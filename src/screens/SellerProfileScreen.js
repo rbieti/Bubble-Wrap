@@ -30,6 +30,7 @@ class SellerProfileScreen extends Component {
 
   async componentDidMount() {
     // TR: hard coded user id of the current seller
+    // const uid = seller.key;
     const uid = { uid: '9noTvky17kfVx2KRXIUIOjhDkW82' };
     this.props.fetchItems(uid);
   }
@@ -58,6 +59,7 @@ class SellerProfileScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation; // THIS IS NECESSARY FOR NAVIGATION
+    // const { seller } = this.props;
     return (
       <View style={styles.root}>
         <View style={styles.headerView}>
@@ -259,7 +261,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { items } = state.buyItems;
-  return { items };
+  const { seller } = state.user;
+  return { items, seller };
 };
 
 export default connect(mapStateToProps, {
