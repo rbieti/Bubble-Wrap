@@ -6,19 +6,35 @@ export default class CampusSafety extends Component {
 	safeSpace = [
 		{
 			coordinate: {
-				latitude: 34.1301,
-				longitude: -117.8884
+				latitude: 34.130438,
+				longitude: -117.887539
 			},
-			title: 'Apu',
-			radius: 50
+			title: 'East Campus',
+			radius: 160
 		},
 		{
 			coordinate: {
-				latitude: 34.1304,
-				longitude: -117.8886
+				latitude: 34.12836,
+				longitude: -117.890574
 			},
-			title: 'Apu two',
-			radius: 50
+			title: 'Starbucks',
+			radius: 20
+		},
+		{
+			coordinate: {
+				latitude: 34.13107,
+				longitude: -117.887034
+			},
+			title: 'Campus Safety',
+			radius: 20
+		},
+		{
+			coordinate: {
+				latitude: 34.135262,
+				longitude: -117.894785
+			},
+			title: 'West Campus',
+			radius: 80
 		}
 	];
 
