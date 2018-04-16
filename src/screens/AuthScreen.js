@@ -11,16 +11,12 @@ import {
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Spinner } from '../components/Spinner';
-
 import { PRIMARY_COLOR } from '../constants/style';
 
-// Purpose of this auth screen is just to call action creator
 class AuthScreen extends Component {
-  //////////////////////////////////////////////////////////////////////////////////
   // State definition
   state = { inSignupMode: false, showLoading: true }; // Just for local use
 
-  //////////////////////////////////////////////////////////////////////////////////
   // Register the event which detects a change of state in the logged-in user
   componentWillMount() {
     //this.props.loading = true;
@@ -31,8 +27,6 @@ class AuthScreen extends Component {
       return this.props.navigation.navigate('main'); // Navigate to main page
     }
 
-    //console.log(this.props.navigation.state.params);
-
     // Listen for authentication state to change.
     firebase.auth().onAuthStateChanged(user => {
       // Show login screen b/c firebase has just authenticated/denied user
@@ -41,15 +35,12 @@ class AuthScreen extends Component {
 
       console.log('onAuthStateChanged()');
       if (user) {
-        // Print out debug info
-        console.log('--We are authenticated now!');
-        console.log(`--Display Name: ${user.displayName}`);
-        console.log(`--Email: ${user.email}`);
-        //console.log(`--Provider: ${user.providerId}`);
-        console.log(`--uid: ${user.uid}`);
+        console.log('We are authenticated now!');
+        console.log(`Display Name: ${user.name}`);
+        console.log(`Email: ${user.email}`);
+        console.log(`uid: ${user.uid}`);
 
-        // Navigate to main page
-        this.props.navigation.navigate('main');
+        this.props.navigation.navigate('main'); // Navigate to main page
         return;
       }
 
@@ -210,7 +201,7 @@ class AuthScreen extends Component {
     }
     return (
       <View>
-        <View style={{ marginBottom: 10 }}>
+        <View style={{ marginBottom: 10, marginTop: 30 }}>
           <FormLabel>E-mail</FormLabel>
           <FormInput
             placeholder="jon@email.com"
