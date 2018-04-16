@@ -4,7 +4,7 @@ import { View, StyleSheet, Text, TouchableOpacity, Image, ScrollView, ActivityIn
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/style';
 import { Cell, Section, TableView, } from 'react-native-tableview-simple';
 import firebase from 'firebase';
-import { fetchAllItems } from '../actions/user_items_actions';
+import { fetchAllItems, itemsSelling } from '../actions/user_items_actions';
 import Carousel from 'react-native-snap-carousel';
 
 const CellVariant = (props) => (
@@ -36,6 +36,7 @@ class Untitled extends Component {
 
   componentDidMount() {
     this.props.fetchAllItems();
+    this.props.itemsSelling();
   }
 
   _renderItem ({item}) {
@@ -55,7 +56,7 @@ class Untitled extends Component {
         <Text style={styles.carouselTitle}>Items you are selling</Text>
         <Carousel
           ref={(c) => { this._carousel = c; }}
-          data={this.props.all_items}
+          data={this.props.selling_items}
           renderItem={this._renderItem}
           sliderWidth={375}
           itemWidth={cardWidth}
@@ -82,8 +83,8 @@ class Untitled extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { items, all_items } = state.userItems;
-  return { items, all_items };
+  const { items, all_items, selling_items } = state.userItems;
+  return { items, all_items, selling_items };
 };
 
 const cardWidth = 250;
@@ -135,4 +136,4 @@ const styles = {
   }
 };
 
-export default connect(mapStateToProps, { fetchAllItems })(Untitled);
+export default connect(mapStateToProps, { fetchAllItems, itemsSelling })(Untitled);

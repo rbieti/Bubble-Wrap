@@ -31,3 +31,5 @@ export const FETCH_USER_REVIEWS = 'fetch_user_reviews';
 
 export const FETCH_USERS = 'fetch_users';
 export const FETCH_ALL_ITEMS = 'fetch_all_items';
+
+export const SELLING_ITEMS = 'selling_items';

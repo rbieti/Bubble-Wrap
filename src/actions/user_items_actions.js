@@ -3,7 +3,11 @@ import {
   ITEM_UPDATE,
   ITEM_CREATE,
   FETCH_USER_ITEMS,
-  FETCH_ALL_ITEMS
+  FETCH_ALL_ITEMS,
+  FETCH_OFFERS,
+  GET_USER_ITEMS,
+  GET_OFFER_ITEMS,
+  SELLING_ITEMS,
 } from './types';
 
 export const itemUpdate = ({ prop, value }) => ({
@@ -11,7 +15,7 @@ export const itemUpdate = ({ prop, value }) => ({
   payload: { prop, value }
 });
 
-export const itemCreate = ({ name, description, price, images, isPending }) => dispatch => {
+export const itemCreate = ({ name, description, price, images }) => dispatch => {
   // Push item details
   const owner = firebase.auth().currentUser.uid;
   const itemRef = firebase.database().ref('/items')
@@ -51,7 +55,7 @@ export const itemCreate = ({ name, description, price, images, isPending }) => d
           if (counter === imgs.length) {
             // dispatch the item
             const imageArray = Object.values(imagesObj).sort((a, b) => (a.index > b.index ? 1 : -1));
-            item = { name, description, price, owner, key, images: imageArray, isPending };
+            item = { name, description, price, owner, key, images: imageArray };
             dispatch({
               type: ITEM_CREATE,
               payload: { item }
@@ -96,4 +100,74 @@ export const fetchAllItems = () => dispatch => {
         payload: { all_items }
       });
     });
+};
+
+export const itemsSelling = () => dispatch => {
+  
+  //const { uid } = firebase.auth().currentUser;
+  var uid = "Eh7iGemio6eJZzSiLJKRkQiRcpT2";
+  firebase.database().ref('/items')
+    .on('value', snapshot => {
+      const selling_items = [];
+      snapshot.forEach(item => {
+        const { images, owner } = item.val();
+        const imageArray = Object.values(images).sort((a, b) => (a.index > b.index ? 1 : -1));
+        console.log(owner) // DO NOT DELETE THIS OR IT WON'T WORK :P SPAGHETTI AT ITS FINEST
+        if(owner === uid)
+          selling_items.push({ ...item.val(), images: imageArray, key: item.key });
+      });
+      dispatch({
+        type: SELLING_ITEMS,
+        payload: { selling_items }
+      });
+    });
+};
+
+export const fetchOffers = (prevItems) => dispatch => {
+  const itemKeys = prevItems.map((item => item.key));
+  firebase.database().ref('/offers')
+    .on('value', snapshot => {
+      const items = prevItems.slice(); // copy
+      snapshot.forEach(o => {
+        const offer = o.val();
+        const itemKey = offer.item; // item is the itemKey
+        if (itemKeys.includes(itemKey)) {
+          const item = items.find(i => i.key === itemKey);
+          if (!('offers' in item)) {
+            item.offers = []; // create offers array if it doesn't exist
+          }
+          item.offers.push({ ...offer, key: o.key });
+        }
+      });
+      dispatch({
+        type: FETCH_OFFERS,
+        payload: { items }
+      });
+    });
+};
+
+export const getUserItems = (items) => {
+  const { uid } = firebase.auth().currentUser;
+  const userItems = [];
+  items.forEach(item => {
+    if (item.owner === uid) {
+      userItems.push(item);
+    }
+  });
+  return {
+    type: GET_USER_ITEMS,
+    payload: { userItems }
+  };
+};
+
+export const getOfferItems = (items) => {
+  const { uid } = firebase.auth().currentUser;
+  const offerItems = items.filter(({ offers }) => offers && offers.some(({ user }) => user === uid))
+    .map(item => {
+      return { ...item, offers: item.offers.filter(({ user }) => user === uid) };
+    });
+  return {
+    type: GET_OFFER_ITEMS,
+    payload: { offerItems }
+  };
 };
