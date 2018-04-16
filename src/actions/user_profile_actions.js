@@ -2,8 +2,7 @@ import firebase from 'firebase';
 import {
     USER_UPDATE,
     FETCH_USER,
-    FETCH_USER_REVIEWS,
-    FIND_USER_NAME
+    FETCH_USER_REVIEWS
 } from './types';
 
 export const fetchUser = () => dispatch => {

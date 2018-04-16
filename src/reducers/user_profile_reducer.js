@@ -27,11 +27,6 @@ export default function (state = INITIAL_STATE, action) {
                 numTransactions: action.payload.numTransactions,
                 profileURL: action.payload.profileURL,
                 email: action.payload.email
-            };
-        case LOAD_UID:
-            return {
-                ...state,
-                userID: action.payload.userID
             }
         case FETCH_USER_REVIEWS:
             return {

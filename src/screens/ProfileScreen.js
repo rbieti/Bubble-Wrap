@@ -41,9 +41,7 @@ class ProfileScreen extends Component {
   async componentDidMount() {
     this.props.fetchItems();
     this.props.fetchUser();
-    this.props.loadUID();
     this.props.fetchUserReviews();
-    //this.props.findUserName(); //This needs to be updated
   }
 
   loadUsername() {
