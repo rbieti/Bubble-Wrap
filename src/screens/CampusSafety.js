@@ -1,36 +1,27 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
-import MapView, { Marker, Polygon } from 'react-native-maps';
+import MapView, { Marker, Polygon, Circle } from 'react-native-maps';
 
 export default class CampusSafety extends Component {
 	safeSpace = [
 		{
-			lat: 34.1301,
-			long: -117.8884,
+			coordinate: {
+				latitude: 34.1301,
+				longitude: -117.8884
+			},
 			title: 'Apu',
-			rad: 50
+			radius: 50
 		},
 		{
-			lat: 34.1304,
-			long: -117.8886,
+			coordinate: {
+				latitude: 34.1304,
+				longitude: -117.8886
+			},
 			title: 'Apu two',
-			rad: 50
+			radius: 50
 		}
 	];
-	safeCircle = [
-		{
-			lat: 34.1301,
-			long: -117.8884,
-			title: 'Apu',
-			rad: 50
-		},
-		{
-			lat: 34.1304,
-			long: -117.8886,
-			title: 'Apu two',
-			rad: 50
-		}
-	];
+
 	static navigationOptions = ({ navigation }) => ({
 		title: 'Campus Safety',
 		tabBarLabel: 'Campus Safety',
@@ -41,22 +32,14 @@ export default class CampusSafety extends Component {
 	});
 
 	renderMarkers() {
-		return this.safeSpace.map((space) => (
-			<MapView.Marker
-				coordinate={{
-					latitude: space.lat,
-					longitude: space.long
-				}}
-				title={space.title}
-			/>
-		));
+		return this.safeSpace.map((space) => <Marker coordinate={space.coordinate} title={space.title} />);
 	}
 
 	renderCircles() {
-		return this.safeCircle.map((space) => (
-			<MapView.Circle
-				center={{ latitude: space.lat, longitude: space.lat }}
-				radius={space.rad}
+		return this.safeSpace.map((space) => (
+			<Circle
+				center={space.coordinate}
+				radius={space.radius}
 				fillColor="rgba(0, 0, 0, 0.2)"
 				strokeColor="rgba(0, 0, 0, 0.2)"
 			/>
@@ -87,6 +70,7 @@ export default class CampusSafety extends Component {
 						}}
 					>
 						{this.renderMarkers()}
+
 						{this.renderCircles()}
 					</MapView>
 				</View>
