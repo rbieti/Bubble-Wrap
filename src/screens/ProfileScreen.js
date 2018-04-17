@@ -23,6 +23,7 @@ import {
   ListView
 } from 'react-native-tableview-simple';
 import { connect } from 'react-redux';
+import firebase from 'firebase';
 import { fetchItems } from '../actions/user_items_actions';
 import { fetchUser } from '../actions/user_profile_actions';
 
@@ -30,7 +31,6 @@ class ProfileScreen extends Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: 'My Profile',
-    //tabBarIcon: { focused: 'user', tintColor: 'black' },
     tabBarLabel: 'Profile',
     headerTitleStyle: {
       textAlign: 'center',
@@ -48,7 +48,6 @@ class ProfileScreen extends Component {
     return (
       <Text style={styles.userNameLbl}>{`${name}`}</Text>
     )
-    
   }
 
   renderItems() {
@@ -77,13 +76,26 @@ class ProfileScreen extends Component {
       <View style={styles.root}>
         <View style={styles.headerView}>
           <TouchableOpacity
+            onPress={() => {
+              try {
+                firebase.auth().signOut();
+              } catch(e) {
+                alert("Error signing out");
+              }
+            }}
+            style = {styles.signOutBtn}
+          >
+            <Text style={{color: "black", fontWeight: "bold"}}>Sign out</Text>
+
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => { console.log(this.props.profileURL)}}
           >
-          <Image
-            source={{ uri: profileURL }}
-            style={styles.profileImg}
-            resizeMode="cover"
-          />
+            <Image
+              source={{ uri: profileURL }}
+              style={styles.profileImg}
+              resizeMode="cover"
+            />
           </TouchableOpacity>
 
           {this.loadUsername()}
@@ -225,17 +237,27 @@ const styles = StyleSheet.create({
     flex: 1
   },
 
-  /* Universal Styles */
   h1Lbl: {
     fontWeight: 'bold',
     color: '#000',
   },
-  /* End Universal Styles */
 
   /* Header Section */
   headerView: {
     backgroundColor: '#37474F',
     height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  signOutBtn: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    height: 40,
+    padding: 8,
+    backgroundColor: "#fefefe",
+    borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -271,10 +293,6 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     paddingTop: 15,
     backgroundColor: '#fff',
-  },
-
-  reviewsScroll: {
-
   },
 
   reviewCell: {
