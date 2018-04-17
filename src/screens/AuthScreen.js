@@ -14,88 +14,64 @@ import { Spinner } from '../components/Spinner';
 import { PRIMARY_COLOR } from '../constants/style';
 
 class AuthScreen extends Component {
-  // State definition
-  state = { inSignupMode: false, showLoading: true }; // Just for local use
+  state = { inSignupMode: false, showLoading: true };
 
   // Register the event which detects a change of state in the logged-in user
   componentWillMount() {
-    //this.props.loading = true;
-
     // Check if user is persisted and "login" by navigating to main if so
     if (firebase.auth().currentUser) {
       console.log(`${firebase.auth().currentUser.email} already logged in.`);
-      return this.props.navigation.navigate('main'); // Navigate to main page
+      return this.props.navigation.navigate('search'); // Navigate to main page
     }
 
     // Listen for authentication state to change.
     firebase.auth().onAuthStateChanged(user => {
-      // Show login screen b/c firebase has just authenticated/denied user
       this.props.loading = false;
       this.setState({ showLoading: this.props.loading }); // Retrigger components
 
       console.log('onAuthStateChanged()');
       if (user) {
         console.log('We are authenticated now!');
-        console.log(`Display Name: ${user.name}`);
-        console.log(`Email: ${user.email}`);
-        console.log(`uid: ${user.uid}`);
+        try{console.log(`Display Name: ${user.displayName}`)} catch(e){};
+        try{console.log(`Email: ${user.email}`)} catch(e){};
+        try{console.log(`UID: ${user.uid}`)} catch(e){};
 
-        this.props.navigation.navigate('main'); // Navigate to main page
+        this.props.navigation.navigate('search'); // Navigate to main page
         return;
+      } else {
+        this.props.navigation.navigate('auth');
       }
-
-      this.props.navigation.navigate('auth');
     });
   }
 
-  //////////////////////////////////////////////////////////////////////////////////
   // Called whenever one of the props (properties) changes - when the login/token
   // property from the auth reducer changes, this will be called.
   componentWillReceiveProps(nextProps) {
     this.setState({ showLoading: nextProps.loading });
   }
 
-  //////////////////////////////////////////////////////////////////////////////////
-  // Handler for facebook login button
-  onFbButtonPress = () => {
-    this.props.facebookLogin();
-    //AsyncStorage.removeItem('fb_token'); // Just used for testing to clear item
-    //SecureStore.deleteItemAsync('fb_token');
-  };
-
-  //////////////////////////////////////////////////////////////////////////////////
-  // Update the property when changed
   onEmailChange = text => {
     this.props.emailChanged(text);
   };
 
-  //////////////////////////////////////////////////////////////////////////////////
-  // Update the property when changed
   onPasswordChange = text => {
     this.props.passwordChanged(text);
   };
 
-  //////////////////////////////////////////////////////////////////////////////////
-  // Update the property when changed
   onPasswordRetypeChange = text => {
     this.props.passwordRetypeChanged(text);
   };
 
-  //////////////////////////////////////////////////////////////////////////////////
-  // Login user via username/password
   onStandardLoginButtonPress = () => {
     const { email, password } = this.props;
     this.props.loginUser(email, password);
   };
 
-  //////////////////////////////////////////////////////////////////////////////////
-  // Login user via username/password
   onStandardSignupButtonPress = () => {
     const { email, password, passwordRetype } = this.props;
     this.props.signupUser(email, password, passwordRetype);
   };
 
-  //////////////////////////////////////////////////////////////////////////////////
   // Toggles between Login mode and Signup mode
   onSignupLoginToggle = () => {
     this.setState({ inSignupMode: !this.state.inSignupMode });
@@ -110,27 +86,14 @@ class AuthScreen extends Component {
         <View>
           <Button
             title="Sign Up"
-            //icon={{ name: 'vpn-key' }}
             backgroundColor={PRIMARY_COLOR}
             onPress={this.onStandardSignupButtonPress}
           />
 
-          <Text style={{ textAlign: 'center', marginTop: 10 }}>- OR -</Text>
-
-          <SocialIcon
-            type="facebook"
-            title="Sign Up With Facebook"
-            raised={false}
-            button
-            onPress={this.onFbButtonPress}
-          />
-
           <View style={styles.detailWrapperStyle}>
-            <Text style={{ textAlign: 'center' }}>Already have an account?&nbsp;</Text>
+            <Text style={{ textAlign: 'center' }}>Already have an account?</Text>
             <TouchableWithoutFeedback onPress={this.onSignupLoginToggle}>
-              <View>
-                <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Log In</Text>
-              </View>
+              <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Log In</Text>
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -140,27 +103,13 @@ class AuthScreen extends Component {
       <View>
         <Button
           title="Log In"
-          //icon={{ name: 'vpn-key' }}
           backgroundColor={PRIMARY_COLOR}
           onPress={this.onStandardLoginButtonPress}
         />
-
-        <Text style={{ textAlign: 'center', marginTop: 10 }}>- OR -</Text>
-
-        <SocialIcon
-          type="facebook"
-          title="Log In With Facebook"
-          raised={false}
-          button
-          onPress={this.onFbButtonPress}
-        />
-
         <View style={styles.detailWrapperStyle}>
-          <Text style={{ textAlign: 'center' }}>Don't have an account?&nbsp;</Text>
+          <Text style={{ textAlign: 'center'}}>Don't have an account?</Text>
           <TouchableWithoutFeedback onPress={this.onSignupLoginToggle}>
-            <View>
-              <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Sign Up</Text>
-            </View>
+            <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Sign Up</Text>
           </TouchableWithoutFeedback>
         </View>
       </View>
@@ -185,7 +134,6 @@ class AuthScreen extends Component {
     }
   }
 
-  //////////////////////////////////////////////////////////////////////////////////
   // Get screen style (used to center activity spinner when loading)
   getScreenStyle() {
     if (this.state.showLoading) {
@@ -193,18 +141,17 @@ class AuthScreen extends Component {
     }
   }
 
-  //////////////////////////////////////////////////////////////////////////////////
   // Render loading screen (if attempting a persist login) or login screen
   renderContent() {
     if (this.state.showLoading) {
       return <Spinner size="large" message="Authenticating..." />;
     }
     return (
-      <View>
-        <View style={{ marginBottom: 10, marginTop: 30 }}>
-          <FormLabel>E-mail</FormLabel>
+      <View style={{marginLeft: 10, marginRight: 10}}>
+        <View style={{ marginBottom: 10, marginTop: "33%" }}>
+          <FormLabel>Email</FormLabel>
           <FormInput
-            placeholder="jon@email.com"
+            placeholder="jonWallace@uni.edu"
             value={this.props.email}
             onChangeText={this.onEmailChange}
           />
@@ -213,7 +160,7 @@ class AuthScreen extends Component {
         <View style={{ marginBottom: 10 }}>
           <FormLabel>Password</FormLabel>
           <FormInput
-            placeholder="p@ssw0rd"
+            placeholder="password"
             secureTextEntry
             value={this.props.password}
             onChangeText={this.onPasswordChange}
@@ -222,7 +169,7 @@ class AuthScreen extends Component {
 
         {this.renderPasswordRetypeButton()}
 
-        <FormValidationMessage containerStyle={{ marginBottom: 10 }}>
+        <FormValidationMessage containerStyle={{ marginBottom: 40}}>
           {this.props.error}
         </FormValidationMessage>
 
@@ -231,14 +178,12 @@ class AuthScreen extends Component {
     );
   }
 
-  //////////////////////////////////////////////////////////////////////////////////
   // Main render method
   render() {
     return <View style={this.getScreenStyle()}>{this.renderContent()}</View>;
   }
 }
 
-//////////////////////////////////////////////////////////////////////////////////
 // Styles object
 const styles = {
   detailWrapperStyle: {
@@ -255,7 +200,6 @@ const styles = {
   }
 };
 
-//////////////////////////////////////////////////////////////////////////////////
 // Map redux reducers to component props.
 function mapStateToProps({ auth }) {
   return {

@@ -30,9 +30,6 @@ import { PRIMARY_COLOR } from './src/constants/style';
 import EditItemScreen from './src/screens/EditItemScreen';
 
 export default class App extends Component {
-  //////////////////////////////////////////////////////////////////////////////
-  // Setup some warnings to ignore
-  // https://github.com/firebase/firebase-js-sdk/issues/97
   constructor() {
     super();
     this.state = {
@@ -41,20 +38,11 @@ export default class App extends Component {
     console.ignoredYellowBox = ['Setting a timer'];
     console.disableYellowBox = true;
   }
-  //////////////////////////////////////////////////////////////////////////////
-  // Upon loading app, initialize firebase
+
   componentWillMount() {
-    // DTG - Debugging
-
-    firebase.initializeApp(GOOGLE_FIREBASE_CONFIG);
-
-    //console.log('App.js: Signing Out');
-    //AsyncStorage.removeItem('fb_token'); // Just used for testing to clear item
-    //SecureStore.deleteItemAsync('fb_token'); // Just used for testing to clear item
-    //firebase.auth().signOut();
+    firebase.initializeApp(GOOGLE_FIREBASE_CONFIG); // Initialize firebase on app load
   }
 
-  // TR: Make fonts work in Expo: https://github.com/oblador/react-native-vector-icons/issues/523
   async componentDidMount() {
     await Font.loadAsync({
       Entypo: require('./node_modules/react-native-vector-icons/Fonts/Entypo.ttf'),
@@ -63,22 +51,18 @@ export default class App extends Component {
       MaterialIcons: require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
       Ionicons: require('./node_modules/react-native-vector-icons/Fonts/Ionicons.ttf')
     });
+    
     this.setState({ fontLoaded: true });
   }
 
-  //////////////////////////////////////////////////////////////////////////////
   // Main render method
   render() {
-    // TR: Make sure fonts load
     if (!this.state.fontLoaded) {
       return null;
     }
 
     const { icon } = styles;
 
-    //////////////////////////////////////////////////////////////////////////////
-    // Inner StackNavigator for search results
-    //////////////////////////////////////////////////////////////////////////////
     // Inner StackNavigator for search results
     const SearchScene = StackNavigator(
       {
@@ -138,7 +122,6 @@ export default class App extends Component {
         soview: { screen: SingleOfferViewScreen },
         mos: { screen: MakeOfferScreen },
         search: { screen: SearchScreen },
-
         campusSafety: { screen: CampusSafetyScreen }
       },
       {
@@ -190,12 +173,9 @@ export default class App extends Component {
           headerTitleStyle: { color: '#FFF' },
           headerTintColor: '#FFF',
         },
-        // cardStyle: {
-        //   paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
-        // },
         tabBarPosition: 'bottom', // Android
         tabBarOptions: {
-          showIcon: true, // Android
+          showIcon: true,         // Android
           showLabel: false,
         },
       }
@@ -228,7 +208,6 @@ export default class App extends Component {
       }
     );
 
-    //////////////////////////////////////////////////////////////////////////////
     // This component dictates the configuration of the drawer
     const customDrawerComponent = (props) => (
       <ScrollView>
@@ -253,7 +232,6 @@ export default class App extends Component {
       </ScrollView>
     );
 
-    //////////////////////////////////////////////////////////////////////////////
     // Main side drawer
     const MainDrawer = DrawerNavigator(
       {
@@ -262,23 +240,16 @@ export default class App extends Component {
       },
       {
         contentComponent: customDrawerComponent,
-        // contentOptions: {
-        //   activeTintColor: { color: '#F00' }
-        // }
-        // TR: https://github.com/react-navigation/react-navigation/issues/3148
         drawerOpenRoute: 'DrawerOpen',
         drawerCloseRoute: 'DrawerClose',
         drawerToggleRoute: 'DrawerToggle'
       }
     );
 
-    //////////////////////////////////////////////////////////////////////////////
-    // Top Level Navigator
+    // Top Level Navigator with slide functionality
     const MainNavigator = TabNavigator(
       {
-        // welcome: { screen: WelcomeScreen },
-        navigate: { screen: ScaffoldingScene },
-
+        // navigate: { screen: ScaffoldingScene },
         auth: { screen: AuthScreen },
         main: { screen: MainDrawer }
       },
@@ -287,13 +258,12 @@ export default class App extends Component {
           tabBarVisible: false
         },
         tabBarPosition: 'bottom',
-        swipeEnabled: true,
+        swipeEnabled: false,
         lazy: true, // Each screen will not mount/load until user clicks on them
         animationEnabled: false
       }
     );
 
-    // NOTE: onNavigationStateChange={null} disables Navigator debug logging
     return (
       <Provider store={store}>
         <View style={styles.container}>
@@ -304,17 +274,14 @@ export default class App extends Component {
   }
 }
 
-//////////////////////////////////////////////////////////////////////////////
-// Style object
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    //alignItems: 'center',
     justifyContent: 'center',
-    //marginTop: 25
     marginTop: Platform.OS === 'android' ? 24 : 0
   },
+
   icon: {
     color: '#000',
     fontSize: 24

@@ -76,7 +76,13 @@ class ProfileScreen extends Component {
       <View style={styles.root}>
         <View style={styles.headerView}>
           <TouchableOpacity
-            onPress={() => {firebase.auth().signOut();}}
+            onPress={() => {
+              try {
+                firebase.auth().signOut();
+              } catch(e) {
+                alert("Error signing out");
+              }
+            }}
             style = {styles.signOutBtn}
           >
             <Text style={{color: "black", fontWeight: "bold"}}>Sign out</Text>
