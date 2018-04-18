@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import firebase from 'firebase';
 import {
   FormLabel,
@@ -93,7 +93,7 @@ class AuthScreen extends Component {
           <View style={styles.detailWrapperStyle}>
             <Text style={{ textAlign: 'center' }}>Already have an account?</Text>
             <TouchableWithoutFeedback onPress={this.onSignupLoginToggle}>
-              <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Log In</Text>
+              <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Sign In</Text>
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -102,14 +102,14 @@ class AuthScreen extends Component {
     return (
       <View>
         <Button
-          title="Log In"
+          title="Sign In"
           backgroundColor={PRIMARY_COLOR}
           onPress={this.onStandardLoginButtonPress}
         />
         <View style={styles.detailWrapperStyle}>
           <Text style={{ textAlign: 'center'}}>Don't have an account?</Text>
           <TouchableWithoutFeedback onPress={this.onSignupLoginToggle}>
-            <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Sign Up</Text>
+            <Text style={{ color: 'blue', textDecorationLine: 'underline', borderRadius: 10 }}>Sign Up</Text>
           </TouchableWithoutFeedback>
         </View>
       </View>
@@ -146,9 +146,10 @@ class AuthScreen extends Component {
     if (this.state.showLoading) {
       return <Spinner size="large" message="Authenticating..." />;
     }
+
     return (
-      <View style={{marginLeft: 10, marginRight: 10}}>
-        <View style={{ marginBottom: 10, marginTop: "33%" }}>
+      <View style={styles.container}>
+        <View style={{ marginBottom: 10, marginTop: "33%"}}>
           <FormLabel>Email</FormLabel>
           <FormInput
             placeholder="jonWallace@uni.edu"
@@ -169,7 +170,7 @@ class AuthScreen extends Component {
 
         {this.renderPasswordRetypeButton()}
 
-        <FormValidationMessage containerStyle={{ marginBottom: 40}}>
+        <FormValidationMessage>
           {this.props.error}
         </FormValidationMessage>
 
@@ -180,23 +181,33 @@ class AuthScreen extends Component {
 
   // Main render method
   render() {
-    return <View style={this.getScreenStyle()}>{this.renderContent()}</View>;
+    return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={this.getScreenStyle()}>
+          {this.renderContent()}
+        </View>
+      </TouchableWithoutFeedback>
+    );
   }
 }
 
 // Styles object
 const styles = {
+  container: {
+    height: "100%", 
+    width: "100%", 
+  },
   detailWrapperStyle: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
-    marginTop: 10
+    marginTop: 10,
   },
   spinnerStyle: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   }
 };
 
