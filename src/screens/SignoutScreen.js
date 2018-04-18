@@ -18,11 +18,8 @@ class AuthScreen extends Component {
   componentWillMount() {
     try {
       firebase.auth().signOut();
-      alert("Signing out...");
-      this.props.navigation.navigate('auth')
-    } catch(e) {
-      alert("Error signing out");
-    }
+      this.props.navigation.navigate('MainNavigator')
+    } catch(e) {}
   }
 
   renderScreen() {
