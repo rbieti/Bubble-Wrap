@@ -3,7 +3,10 @@ import {
   ITEM_UPDATE,
   ITEM_CREATE,
   FETCH_USER_ITEMS,
-  FETCH_ALL_ITEMS
+  FETCH_ALL_ITEMS,
+  FETCH_OFFERS,
+  GET_USER_ITEMS,
+  GET_OFFER_ITEMS
 } from './types';
 
 export const itemUpdate = ({ prop, value }) => ({
@@ -96,4 +99,53 @@ export const fetchAllItems = () => dispatch => {
         payload: { all_items }
       });
     });
+};
+
+export const fetchOffers = (prevItems) => dispatch => {
+  const itemKeys = prevItems.map((item => item.key));
+  firebase.database().ref('/offers')
+    .on('value', snapshot => {
+      const items = prevItems.slice(); // copy
+      snapshot.forEach(o => {
+        const offer = o.val();
+        const itemKey = offer.item; // item is the itemKey
+        if (itemKeys.includes(itemKey)) {
+          const item = items.find(i => i.key === itemKey);
+          if (!('offers' in item)) {
+            item.offers = []; // create offers array if it doesn't exist
+          }
+          item.offers.push({ ...offer, key: o.key });
+        }
+      });
+      dispatch({
+        type: FETCH_OFFERS,
+        payload: { items }
+      });
+    });
+};
+
+export const getUserItems = (items) => {
+  const { uid } = firebase.auth().currentUser;
+  const userItems = [];
+  items.forEach(item => {
+    if (item.owner === uid) {
+      userItems.push(item);
+    }
+  });
+  return {
+    type: GET_USER_ITEMS,
+    payload: { userItems }
+  };
+};
+
+export const getOfferItems = (items) => {
+  const { uid } = firebase.auth().currentUser;
+  const offerItems = items.filter(({ offers }) => offers && offers.some(({ user }) => user === uid))
+    .map(item => {
+      return { ...item, offers: item.offers.filter(({ user }) => user === uid) };
+    });
+  return {
+    type: GET_OFFER_ITEMS,
+    payload: { offerItems }
+  };
 };

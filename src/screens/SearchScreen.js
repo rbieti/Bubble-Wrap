@@ -6,6 +6,7 @@ import { Icon, FormLabel, FormInput, Button, List, ListItem} from 'react-native-
 import { ActivityIndicator, AppRegistry, Dimensions, Image, ScrollView, StyleSheet, Switch, Text, TextInput, View, TouchableOpacity, FlatList} from 'react-native';
 import { fetchAllItems } from '../actions/user_items_actions';
 import { loadItem } from '../actions/buy_items_actions';
+import { fetchUsers } from '../actions/users_actions';
 
 class SearchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -19,13 +20,14 @@ class SearchScreen extends Component {
 
   componentDidMount() {
     this.props.fetchAllItems();
+    this.props.fetchUsers();
   }
 
   renderItems() {
     const { all_items } = this.props;
     return all_items.map((item) => (
-      <TouchableOpacity onPress={() => { this.props.loadItem(item); this.props.navigation.navigate('buyItem'); }}>
-        <View style={styles.itemCell} key={{item}.key}>
+      <TouchableOpacity key={item.key} onPress={() => { this.props.loadItem(item); this.props.navigation.navigate('buyItem'); }}>
+        <View style={styles.itemCell}>
           <Image
             source={{ uri: item.images[0].url }}
             style={styles.itemImg}
@@ -64,11 +66,6 @@ class SearchScreen extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  const { items, all_items } = state.userItems;
-  return { items, all_items };
-};
 
 const styles = StyleSheet.create({
   root: { 
@@ -110,4 +107,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps, { fetchAllItems, loadItem })(SearchScreen);
+const mapStateToProps = (state) => {
+  const { all_items } = state.userItems;
+  return { all_items };
+};
+
+export default connect(mapStateToProps, { fetchAllItems, loadItem, fetchUsers })(SearchScreen);
