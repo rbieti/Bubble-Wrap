@@ -6,11 +6,11 @@ export default class CampusSafety extends Component {
 	safeSpace = [
 		{
 			coordinate: {
-				latitude: 34.130438,
-				longitude: -117.887539
+				latitude: 34.130284,
+				longitude: -117.888261
 			},
 			title: 'East Campus',
-			radius: 160
+			radius: 40
 		},
 		{
 			coordinate: {
@@ -18,6 +18,14 @@ export default class CampusSafety extends Component {
 				longitude: -117.890574
 			},
 			title: 'Starbucks',
+			radius: 20
+		},
+		{
+			coordinate: {
+				latitude: 34.130507,
+				longitude: -117.886821
+			},
+			title: 'Trinity Lawn',
 			radius: 20
 		},
 		{
