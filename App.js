@@ -18,6 +18,7 @@ import ListOfOffers from './src/screens/ListOfOffers';
 import SingleOfferViewScreen from './src/screens/SingleOfferViewScreen';
 import ScaffoldingScreen from './src/screens/ScaffoldingScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import EditProfileScreen from './src/screens/EditProfileScreen';
 import SellerScreen from './src/screens/SellerProfileScreen';
 import ChatMessengerScreen from './src/screens/ChatMessengerScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
@@ -196,7 +197,8 @@ export default class App extends Component {
         trans: { screen: TransactionScreen },
         mos: { screen: MakeOfferScreen },
         search: { screen: SearchScreen },
-        campusSafety: { screen: CampusSafetyScreen }
+        campusSafety: { screen: CampusSafetyScreen },
+        editProfile: { screen: EditProfileScreen}
       },
       {
         navigationOptions: {
