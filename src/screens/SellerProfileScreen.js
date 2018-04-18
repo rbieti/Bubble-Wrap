@@ -17,6 +17,7 @@ import {
 import { Cell, Section, TableView } from 'react-native-tableview-simple';
 import { connect } from 'react-redux';
 import { loadItem, fetchItems } from '../actions/buy_items_actions';
+import { loadSeller } from '../actions/user_profile_actions';
 
 class SellerProfileScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -32,6 +33,32 @@ class SellerProfileScreen extends Component {
     // TR: hard coded user id of the current seller
     const uid = { uid: 'vwFIYPQnssUpRACcwkTY0GRtcdm1' };
     this.props.fetchItems(uid);
+  }
+
+  loadReviews() {
+    const { seller } = this.props;
+    const { reviews } = seller;
+    let sellerName = '';
+    return Object.values(reviews).map(({ key, comment, rating, userId }) => (
+      <TouchableOpacity
+        onPress={() => {
+          this.props.loadSeller(userId);
+          this.props.navigation.navigate('seller'); 
+        }}
+        key={key}
+      >
+        <View style={styles.reviewCell} >
+          <Image
+            source={{url: 'https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/12669716_1237006402982393_3217046914981297038_n.jpg?_nc_cat=0&oh=b05a93c391dc723f390016b5eef6122b&oe=5B65D228'}}
+            style={styles.reviewerImg}
+            resizeMode="cover"
+          />
+          <Text style={styles.h1Lbl}>{`${sellerName}`}</Text>
+          <Text style={styles.h1Lbl}>{`${rating}/5`}</Text>
+          <Text style={styles.h1Lbl}>{`${comment}`}</Text>
+        </View>
+      </TouchableOpacity>
+    ));
   }
 
   renderItems() {
@@ -58,18 +85,24 @@ class SellerProfileScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation; // THIS IS NECESSARY FOR NAVIGATION
+    const { seller } = this.props;
+    const { name, bubbleCommunity, overallRating, profileURL, reviews, email, numTransactions, strikeCount } = seller;
     return (
       <View style={styles.root}>
         <View style={styles.headerView}>
-          <Image source={require('../../assets/profile1.jpg')} style={styles.profileImg} resizeMode="cover" />
+          <Image 
+          source={{ uri: profileURL }} 
+          style={styles.profileImg} 
+          resizeMode="cover" 
+          />
 
-          <Text style={styles.userNameLbl}>Kyle Nakamura</Text>
-          <Text style={styles.userUniversityLbl}>Azusa Pacific University</Text>
+          <Text style={styles.userNameLbl}>{`${name}`}</Text>
+          <Text style={styles.userUniversityLbl}>{`Bubble Community: ${bubbleCommunity}`}</Text>
         </View>
 
         <ScrollView contentContainerStyle={styles.tableViewScroll}>
           <View style={styles.scrollSection}>
-            <Text style={styles.scrollSectionLbl}>Kyle's trustworthiness rating: 4.8/5</Text>
+            <Text style={styles.scrollSectionLbl}>{`${name}'s trustworthiness rating: ${overallRating}/5`}</Text>
             <ScrollView
               style={styles.horizontalScrollView}
               automaticallyAdjustInsets={true}
@@ -79,78 +112,13 @@ class SellerProfileScreen extends Component {
               decelerationRate={0.5}
               scrollEventThrottle={16}
             >
-              <TouchableOpacity
-                onPress={() => {
-                  navigate('seller');
-                }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require('../../assets/icon-profile.png')}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Robert</Text>
-                  <Text style={styles.h1Lbl}>4/5</Text>
-                  <Text style={styles.reviewerTxt}>"Item was exactly as described!"</Text>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => {
-                  navigate('seller');
-                }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require('../../assets/icon-profile.png')}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Trevor</Text>
-                  <Text style={styles.h1Lbl}>5/5</Text>
-                  <Text style={styles.reviewerTxt}>"Thanks for selling me your car!"</Text>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => {
-                  navigate('seller');
-                }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require('../../assets/icon-profile.png')}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Andrew</Text>
-                  <Text style={styles.h1Lbl}>3/5</Text>
-                  <Text style={styles.reviewerTxt}>"Kyle was very nice and reasonable."</Text>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => {
-                  navigate('seller');
-                }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require('../../assets/icon-profile.png')}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Joshua</Text>
-                  <Text style={styles.h1Lbl}>5/5</Text>
-                  <Text style={styles.reviewerTxt}>"Went out of his way to be helpful."</Text>
-                </View>
-              </TouchableOpacity>
+            
+             {this.loadReviews()}
             </ScrollView>
           </View>
 
           <View style={styles.scrollSection}>
-            <Text style={styles.scrollSectionLbl}>Kyle's Items for Sale</Text>
+            <Text style={styles.scrollSectionLbl}>{`${name}'s Items for Sale`}</Text>
             <ScrollView
               style={styles.horizontalScrollView}
               automaticallyAdjustInsets={true}
@@ -259,10 +227,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { items } = state.buyItems;
-  return { items };
+  const { seller } = state.user;
+  return { items, seller };
 };
 
 export default connect(mapStateToProps, {
   loadItem,
-  fetchItems
+  fetchItems,
+  loadSeller,
 })(SellerProfileScreen);

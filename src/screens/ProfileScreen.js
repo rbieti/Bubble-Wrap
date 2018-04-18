@@ -25,7 +25,8 @@ import {
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 import { fetchItems } from '../actions/user_items_actions';
-import { fetchUser } from '../actions/user_profile_actions';
+import { fetchUser, fetchUserReviews, findUserName, loadSeller } from '../actions/user_profile_actions';
+import { fetchUsers } from '../actions/users_actions';
 
 class ProfileScreen extends Component {
 
@@ -41,6 +42,8 @@ class ProfileScreen extends Component {
   async componentDidMount() {
     this.props.fetchItems();
     this.props.fetchUser();
+    this.props.fetchUserReviews();
+    this.props.fetchUsers();
   }
 
   loadUsername() {
@@ -50,12 +53,40 @@ class ProfileScreen extends Component {
     )
   }
 
+  loadReviews() {
+    const { reviews } = this.props;
+    let sellerName = '';
+    return reviews.map(({ key, comment, rating, userId }) => (
+      <TouchableOpacity
+        onPress={() => {
+          this.props.loadSeller(userId);
+          this.props.navigation.navigate('seller'); 
+        }}
+        key={key}
+      >
+        <View style={styles.reviewCell} >
+          <Image
+            source={{url: 'https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/12669716_1237006402982393_3217046914981297038_n.jpg?_nc_cat=0&oh=b05a93c391dc723f390016b5eef6122b&oe=5B65D228'}}
+            style={styles.reviewerImg}
+            resizeMode="cover"
+          />
+          <Text style={styles.h1Lbl}>{`${sellerName}`}</Text>
+          <Text style={styles.h1Lbl}>{`${rating}/5`}</Text>
+          <Text style={styles.h1Lbl}>{`${comment}`}</Text>
+        </View>
+      </TouchableOpacity>
+    ));
+  }
+
+
+
   renderItems() {
     const { items } = this.props;
     return items.map(({ key, name, price, images }) => (
       <TouchableOpacity
         key={key}
         onPress={() => { this.props.navigation.navigate('editItem'); }}
+        key={key}
       >
         <View style={styles.reviewCell}>
           <Image
@@ -71,7 +102,7 @@ class ProfileScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { overallRating, profileURL, bubbleCommunity, numTransactions } = this.props;
+    const { name, overallRating, profileURL, bubbleCommunity, numTransactions, email } = this.props;
     return (
       <View style={styles.root}>
         <View style={styles.headerView}>
@@ -100,8 +131,9 @@ class ProfileScreen extends Component {
 
           {this.loadUsername()}
           <Text style={styles.userUniversityLbl}>Your bubble: {bubbleCommunity}</Text>
+          <Text style={styles.userUniversityLbl}>{email}</Text>
         </View>
-
+        
         <ScrollView contentContainerStyle={styles.tableViewScroll}>
           <View style={styles.reviewsView}>
             <Text style={styles.h1Lbl}>Your trustworthiness rating: {overallRating}/5</Text>
@@ -114,62 +146,8 @@ class ProfileScreen extends Component {
               decelerationRate={0.5}
               scrollEventThrottle={16}
             >
-              <TouchableOpacity
-                onPress={() => { navigate('seller'); }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require("../../assets/icon-profile.png")}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Robert</Text>
-                  <Text style={styles.h1Lbl}>4/5</Text>
-                  <Text style={styles.reviewerTxt}>"Item was exactly as described!"</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => { navigate('seller'); }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require("../../assets/icon-profile.png")}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Trevor</Text>
-                  <Text style={styles.h1Lbl}>5/5</Text>
-                  <Text style={styles.reviewerTxt}>"Thanks for selling me your car!"</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => { navigate('seller'); }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require("../../assets/icon-profile.png")}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Andrew</Text>
-                  <Text style={styles.h1Lbl}>3/5</Text>
-                  <Text style={styles.reviewerTxt}>"Kyle was very nice and reasonable."</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => { navigate('seller'); }}
-              >
-                <View style={styles.reviewCell}>
-                  <Image
-                    source={require("../../assets/icon-profile.png")}
-                    style={styles.reviewerImg}
-                    resizeMode="cover"
-                  />
-                  <Text style={styles.h1Lbl}>Joshua</Text>
-                  <Text style={styles.h1Lbl}>5/5</Text>
-                  <Text style={styles.reviewerTxt}>"Went out of his way to be helpful."</Text>
-                </View>
-              </TouchableOpacity>
+            {this.loadReviews()}
+              
             </ScrollView>
           </View>
 
@@ -187,41 +165,6 @@ class ProfileScreen extends Component {
               {this.renderItems()}
             </ScrollView>
           </View>
-
-          <TableView>
-            <Section header="CONTACT INFORMATION" footer="">
-              <Cell
-                cellStyle="Basic"
-                title="Update your profile picture"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-              <Cell
-                cellStyle="Basic"
-                title="Add a phone number"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-              <Cell
-                cellStyle="Basic"
-                title="Add an email address"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-              <Cell
-                cellStyle="Basic"
-                title="Add a payment method"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-              <Cell
-                cellStyle="Basic"
-                title="Connect your Facebook account"
-                accessory="DisclosureIndicator"
-                onPress={() => console.log('Heyho!')}
-              />
-            </Section>
-          </TableView>
         </ScrollView>
       </View>
     );
@@ -266,6 +209,20 @@ const styles = StyleSheet.create({
     width: profileImgWidth,
     height: profileImgWidth,
     borderRadius: profileImgWidth / 2,
+  },
+
+  editProfile: {
+    position: 'absolute',
+    top:12,
+    right:12,
+    height:25,
+    width: 25,
+    zIndex: 2
+  },
+
+  icon:{
+    height: '100%',
+    width: '100%'
   },
 
   userNameLbl: {
@@ -325,15 +282,22 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   const { items } = state.userItems;
   const { name, overallRating, 
-    bubbleCommunity, numTransactions, profileURL } = state.user;
+    bubbleCommunity, numTransactions, profileURL, email } = state.user;
+  const { reviews } = state.user;
+  const { username } = state.user;
+  const { users } = state.users;
   return { 
     items, 
     name,
     overallRating,
     bubbleCommunity,
     numTransactions,
-    profileURL
+    profileURL,
+    reviews,
+    username,
+    email,
+    users,
    };
 };
 
-export default connect(mapStateToProps, { fetchItems, fetchUser })(ProfileScreen);
+export default connect(mapStateToProps, { fetchItems, fetchUser, fetchUserReviews, findUserName, fetchUsers, loadSeller })(ProfileScreen);
