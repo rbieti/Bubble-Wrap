@@ -1,6 +1,10 @@
 import {
 FETCH_USER,
-USER_UPDATE
+//USER_UPDATE
+LOAD_UID,
+FETCH_USER_REVIEWS,
+FIND_USER_NAME,
+LOAD_SELLER
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -8,7 +12,11 @@ const INITIAL_STATE = {
     overallRating: 0,
     bubbleCommunity: '',
     numTransactions: 0,
-    profileURL: 'https://www.aisd.net/adams-elementary/wp-content/files/sites/44/2017/07/generic-profile-picture.png'
+    profileURL: 'https://www.aisd.net/adams-elementary/wp-content/files/sites/44/2017/07/generic-profile-picture.png',
+    userID: '',
+    reviews: [],
+    username: '',
+    seller: {},
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -19,8 +27,24 @@ export default function (state = INITIAL_STATE, action) {
                 overallRating: action.payload.overallRating,
                 bubbleCommunity: action.payload.bubbleCommunity,
                 numTransactions: action.payload.numTransactions,
-                profileURL: action.payload.profileURL
-            };
+                profileURL: action.payload.profileURL,
+                email: action.payload.email
+            }
+        case FETCH_USER_REVIEWS:
+            return {
+                ...state,
+                reviews: action.payload.reviewsArray
+            }
+        case FIND_USER_NAME:
+            return {
+                ...state,
+                username: action.payload.username
+            }
+        case LOAD_SELLER:
+            return {
+                ...state,
+                seller: action.payload.seller
+            }
         default:
             return state;
     }
