@@ -237,6 +237,7 @@ export default class App extends Component {
 		const MainDrawer = DrawerNavigator(
 			{
 				home: { screen: HomeScene },
+				campusSafety: { screen: CampusSafetyScreen },
 				signout: { screen: SignoutScreen }
 			},
 			{
