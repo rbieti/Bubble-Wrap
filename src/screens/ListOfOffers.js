@@ -1,26 +1,13 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import { View, StyleSheet, Text, TouchableOpacity, Image, ScrollView, ActivityIndicator, AppRegistry, Dimensions, Switch, TextInput, Button} from "react-native";
-import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/style';
 import { Cell, Section, TableView, } from 'react-native-tableview-simple';
+import Carousel from 'react-native-snap-carousel';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/style';
+import { fetchAllItems, fetchOffers, getUserItems, getOfferItems } from '../actions/user_items_actions';
+import { loadItem } from '../actions/buy_items_actions';
 
-const CellVariant = (props) => (
-  <Cell
-    {...props}
-    cellContentView = {
-      <View style={styles.customCell} >
-        <Text
-          allowFontScaling
-          numberOfLines={1}
-          style={styles.cellText}
-        >
-          {props.title}
-        </Text>
-      </View>
-    }
-  />
-);
-
-export default class Untitled extends Component {
+class ListOfOffers extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Offers',
     tabBarLabel: 'Offers',
@@ -30,235 +17,133 @@ export default class Untitled extends Component {
     },
   });
 
+  componentDidMount() {
+    // this.props.fetchAllItems();
+    this.props.getUserItems(this.props.all_items);
+    this.props.fetchOffers(this.props.all_items);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.offersFetched !== this.props.offersFetched) {
+      this.props.getOfferItems(this.props.all_items);
+    }
+  }
+
+  _renderUserItem({ item, index }) {
+    return (
+      <TouchableOpacity 
+        style={styles.card} 
+        onPress={() => { this.props.loadItem(item); this.props.navigation.navigate('soview'); }}
+        key={index}
+      >
+        <Image style={styles.cardImg} source={{ uri: item.images[0].url }} />
+        <View style={styles.textBackground}>
+          <Text style={styles.cardText}>{`${item.name} \n $${item.price}`}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  _renderSellerItem({ item, index }) {
+    return (
+      <TouchableOpacity 
+        style={styles.card}
+        onPress={() => { this.props.loadItem(item); this.props.navigation.navigate('buyItem'); }}
+        key={index}
+      >
+        <Image style={styles.cardImg} source={{ uri: item.images[0].url }} />
+        <View style={styles.textBackground}>
+          <Text style={styles.cardText}>{`${item.name} \n You Offered: $${item.offers[0].amount}`}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
   render() {
     return (
-      <View style={styles.root}>
-        <ScrollView>
-          <View style={styles.cardView}>
-            <Image 
-              source={require("../../assets/logo.png")}
-              style={styles.profileImg}
-              resizeMode="cover"
-            />
-            <View style={styles.titleArea}>
-              <Text style={styles.cardTitle}> iPhone 6 </Text>
-              <Text style={styles.cardSubtitle}> asking price: $245 </Text>
-            </View>
+      <ScrollView contentContainerStyle={styles.verticalScroll}>
+        <Text style={styles.carouselTitle}>Items you are selling</Text>
+        <Carousel
+          ref={(c) => { this._carousel = c; }}
+          data={this.props.userItems}
+          renderItem={this._renderUserItem.bind(this)}
+          sliderWidth={375}
+          itemWidth={cardWidth}
+          layout={'default'} 
+          activeSlideAlignment={'center'}
+          containerCustomStyle={styles.horizontalCarousel}
+          enableSnap={false}
+        />
 
-            <View style={styles.sections}>
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> See more... </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.cardView}>
-            <Image 
-              source={require("../../assets/logo.png")}
-              style={styles.profileImg}
-              resizeMode="cover"
-            />
-            <View style={styles.titleArea}>
-              <Text style={styles.cardTitle}> Honda Accord 2014 50k miles </Text>
-              <Text style={styles.cardSubtitle}> asking price: $92,000 </Text>
-            </View>
-
-            <View style={styles.sections}>
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> See more... </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.cardView}>
-            <Image 
-              source={require("../../assets/logo.png")}
-              style={styles.profileImg}
-              resizeMode="cover"
-            />
-            <View style={styles.titleArea}>
-              <Text style={styles.cardTitle}> iPhone 6 </Text>
-              <Text style={styles.cardSubtitle}> asking price: $245 </Text>
-            </View>
-
-            <View style={styles.sections}>
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> See more... </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.cardView}>
-            <Image 
-              source={require("../../assets/logo.png")}
-              style={styles.profileImg}
-              resizeMode="cover"
-            />
-            <View style={styles.titleArea}>
-              <Text style={styles.cardTitle}> iPhone 6 </Text>
-              <Text style={styles.cardSubtitle}> asking price: $245 </Text>
-            </View>
-
-            <View style={styles.sections}>
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> See more... </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.cardView}>
-            <Image 
-              source={require("../../assets/logo.png")}
-              style={styles.profileImg}
-              resizeMode="cover"
-            />
-            <View style={styles.titleArea}>
-              <Text style={styles.cardTitle}> iPhone 6 </Text>
-              <Text style={styles.cardSubtitle}> asking price: $245 </Text>
-            </View>
-
-            <View style={styles.sections}>
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> See more... </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.cardView}>
-            <Image 
-              source={require("../../assets/logo.png")}
-              style={styles.profileImg}
-              resizeMode="cover"
-            />
-            <View style={styles.titleArea}>
-              <Text style={styles.cardTitle}> iPhone 6 </Text>
-              <Text style={styles.cardSubtitle}> asking price: $245 </Text>
-            </View>
-
-            <View style={styles.sections}>
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> Carl offered: $100,000,000 </Text>
-              </View>
-
-              <View style={styles.cardSection}>
-                <Text style={styles.cardText}> See more... </Text>
-              </View>
-            </View>
-          </View>
-        </ScrollView>
-      </View>
+        <Text style={styles.carouselTitle}>Offers you have made</Text>
+        <Carousel
+          ref={(c) => { this._carousel = c; }}
+          data={this.props.offerItems}
+          renderItem={this._renderSellerItem.bind(this)}
+          sliderWidth={375}
+          itemWidth={cardWidth}
+          layout={'default'} 
+          activeSlideAlignment={'center'}
+          containerCustomStyle={styles.horizontalCarousel}
+        />
+      </ScrollView>
     );
   }
 }
 
+const cardWidth = 250;
+const cardHeight = cardWidth;
+
 const styles = {
-  root: {
-
+  horizontalCarousel: {
+    marginTop: 40,
   },
 
-  cardView: {
-    flexDirection: 'column', 
+  card: {
     flex: 1, 
-    paddingVertical: 20, 
-    margin: 20,
-    marginBottom: 30,
-    height: 300,
-    borderRadius: 5,
+    width: cardWidth,
+    height: cardHeight,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 12, 
+    borderRadius: 15,
     backgroundColor: "#fff",
-    shadowColor: '#000',
-    shadowOffset: { width: 2, height: 3 },
-    shadowOpacity: 0.33,
-    shadowRadius: 5,
-    elevation: 0,
+    overflow: 'hidden',
   },
 
-  profileImg: {
-    width: 150,
-    height: 150,
-    position: "absolute",
+  cardImg: {
+    position: 'absolute',
     top: 0,
+    right: 0,
+    bottom: 0,
     left: 0,
   },
 
-  titleArea: {
-    width: "50%"
-  },
-
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    position: "relative",
-    left: 160,
-    textAlign: 'left',
-  },
-
-  cardSubtitle: {
-    fontSize: 16,
-    position: "relative",
-    left: 160,
-  },
-
-  sections: {
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-  },
-
-  cardSection: {
+  textBackground: {
+    height: 60,
+    flex: 1,
     justifyContent: 'center',
-    width: "100%",
-    height: 50,
-    backgroundColor: "#fff",
-    borderTopWidth: 2,
-    borderColor: '#d6d7da',
+    alignItems: 'center',
+    backgroundColor: "#00000050",
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 
   cardText: {
-    fontSize: 16,
-    marginLeft: 15
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#fff',
   }
 };
+
+const mapStateToProps = (state) => {
+  const { items, all_items, userItems, offerItems, offersFetched } = state.userItems;
+  const { item } = state.buyItems;
+  return { items, item, all_items, userItems, offerItems, offersFetched };
+};
+
+export default connect(mapStateToProps, { fetchAllItems, fetchOffers, loadItem, getUserItems, getOfferItems })(ListOfOffers);
