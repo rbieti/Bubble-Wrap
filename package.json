@@ -1,34 +1,33 @@
 {
-  "name": "reactnativestarterproject",
-  "version": "0.0.0",
-  "description": "Hello Expo!",
-  "author": "RJ Bieti, Trevor Robert, AKISAKINAKA",
-  "private": true,
-  "main": "node_modules/expo/AppEntry.js",
-  "dependencies": {
-    "axios": "^0.16.2",
-    "expo": "^22.0.0",
-    "firebase": "^4.3.0",
-    "lodash": "^4.17.4",
-    "npm": "^5.8.0",
-    "qs": "^6.5.0",
-    "react": "^16.2.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-22.0.1.tar.gz",
-    "react-native-awesome-card-io": "^0.7.0",
-    "react-native-checkout": "0.0.7",
-    "react-native-elements": "^0.16.0",
-    "react-native-gifted-chat": "^0.3.0",
-    "react-native-maps": "^0.20.0",
-    "react-native-snap-carousel": "^3.6.0",
-    "react-native-tableview-simple": "^0.17.2",
-    "react-native-vector-icons": "^4.5.0",
-    "react-navigation": "^1.0.0-beta.11",
-    "react-redux": "^5.0.6",
-    "redux": "^3.7.2",
-    "redux-persist": "^4.8.3",
-    "redux-thunk": "^2.2.0"
-  },
-  "devDependencies": {
-    "eslint-config-rallycoding": "^3.2.0"
-  }
+	"name": "reactnativestarterproject",
+	"version": "0.0.0",
+	"description": "Hello Expo!",
+	"author": "RJ Bieti, Trevor Robert, AKISAKINAKA",
+	"private": true,
+	"main": "node_modules/expo/AppEntry.js",
+	"dependencies": {
+		"axios": "^0.16.2",
+		"expo": "^22.0.0",
+		"firebase": "^4.3.0",
+		"lodash": "^4.17.4",
+		"npm": "^5.8.0",
+		"qs": "^6.5.0",
+		"react": "^16.2.0",
+		"react-native": "https://github.com/expo/react-native/archive/sdk-22.0.1.tar.gz",
+		"react-native-awesome-card-io": "^0.7.0",
+		"react-native-checkout": "0.0.7",
+		"react-native-elements": "^0.16.0",
+		"react-native-gifted-chat": "^0.3.0",
+		"react-native-maps": "^0.20.1",
+		"react-native-tableview-simple": "^0.17.2",
+		"react-native-vector-icons": "^4.5.0",
+		"react-navigation": "^1.0.0-beta.11",
+		"react-redux": "^5.0.6",
+		"redux": "^3.7.2",
+		"redux-persist": "^4.8.3",
+		"redux-thunk": "^2.2.0"
+	},
+	"devDependencies": {
+		"eslint-config-rallycoding": "^3.2.0"
+	}
 }

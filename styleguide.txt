@@ -1,5 +1,7 @@
 Git Style Guide
 
+------------
+
 Branches:
  - Branch names should start with a category; either feature, bugfix, hotfix, or release.
  - Branch names should include a unique identifier, which will correspond to a GitHub issue number.
