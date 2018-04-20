@@ -29,10 +29,10 @@ class SellerProfileScreen extends Component {
     }
   });
 
-  async componentDidMount() {
-    // TR: hard coded user id of the current seller
-    const uid = { uid: 'vwFIYPQnssUpRACcwkTY0GRtcdm1' };
-    this.props.fetchItems(uid);
+  componentDidUpdate(prevProps) {
+    if (prevProps.seller !== this.props.seller) {
+      this.props.fetchItems({ uid: this.props.seller.key });
+    }
   }
 
   loadReviews() {
@@ -43,7 +43,7 @@ class SellerProfileScreen extends Component {
       <TouchableOpacity
         onPress={() => {
           this.props.loadSeller(userId);
-          this.props.navigation.navigate('seller'); 
+          this.props.navigation.navigate('seller');
         }}
         key={key}
       >
@@ -71,12 +71,12 @@ class SellerProfileScreen extends Component {
         }}
       >
         <View style={styles.reviewCell}>
-        {!!item.images[0] &&
-          <Image
-            source={{ uri: item.images[0].url }}
-            style={styles.reviewerImg}
-            resizeMode="cover"
-          />}
+          {!!item.images[0] &&
+            <Image
+              source={{ uri: item.images[0].url }}
+              style={styles.reviewerImg}
+              resizeMode="cover"
+            />}
           <Text style={styles.h1Lbl}>{`${item.name} | $${item.price}`}</Text>
         </View>
       </TouchableOpacity>
@@ -90,10 +90,10 @@ class SellerProfileScreen extends Component {
     return (
       <View style={styles.root}>
         <View style={styles.headerView}>
-          <Image 
-          source={{ uri: profileURL }} 
-          style={styles.profileImg} 
-          resizeMode="cover" 
+          <Image
+            source={{ uri: profileURL }}
+            style={styles.profileImg}
+            resizeMode="cover"
           />
 
           <Text style={styles.userNameLbl}>{`${name}`}</Text>
@@ -112,8 +112,8 @@ class SellerProfileScreen extends Component {
               decelerationRate={0.5}
               scrollEventThrottle={16}
             >
-            
-             {this.loadReviews()}
+
+              {this.loadReviews()}
             </ScrollView>
           </View>
 
