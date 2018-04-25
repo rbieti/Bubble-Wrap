@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Text, Button, TouchableOpacity, Image, TextInput } from "react-native";
 import { PRIMARY_COLOR } from '../constants/style';
-export default class Untitled extends Component {
+import { connect } from 'react-redux';
+
+class MakeOfferScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     //tabBarVisible: false,
     title: 'Make an Offer',
@@ -13,25 +15,28 @@ export default class Untitled extends Component {
   });
 
   render() {
+    const { name, price, images } = this.props.item;
     const { navigate } = this.props.navigation;
     return (
-      <Image
-        style={styles.backgroundImage}
-        source={require("../../assets/item01.jpg")}
-      >
+      <Image 
+        style={styles.backgroundImage} 
+        source={{ uri: images[0].url }}
+        blurRadius={15}
+        >
         <View style={styles.root}>
           <View style={styles.topArea}>
             <TextInput
               style={styles.textInput}
-              placeholder="$145"
+              keyboardType='numeric'
+              // value={"$" + price}  // get offer value from price variable
+              // value={"$" + "0"}
+              maxLength={5}
               onChangeText={(text) => this.setState({text})}
             />
-            <Text style={styles.text}>Enter your offer for [item name]</Text>
+            <Text style={styles.text}>Enter your offer for</Text>
+            <Text style={styles.text}>{name}</Text>
           </View>
-          <TouchableOpacity 
-            style={styles.offerBtn}
-            onPress={() => {console.log("Button pressed")}}
-            >
+          <TouchableOpacity style={styles.offerBtn} onPress={() => { console.log("Button pressed") }}>
             <Text style={styles.btnText}>Make offer</Text>
           </TouchableOpacity>
        </View>
@@ -59,23 +64,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "80%",
-    maxHeight: 100,
+    maxHeight: 180,
     backgroundColor: "transparent"
   },
 
   textInput: {
     width: "80%",
+    height: 45,
     backgroundColor: "white",
-    textAlign: "center",
+    color: "black",
+    textAlign: "left",
+    borderRadius: 15,
     padding: 20,
+    paddingTop: 0,
+    paddingBottom: 0,
     marginTop: 100,
+    marginBottom: 20,
   },
 
   text: {
     width: "100%",
     color: "white",
     textAlign: "center",
-    marginTop: 20,
+    marginBottom: 8,
+    fontSize: 20,
   },
 
   offerBtn: {
@@ -91,6 +103,15 @@ const styles = StyleSheet.create({
   },
 
   btnText: {
-
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'white',
   }
 });
+
+const mapStateToProps = (state) => {
+  const { item } = state.buyItems;
+  return { item };
+};
+
+export default connect(mapStateToProps)(MakeOfferScreen);
