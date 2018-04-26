@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, StyleSheet, Text, Button, TouchableOpacity, Image, TextInput } from "react-native";
 import { PRIMARY_COLOR } from '../constants/style';
 import { connect } from 'react-redux';
+import firebase from 'firebase';
 
 class MakeOfferScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -13,6 +14,13 @@ class MakeOfferScreen extends Component {
       alignSelf: 'center'
     }
   });
+
+  makeOffer = (amount, item) => {
+    const name = firebase.auth().currentUser.uid;
+    const offerRef = firebase.database().ref('offers')
+      .push( { amount, item, name });
+  }
+
 
   render() {
     const { name, price, images } = this.props.item;
@@ -36,7 +44,9 @@ class MakeOfferScreen extends Component {
             <Text style={styles.text}>Enter your offer for</Text>
             <Text style={styles.text}>{name}</Text>
           </View>
-          <TouchableOpacity style={styles.offerBtn} onPress={() => { console.log("Button pressed") }}>
+          <TouchableOpacity style={styles.offerBtn} onPress={() => { 
+            this.makeOffer(0, this.props.item.key);
+           }}>
             <Text style={styles.btnText}>Make offer</Text>
           </TouchableOpacity>
        </View>
