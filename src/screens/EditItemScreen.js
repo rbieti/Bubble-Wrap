@@ -15,32 +15,46 @@ class EditItemScreen extends Component {
     }
   });
 
-  state = { images: [] };
+  state = {
+    images: [],
+    original: {
+      name: '',
+      description: '',
+      price: ''
+    }
+  };
 
   componentWillMount() {
     // this probably could be done better
-    this.props.itemUpdate({ prop: 'name', value: this.props.item.name });
-    this.props.itemUpdate({ prop: 'description', value: this.props.item.description });
-    this.props.itemUpdate({ prop: 'price', value: this.props.item.price });
-
-    const { images } = this.props.item;
+    const { name, description, price, images } = this.props.item;
+    this.props.itemUpdate({ prop: 'name', value: name });
+    this.props.itemUpdate({ prop: 'description', value: description });
+    this.props.itemUpdate({ prop: 'price', value: price });
+    const paddedImages = images.slice();
     for (let i = images.length; i < 4; i++) {
-      images.push({ url: '', index: i }); // pad images
+      paddedImages.push({ index: i });
     }
-    this.setState({ images });
+    this.setState({ images: paddedImages, original: { name, description, price } });
   }
 
   onButtonPress() {
-    if (this.props.name === '') {
+    const { name, description, price } = this.props;
+    if (!name) {
       Alert.alert('Item name is required');
-    } else if (this.props.description === '') {
+    } else if (!description) {
       Alert.alert('Item description is required');
-    } else if (this.props.price === '') {
+    } else if (!price) {
       Alert.alert('Item price is required');
+    } else if (
+      this.state.original.name === name &&
+      this.state.original.description === description &&
+      this.state.original.price === price &&
+      !this.state.images.some(({ uri }) => uri)
+    ) {
+      Alert.alert('No edit made');
     } else {
-      const { name, description, price } = this.props;
       const { images } = this.state;
-      this.props.editItem({ name, description, price, images, key: this.props.item.key });
+      this.props.editItem({ name, description, price, imageURIs: images, key: this.props.item.key });
       Alert.alert('Your item has been edited', '', [{ text: 'OK', onPress: () => this.props.navigation.navigate('profile') }]);
     }
   }
@@ -51,7 +65,7 @@ class EditItemScreen extends Component {
     });
     if (!result.cancelled) {
       const images = this.state.images.slice();
-      images[index] = { url: result.uri, index };
+      images[index] = { url: result.uri, uri: result.uri, index };
       this.setState({ images });
     }
   }
@@ -59,22 +73,22 @@ class EditItemScreen extends Component {
   renderImgThumbnails() {
     const images = this.state.images.slice(1);
     return images.map(({ url, index }) => (
-      <TouchableOpacity 
+      <TouchableOpacity
         onPress={() => this.pickImage(index)}
         style={styles.thumbnailView}
         key={index}
       >
-      {!!url &&
-        <Image
-          style={styles.thumbnailImage}
-          source={{ uri: url }}
-        />}
+        {!!url &&
+          <Image
+            style={styles.thumbnailImage}
+            source={{ uri: url }}
+          />}
       </TouchableOpacity>
     ));
   }
 
   render() {
-    const { images } = this.state;
+    const { url } = this.state.images[0];
 
     return (
       <View style={styles.root}>
@@ -82,10 +96,10 @@ class EditItemScreen extends Component {
           style={styles.imageContainer}
           onPress={() => this.pickImage(0)}
         >
-          {!!images[0].url &&
+          {!!url &&
             <Image
               style={styles.mainImg}
-              source={{ uri: images[0].url }}
+              source={{ uri: url }}
               resizeMode="cover"
             />}
 
@@ -265,6 +279,6 @@ const mapStateToProps = (state) => {
   return { name, description, price, item };
 };
 
-export default connect(mapStateToProps, { 
+export default connect(mapStateToProps, {
   itemUpdate, editItem
 })(EditItemScreen);

@@ -10,61 +10,53 @@ import {
   GET_USER_ITEMS,
   GET_OFFER_ITEMS
 } from './types';
+import { IMAGE_UPLOAD_CLOUD_FUNCTION_URL } from '../constants';
 
 export const itemUpdate = ({ prop, value }) => ({
   type: ITEM_UPDATE,
   payload: { prop, value }
 });
 
-export const itemCreate = ({ name, description, price, images }) => dispatch => {
-  // Push item details
-  const owner = firebase.auth().currentUser.uid;
-  const itemRef = firebase.database().ref('/items')
-    .push({ name, description, price, owner });
-  const key = itemRef.key;
-
-  // Upload images
-  const imagesObj = {};
-  let item = {};
+const uploadImagesToItem = ({ imageURIs, key }, callback) => {
+  const images = [];
   let counter = 0;
-  const imgs = images.filter(String); // filter out empty Strings
-  imgs.forEach(async (uri, index) => {
-    const filename = `${key}_${index}.jpg`; // eg: abc123itemkey_3.jpg
+  const newImages = imageURIs.filter(({ uri }) => uri); // potentially could just use (uri vs url) this for checking whether it's edited?
+  newImages.forEach(async ({ uri, index }) => {
+    const filename = `${key}_${index}.jpg`;
     const body = new FormData();
-    body.append('picture', {
-      uri,
-      name: filename,
-      type: 'image/jpg'
-    });
-    await fetch('https://us-central1-bubble-wrap-8485d.cloudfunctions.net/api/picture', {
+    body.append('picture', { uri, name: filename, type: 'image/jpg' });
+    await fetch(IMAGE_UPLOAD_CLOUD_FUNCTION_URL, {
       method: 'POST',
       body,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-
-    // Push image urls to item
+      headers: { Accept: 'application/json', 'Content-Type': 'multipart/form-data' }
+    }).catch(error => console.log(error));
     const storageRef = firebase.storage().ref(filename);
     storageRef.getDownloadURL().then(url => {
-      firebase.database().ref(`/items/${key}/images`)
-        .push({ url, index })
-        .then(() => {
-          imagesObj[index] = { url, index };
-          counter++;
-          if (counter === imgs.length) {
-            // dispatch the item
-            const imageArray = Object.values(imagesObj).sort((a, b) => (a.index > b.index ? 1 : -1));
-            item = { name, description, price, owner, key, images: imageArray };
-            dispatch({
-              type: ITEM_CREATE,
-              payload: { item }
-            });
-          }
-        });
+      images.push({ url, index });
+      counter++;
+      if (counter === newImages.length) {
+        callback(images);
+      }
     });
   });
+};
+
+export const itemCreate = ({ name, description, price, imageURIs }) => dispatch => {
+  const { uid } = firebase.auth().currentUser;
+  const item = { name, description, price, owner: uid };
+  firebase.database().ref('/items').push(item)
+    .then((itemRef) => {
+      const key = itemRef.key;
+      uploadImagesToItem({ imageURIs, key }, images => {
+        itemRef.update({ images })
+          .then(() => {
+            dispatch({
+              type: ITEM_CREATE,
+              payload: { ...item, images, key }
+            });
+          });
+      });
+    });
 };
 
 export const fetchItems = () => dispatch => {
@@ -74,7 +66,7 @@ export const fetchItems = () => dispatch => {
       const items = [];
       snapshot.forEach(item => {
         const { owner, images } = item.val();
-        if (owner === uid) {
+        if (images && owner === uid) {
           const imageArray = Object.values(images).sort((a, b) => (a.index > b.index ? 1 : -1));
           items.push({ ...item.val(), images: imageArray, key: item.key });
         }
@@ -91,23 +83,32 @@ export const loadItem = (item) => ({
   payload: { item }
 });
 
-// Is not very efficient (just updates everything)
-// ERROR: just uploads fake image url for now
 export const editItem = (item) => dispatch => {
-  const { name, description, price, images, key } = item;
-  const imagesObj = {};
-  images.forEach(image => {
-    imagesObj[image.index] = image;
-  });
-  firebase.database().ref(`/items/${key}`)
-    .update({ name, description, price, images: imagesObj })
-    .then(() => {
-      dispatch({
-        type: EDIT_ITEM,
-        payload: { item }
-      });
+  const { name, description, price, imageURIs, key } = item;
+  const itemRef = firebase.database().ref(`/items/${key}`);
+  if (imageURIs.length > 0) { // has images to update
+    uploadImagesToItem({ imageURIs, key }, uploadedImages => {
+      const images = imageURIs.slice();
+      uploadedImages.forEach(({ url, index }) => (images[index] = { url, index }));
+      itemRef.update({ name, description, price, images })
+        .then(() => {
+          dispatch({
+            type: EDIT_ITEM,
+            payload: { ...item, images }
+          });
+        });
     });
+  } else { // no images to update
+    itemRef.update({ name, description, price })
+      .then(() => {
+        dispatch({
+          type: EDIT_ITEM,
+          payload: { item }
+        });
+      });
+  }
 };
+
 export const fetchAllItems = () => dispatch => {
   // const { uid } = firebase.auth().currentUser;
   firebase.database().ref('/items')
@@ -115,8 +116,10 @@ export const fetchAllItems = () => dispatch => {
       const all_items = [];
       snapshot.forEach(item => {
         const { images } = item.val();
-        const imageArray = Object.values(images).sort((a, b) => (a.index > b.index ? 1 : -1));
-        all_items.push({ ...item.val(), images: imageArray, key: item.key });
+        if (images) {
+          const imageArray = Object.values(images).sort((a, b) => (a.index > b.index ? 1 : -1));
+          all_items.push({ ...item.val(), images: imageArray, key: item.key });
+        }
       });
       dispatch({
         type: FETCH_ALL_ITEMS,
@@ -166,7 +169,7 @@ export const getOfferItems = (items) => {
   const { uid } = firebase.auth().currentUser;
   const offerItems = items.filter(({ offers }) => offers && offers.some(({ user }) => user === uid))
     .map(item => {
-      return { ...item, offers: item.offers.filter(({ user }) => user === uid) };
+      return { ...item, offers: item.offers.filter(({ user }) => user === uid) };
     });
   return {
     type: GET_OFFER_ITEMS,

@@ -16,10 +16,11 @@ class BuyItemScreen extends Component {
   renderImgThumbnails = () => {
     return this.props.item.images.slice(1).map(({ url, index }) => (
       <View style={styles.thumbnailView} key={index}>
-        <Image
-          style={styles.thumbnailImage}
-          source={{ uri: url }}
-        />
+        {!!url &&
+          <Image
+            style={styles.thumbnailImage}
+            source={{ uri: url }}
+          />}
       </View>
     ));
   };
