@@ -5,6 +5,7 @@ import userItems from './user_items_reducer';
 import buyItems from './buy_items_reducer';
 import user from './user_profile_reducer';
 import users from './users_reducer';
+import offers from './offers_reducer';
 
 ////////////////////////////////////////////////////////////////////////
 // Combines reducers and assigns reducer names
@@ -14,5 +15,6 @@ export default combineReducers({
   userItems,
   buyItems,
   user,
-  users
+  users,
+  offers
 });

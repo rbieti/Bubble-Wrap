@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text, Button, TouchableOpacity, Image, TextInput } from "react-native";
+import { Alert, View, StyleSheet, Text, Button, TouchableOpacity, Image, TextInput } from "react-native";
 import { PRIMARY_COLOR } from '../constants/style';
 import { connect } from 'react-redux';
+import { makeOffer, offerUpdate } from '../actions/offer_actions';
 import firebase from 'firebase';
 
 class MakeOfferScreen extends Component {
@@ -15,14 +16,17 @@ class MakeOfferScreen extends Component {
     }
   });
 
-  makeOffer = (amount, item) => {
-    const name = firebase.auth().currentUser.uid;
-    const offerRef = firebase.database().ref('offers')
-      .push( { amount, item, name });
+  onButtonPress() {
+    console.log("I HATE THIS");
+    const {price, item} = this.props;
+    this.props.makeOffer({ price, key: item.key});
+    Alert.alert("Your offer has been posted");
   }
 
 
   render() {
+    console.log("PLEASE PRINT THIS THING");
+    console.log(this.props.item);
     const { name, price, images } = this.props.item;
     const { navigate } = this.props.navigation;
     return (
@@ -39,14 +43,14 @@ class MakeOfferScreen extends Component {
               // value={"$" + price}  // get offer value from price variable
               // value={"$" + "0"}
               maxLength={5}
-              onChangeText={(text) => this.setState({text})}
+
+              onChangeText={(price) => this.props.offerUpdate({price})}
             />
             <Text style={styles.text}>Enter your offer for</Text>
             <Text style={styles.text}>{name}</Text>
           </View>
-          <TouchableOpacity style={styles.offerBtn} onPress={() => { 
-            this.makeOffer(0, this.props.item.key);
-           }}>
+          <TouchableOpacity style={styles.offerBtn} onPress={ this.onButtonPress.bind(this)}
+          >
             <Text style={styles.btnText}>Make offer</Text>
           </TouchableOpacity>
        </View>
@@ -121,7 +125,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { item } = state.buyItems;
-  return { item };
+  const { price } = state.offers;
+  return { item, price };
 };
 
-export default connect(mapStateToProps)(MakeOfferScreen);
+export default connect(mapStateToProps, {makeOffer, offerUpdate})(MakeOfferScreen);
