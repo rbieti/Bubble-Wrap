@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 import MapView, { Marker, Polygon, Circle } from 'react-native-maps';
-
+import call from 'react-native-phone-call';
 export default class CampusSafety extends Component {
 	safeSpace = [
+		{
+			coordinate: {
+				latitude: 34.13097,
+				longitude: -117.890057
+			},
+			title: 'Azusa Pacific University Bubble Community ',
+			radius: 4000,
+			circlecolor: 'rgba(17, 170, 255, 0.1e0)'
+		},
+
 		{
 			coordinate: {
 				latitude: 34.130284,
 				longitude: -117.888261
 			},
 			title: 'East Campus',
-			radius: 40
+			radius: 40,
+			circlecolor: 'rgba(0, 0, 0, 0.2)'
 		},
 		{
 			coordinate: {
@@ -18,7 +29,8 @@ export default class CampusSafety extends Component {
 				longitude: -117.890574
 			},
 			title: 'Starbucks',
-			radius: 20
+			radius: 20,
+			circlecolor: 'rgba(0, 0, 0, 0.2)'
 		},
 		{
 			coordinate: {
@@ -26,7 +38,8 @@ export default class CampusSafety extends Component {
 				longitude: -117.886821
 			},
 			title: 'Trinity Lawn',
-			radius: 20
+			radius: 20,
+			circlecolor: 'rgba(0, 0, 0, 0.2)'
 		},
 		{
 			coordinate: {
@@ -34,7 +47,8 @@ export default class CampusSafety extends Component {
 				longitude: -117.887034
 			},
 			title: 'Campus Safety',
-			radius: 20
+			radius: 20,
+			circlecolor: 'rgba(0, 0, 0, 0.2)'
 		},
 		{
 			coordinate: {
@@ -42,7 +56,8 @@ export default class CampusSafety extends Component {
 				longitude: -117.894785
 			},
 			title: 'West Campus',
-			radius: 80
+			radius: 80,
+			circlecolor: 'rgba(0, 0, 0, 0.2)'
 		}
 	];
 
@@ -64,7 +79,7 @@ export default class CampusSafety extends Component {
 			<Circle
 				center={space.coordinate}
 				radius={space.radius}
-				fillColor="rgba(0, 0, 0, 0.2)"
+				fillColor={space.circlecolor}
 				strokeColor="rgba(0, 0, 0, 0.2)"
 			/>
 		));
@@ -101,7 +116,7 @@ export default class CampusSafety extends Component {
 				<TouchableOpacity
 					style={styles.btnOpacity}
 					onPress={() => {
-						console.log('Button pressed');
+						call(args).catch(console.error);
 					}}
 				>
 					<Text style={styles.btnText}>Contact Campus Safety</Text>
@@ -113,7 +128,10 @@ export default class CampusSafety extends Component {
 
 const Dimensions = require('Dimensions');
 const window = Dimensions.get('window');
-
+const args = {
+	number: '8088590809', // String value with the number to call
+	prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call
+};
 const styles = StyleSheet.create({
 	root: {
 		backgroundColor: 'white',
