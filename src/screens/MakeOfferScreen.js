@@ -17,7 +17,6 @@ class MakeOfferScreen extends Component {
   });
 
   onButtonPress() {
-    console.log("I HATE THIS");
     const {price, item} = this.props;
     this.props.makeOffer({ price, key: item.key});
     Alert.alert("Your offer has been posted");
@@ -25,8 +24,6 @@ class MakeOfferScreen extends Component {
 
 
   render() {
-    console.log("PLEASE PRINT THIS THING");
-    console.log(this.props.item);
     const { name, price, images } = this.props.item;
     const { navigate } = this.props.navigation;
     return (
@@ -43,7 +40,7 @@ class MakeOfferScreen extends Component {
               // value={"$" + price}  // get offer value from price variable
               // value={"$" + "0"}
               maxLength={5}
-
+              placeholder={`Suggested Price $${price}`}
               onChangeText={(price) => this.props.offerUpdate({price})}
             />
             <Text style={styles.text}>Enter your offer for</Text>
