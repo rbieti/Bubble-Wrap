@@ -20,7 +20,7 @@ export const itemUpdate = ({ prop, value }) => ({
 const uploadImagesToItem = ({ imageURIs, key }, callback) => {
   const images = [];
   let counter = 0;
-  const newImages = imageURIs.filter(({ uri }) => uri); // potentially could just use (uri vs url) this for checking whether it's edited?
+  const newImages = imageURIs.filter(({ uri }) => uri);
   newImages.forEach(async ({ uri, index }) => {
     const filename = `${key}_${index}.jpg`;
     const body = new FormData();
@@ -29,7 +29,7 @@ const uploadImagesToItem = ({ imageURIs, key }, callback) => {
       method: 'POST',
       body,
       headers: { Accept: 'application/json', 'Content-Type': 'multipart/form-data' }
-    }).catch(error => console.log(error));
+    });
     const storageRef = firebase.storage().ref(filename);
     storageRef.getDownloadURL().then(url => {
       images.push({ url, index });
@@ -86,7 +86,7 @@ export const loadItem = (item) => ({
 export const editItem = (item) => dispatch => {
   const { name, description, price, imageURIs, key } = item;
   const itemRef = firebase.database().ref(`/items/${key}`);
-  if (imageURIs.length > 0) { // has images to update
+  if (imageURIs.some(({ uri }) => uri)) { // has images to update
     uploadImagesToItem({ imageURIs, key }, uploadedImages => {
       const images = imageURIs.slice();
       uploadedImages.forEach(({ url, index }) => (images[index] = { url, index }));
