@@ -6,7 +6,7 @@ import { Icon, FormLabel, FormInput, Button, List, ListItem} from 'react-native-
 import { ActivityIndicator, AppRegistry, Dimensions, Image, ScrollView, StyleSheet, Switch, Text, TextInput, View, TouchableOpacity, FlatList} from 'react-native';
 import { fetchAllItems } from '../actions/user_items_actions';
 import { loadItem } from '../actions/buy_items_actions';
-import { fetchUsers } from '../actions/users_actions';
+import { fetchUsers } from '../actions/user_profile_actions';
 
 class SearchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,7 +20,6 @@ class SearchScreen extends Component {
 
   componentDidMount() {
     this.props.fetchAllItems();
-    this.props.fetchUsers();
   }
 
   renderItems() {
