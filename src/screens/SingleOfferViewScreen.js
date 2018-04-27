@@ -60,9 +60,7 @@ class SingleOfferViewScreen extends Component {
         </View>
 
         <ScrollView style={styles.scrollView}>
-
-              {this.renderOffers()}
-
+          {this.renderOffers()}
         </ScrollView>
       </View>
     );

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, View, StyleSheet, Text, Button, TouchableOpacity, Image, TextInput } from "react-native";
+import { Alert, View, StyleSheet, Text, Button, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { PRIMARY_COLOR } from '../constants/style';
 import { connect } from 'react-redux';
 import { makeOffer, offerUpdate } from '../actions/offer_actions';
@@ -18,40 +18,46 @@ class MakeOfferScreen extends Component {
 
   onButtonPress() {
     const {price, item} = this.props;
-    this.props.makeOffer({ price, key: item.key});
-    Alert.alert("Your offer has been posted");
+    if (this.props.price == "") {
+      alert("Please enter a price");
+    } else {
+      this.props.makeOffer({ price, key: item.key});
+      alert("Your offer has been sent!");
+      this.props.navigation.navigate('search');
+    }
   }
-
 
   render() {
     const { name, price, images } = this.props.item;
     const { navigate } = this.props.navigation;
     return (
-      <Image 
-        style={styles.backgroundImage} 
-        source={{ uri: images[0].url }}
-        blurRadius={15}
-        >
-        <View style={styles.root}>
-          <View style={styles.topArea}>
-            <TextInput
-              style={styles.textInput}
-              keyboardType='numeric'
-              // value={"$" + price}  // get offer value from price variable
-              // value={"$" + "0"}
-              maxLength={5}
-              placeholder={`Suggested Price $${price}`}
-              onChangeText={(price) => this.props.offerUpdate({price})}
-            />
-            <Text style={styles.text}>Enter your offer for</Text>
-            <Text style={styles.text}>{name}</Text>
-          </View>
-          <TouchableOpacity style={styles.offerBtn} onPress={ this.onButtonPress.bind(this)}
-          >
-            <Text style={styles.btnText}>Make offer</Text>
-          </TouchableOpacity>
-       </View>
-      </Image>
+      <KeyboardAvoidingView style={styles.backgroundImage} behavior="padding">
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <Image 
+            style={styles.backgroundImage} 
+            source={{ uri: images[0].url }}
+            blurRadius={15}
+            keyboardShouldPersistTaps={'never'}
+            >
+            <View style={styles.root}>
+              <View style={styles.topArea}>
+                <TextInput
+                  style={styles.textInput}
+                  keyboardType='numeric'
+                  maxLength={5}
+                  placeholder={`Suggested Price $${price}`}
+                  onChangeText={(price) => this.props.offerUpdate({price})}
+                />
+                <Text style={styles.text}>Enter your offer for</Text>
+                <Text style={styles.text}>{name}</Text>
+              </View>
+              <TouchableOpacity style={styles.offerBtn} onPress={ this.onButtonPress.bind(this)}>
+                <Text style={styles.btnText}>Make offer</Text>
+              </TouchableOpacity>
+           </View>
+          </Image>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -110,7 +116,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: "absolute",
-    bottom: 60,
+    bottom: "20%",
   },
 
   btnText: {

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { PRIMARY_COLOR } from '../constants/style';
 import firebase from 'firebase';
 import { Icon, FormLabel, FormInput, Button, List, ListItem} from 'react-native-elements';
-import { ActivityIndicator, AppRegistry, Dimensions, Image, ScrollView, StyleSheet, Switch, Text, TextInput, View, TouchableOpacity, FlatList} from 'react-native';
+import { ActivityIndicator, AppRegistry, Dimensions, Image, ScrollView, StyleSheet, Switch, Text, TextInput, View, TouchableOpacity, KeyboardAvoidingView, FlatList, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import { fetchAllItems } from '../actions/user_items_actions';
 import { loadItem } from '../actions/buy_items_actions';
 import { fetchUsers } from '../actions/users_actions';
@@ -44,7 +44,6 @@ class SearchScreen extends Component {
       <View style={styles.root}>
         <FormLabel>Item Search</FormLabel>
         <FormInput itemholder="What are you looking for?"/>
-
         <Button
           title="Search"
           icon={{ name: 'search' }}
@@ -71,6 +70,13 @@ const styles = StyleSheet.create({
   root: { 
     backgroundColor: "#EFEFF4", 
     flex: 1
+  },
+
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    height: null,
+    width: null,
   },
 
   bottom: {
