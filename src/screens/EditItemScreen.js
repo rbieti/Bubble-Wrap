@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
-import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import { KeyboardAvoidingView, Alert, View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import { ImagePicker } from 'expo';
+import { itemUpdate, editItem } from '../actions/user_items_actions';
 
-export default class CreateItemScreen extends Component {
+class EditItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Edit Item',
     tabBarLabel: 'Edit',
@@ -12,69 +15,150 @@ export default class CreateItemScreen extends Component {
     }
   });
 
+  state = {
+    images: [],
+    original: {
+      name: '',
+      description: '',
+      price: ''
+    }
+  };
+
+  componentWillMount() {
+    // this probably could be done better
+    const { name, description, price, images } = this.props.item;
+    this.props.itemUpdate({ prop: 'name', value: name });
+    this.props.itemUpdate({ prop: 'description', value: description });
+    this.props.itemUpdate({ prop: 'price', value: price });
+    const paddedImages = images.slice();
+    for (let i = images.length; i < 4; i++) {
+      paddedImages.push({ index: i });
+    }
+    this.setState({ images: paddedImages, original: { name, description, price } });
+  }
+
+  onButtonPress() {
+    const { name, description, price } = this.props;
+    if (!name) {
+      Alert.alert('Item name is required');
+    } else if (!description) {
+      Alert.alert('Item description is required');
+    } else if (!price) {
+      Alert.alert('Item price is required');
+    } else if (
+      this.state.original.name === name &&
+      this.state.original.description === description &&
+      this.state.original.price === price &&
+      !this.state.images.some(({ uri }) => uri)
+    ) {
+      Alert.alert('No edit made');
+    } else {
+      const { images } = this.state;
+      this.props.editItem({ name, description, price, imageURIs: images, key: this.props.item.key });
+      Alert.alert('Your item has been edited', '', [{ text: 'OK', onPress: () => this.props.navigation.navigate('profile') }]);
+    }
+  }
+
+  async pickImage(index) {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: false,
+    });
+    if (!result.cancelled) {
+      const images = this.state.images.slice();
+      images[index] = { url: result.uri, uri: result.uri, index };
+      this.setState({ images });
+    }
+  }
+
+  renderImgThumbnails() {
+    const images = this.state.images.slice(1);
+    return images.map(({ url, index }) => (
+      <TouchableOpacity
+        onPress={() => this.pickImage(index)}
+        style={styles.thumbnailView}
+        key={index}
+      >
+        {!!url &&
+          <Image
+            style={styles.thumbnailImage}
+            source={{ uri: url }}
+          />}
+      </TouchableOpacity>
+    ));
+  }
+
   render() {
+    const { url } = this.state.images[0];
+
     return (
       <View style={styles.root}>
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.mainImg}
-            source={require("../../assets/478x478-reeses.jpg")}
-            resizeMode="cover"
-          />
+        <TouchableOpacity
+          style={styles.imageContainer}
+          onPress={() => this.pickImage(0)}
+        >
+          {!!url &&
+            <Image
+              style={styles.mainImg}
+              source={{ uri: url }}
+              resizeMode="cover"
+            />}
 
           <View style={styles.thumbnailContainer}>
-            <View style={styles.thumbnailView}></View>
-
-            <View style={styles.thumbnailView}></View>
-
-            <View style={styles.thumbnailView}></View>
+            {this.renderImgThumbnails()}
           </View>
-        </View>
+        </TouchableOpacity>
 
         <View style={styles.iconContainer}>
-          <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
-          <Icon style={styles.iconImg} name="ios-add" size={40} />
-        </View>
-
-        <View style={styles.textContainer}>
-          <View style={styles.textCell}>
-            <Text style={styles.text}>Name</Text>
-            <TextInput
-              style={styles.textInput}
-              placeholder="The name of your product"
-              onChangeText={(text) => this.setState({text})}
-            />
-          </View>
-
-          <View style={styles.textCell}>
-            <Text style={styles.text}>Description</Text>
-            <TextInput
-              style={styles.textInput}
-              placeholder="A short description"
-              onChangeText={(text) => this.setState({text})}
-            />
-          </View>
-
-          <View style={styles.textCell}>
-            <Text style={styles.text}>Price</Text>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Set your price"
-              onChangeText={(text) => this.setState({text})}
-            />
-          </View>
-        </View>
-
-        <View style={styles.btnContainer}>
-          <TouchableOpacity 
-            style={styles.btnOpacity}
-            onPress={() => {console.log("Button pressed")}}
-            >
-            <Text style={styles.btnText}>
-              Post Item
-            </Text>
+          <TouchableOpacity>
+            <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
           </TouchableOpacity>
         </View>
+
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior='padding'
+        >
+          <View style={styles.textContainer}>
+            <View style={styles.textCell}>
+              <Text style={styles.text}>Name</Text>
+              <TextInput
+                style={styles.textInput}
+                value={this.props.name}
+                onChangeText={value => this.props.itemUpdate({ prop: 'name', value })}
+              />
+            </View>
+
+            <View style={styles.textCell}>
+              <Text style={styles.text}>Description</Text>
+              <TextInput
+                style={styles.textInput}
+                value={this.props.description}
+                onChangeText={value => this.props.itemUpdate({ prop: 'description', value })}
+              />
+            </View>
+
+            <View style={styles.textCell}>
+              <Text style={styles.text}>Price</Text>
+              <TextInput
+                style={styles.textInput}
+                keyboardType='numeric'
+                value={this.props.price}
+                onChangeText={value => this.props.itemUpdate({ prop: 'price', value })}
+              />
+            </View>
+          </View>
+
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+              style={styles.btnOpacity}
+              onPress={this.onButtonPress.bind(this)}
+            >
+              <Text style={styles.btnText}>
+                Edit Item
+            </Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
       </View>
     );
   }
@@ -117,26 +201,31 @@ const styles = StyleSheet.create({
   thumbnailView: {
     width: 80,
     height: 80,
-    padding: 20,
+    //padding: 20,
     backgroundColor: "#FFFFFF30", // 30% oppacity
     borderStyle: "dashed",
     borderWidth: 2,
     borderColor: "#ddd",
     borderRadius: 5,
   },
+  thumbnailImage: {
+    width: 76,
+    height: 76,
+    borderRadius: 5
+  },
 
   iconContainer: {
     flex: 1,
     maxHeight: 70,
-    flexDirection: "row",
-    paddingRight: "25%",
-    paddingLeft: "25%",
+    // flexDirection: "row",
+    // paddingRight: "25%",
+    // paddingLeft: "25%",
     backgroundColor: "#f6f6f6",
     borderColor: "#ddd",
     borderTopWidth: 2,
     borderBottomWidth: 2,
     alignItems: 'center',
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
   },
   iconImg: {
     height: 50,
@@ -162,6 +251,7 @@ const styles = StyleSheet.create({
     height: 40,
     position: "absolute",
     left: 100,
+    width: '70%'
   },
 
   btnContainer: {
@@ -183,3 +273,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
   }
 });
+
+const mapStateToProps = (state) => {
+  const { name, description, price, item } = state.userItems;
+  return { name, description, price, item };
+};
+
+export default connect(mapStateToProps, {
+  itemUpdate, editItem
+})(EditItemScreen);

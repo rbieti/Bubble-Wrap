@@ -1,7 +1,9 @@
-import { 
+import {
   ITEM_UPDATE,
   ITEM_CREATE,
   FETCH_USER_ITEMS,
+  LOAD_EDIT_ITEM,
+  EDIT_ITEM,
   FETCH_ALL_ITEMS,
   FETCH_OFFERS,
   GET_USER_ITEMS,
@@ -28,6 +30,10 @@ export default function (state = INITIAL_STATE, action) {
       return { ...state, item: action.payload.item };
     case FETCH_USER_ITEMS:
       return { ...state, items: action.payload.items };
+    case LOAD_EDIT_ITEM:
+      return { ...state, item: action.payload.item };
+    case EDIT_ITEM:
+      return { ...state, item: action.payload.item };
     case FETCH_ALL_ITEMS:
       return { ...state, all_items: action.payload.all_items };
     case FETCH_OFFERS:

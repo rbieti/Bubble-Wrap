@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
 import { KeyboardAvoidingView, Alert, View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TouchableWithoutFeedback, TextInput } from "react-native";
 import { ImagePicker } from 'expo';
-import firebase from 'firebase';
 import { itemUpdate, itemCreate } from '../actions/user_items_actions';
-import { GOOGLE_FIREBASE_CONFIG } from "../constants/api_keys";
 
 class CreateItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -18,63 +16,55 @@ class CreateItemScreen extends Component {
   });
   
   // images are represented as URI's for now
-  state = { images: ['', '', '', ''] };
+  state = { images: [{ index: 0 }, { index: 1 }, { index: 2 }, { index: 3 }] };
 
   onButtonPress() {
-    if (this.props.name == ""){
-      Alert.alert("Item name is required");
-    } 
-    else if (this.props.description=="") { 
-      Alert.alert("Item description is required"); 
-    } 
-    else if (this.props.price =="") { 
-      Alert.alert("Item price is required"); 
-    }
-    else {
-      const { name, description, price } = this.props;
+    const { name, description, price } = this.props;
+    if (!name) {
+      Alert.alert('Item name is required');
+    } else if (!description) { 
+      Alert.alert('Item description is required'); 
+    } else if (!price) { 
+      Alert.alert('Item price is required'); 
+    } else {
       const { images } = this.state;
-      this.props.itemCreate({ name, description, price, images });
-      Alert.alert("Your item has been posted");
+      this.props.itemCreate({ name, description, price, imageURIs: images });
+      Alert.alert('Your item has been posted');
     }
   }
 
-  pickImage = async (i) => {
+  async pickImage(index) {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: false,
       // aspect: [1, 1],
     });
-
-    // console.log(result.uri);
-
     if (!result.cancelled) {
-      // this.setState({ images: result.uri });
       const images = this.state.images.slice();
-      images[i] = result.uri;
+      images[index] = { uri: result.uri, index };
       this.setState({ images });
-      //this.uploadImageToFirebase(result);
     }
-  };
+  }
 
   renderImgThumbnails() {
     const images = this.state.images.slice(1); // removes first element of array
 
-    return images.map((image, i) => (
+    return images.map(({ uri, index }) => (
       <TouchableOpacity 
-        onPress={() => this.pickImage(i + 1)} // for indecies 1, 2, 3
+        onPress={() => this.pickImage(index)}
         style={styles.thumbnailView}
-        key={i}
+        key={index}
       >
-        {!!image && 
+        {!!uri && 
         <Image
           style={styles.thumbnailImage}
-          source={{ uri: image }}
+          source={{ uri }}
         />}
       </TouchableOpacity>
     ));
   }
 
   render() {
-    const { images } = this.state;
+    const { uri } = this.state.images[0]; // first image
 
     return (
       <View style={styles.root}>
@@ -82,11 +72,11 @@ class CreateItemScreen extends Component {
           style={styles.imageContainer}
           onPress={() => this.pickImage(0)}
         >
-          {!!images[0] &&
+          {!!uri &&
           <Image
             style={styles.mainImg}
             // source={require("../../assets/478x478-reeses.jpg")}
-            source={{ uri: images[0] }}
+            source={{ uri }}
             resizeMode="cover"
           />}
 
@@ -99,12 +89,11 @@ class CreateItemScreen extends Component {
           <TouchableOpacity>
             <Icon style={styles.iconImg} name="ios-camera-outline" size={40} />
           </TouchableOpacity>
-          {/* <Icon style={styles.iconImg} name="ios-add" size={40} /> */}
         </View>
 
         <KeyboardAvoidingView
-          style = {styles.container}
-          behavior = "padding"
+          style={styles.container}
+          behavior="padding"
         >
 
         <View style={styles.textContainer}>
@@ -115,7 +104,6 @@ class CreateItemScreen extends Component {
               placeholder="The name of your product"
               value={this.props.name}
               onChangeText={value => this.props.itemUpdate({ prop: 'name', value })}
-              // onChangeText={(text) => this.setState({ text })}
             />
           </View>
 
@@ -126,7 +114,6 @@ class CreateItemScreen extends Component {
               placeholder="A short description"
               value={this.props.description}
               onChangeText={value => this.props.itemUpdate({ prop: 'description', value })}
-              // onChangeText={(text) => this.setState({ text })}
             />
           </View>
 
@@ -134,11 +121,10 @@ class CreateItemScreen extends Component {
             <Text style={styles.text}>Price</Text>
             <TextInput
               style={styles.textInput}
-              keyboardType = 'numeric'
+              keyboardType='numeric'
               placeholder="Set your price"
               value={this.props.price}
               onChangeText={value => this.props.itemUpdate({ prop: 'price', value })}
-              // onChangeText={(text) => this.setState({ text })}
             />
           </View>
         </View>
