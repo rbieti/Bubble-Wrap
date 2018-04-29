@@ -101,51 +101,84 @@ export const fetchAllItems = () => dispatch => {
     });
 };
 
-export const fetchOffers = (prevItems) => dispatch => {
-  const itemKeys = prevItems.map((item => item.key));
-  firebase.database().ref('/offers')
+// this will fetch offers
+export const fetchOffers = ({ itemId }) => dispatch => {
+  // get item's offerIds
+  firebase.database().ref(`/items/${itemId}/offers`)
     .on('value', snapshot => {
-      const items = prevItems.slice(); // copy
-      snapshot.forEach(o => {
-        const offer = o.val();
-        const itemKey = offer.item; // item is the itemKey
-        if (itemKeys.includes(itemKey)) {
-          const item = items.find(i => i.key === itemKey);
-          if (!('offers' in item)) {
-            item.offers = []; // create offers array if it doesn't exist
-          }
-          item.offers.push({ ...offer, key: o.key });
-        }
-      });
-      dispatch({
-        type: FETCH_OFFERS,
-        payload: { items }
+      if (!snapshot.val()) { // no offers, break
+        dispatch({
+          type: FETCH_OFFERS,
+          payload: { offers: [] }
+        });
+        return;
+      }
+      const offerIds = Object.keys(snapshot.val());
+      // return the offers
+      const offers = [];
+      offerIds.forEach(offerId => {
+        firebase.database().ref(`/offers/${offerId}`)
+          .on('value', snapshot => {
+            offers.push({ ...snapshot.val(), key: snapshot.key });
+            if (offerIds.length === offers.length) {
+              dispatch({
+                type: FETCH_OFFERS,
+                payload: { offers }
+              });
+            }
+          });
       });
     });
 };
 
-export const getUserItems = (items) => {
+// database needs to have users/{userId}/items/{foreignItemIds}
+export const getUserItems = () => dispatch => {
   const { uid } = firebase.auth().currentUser;
-  const userItems = [];
-  items.forEach(item => {
-    if (item.owner === uid) {
-      userItems.push(item);
-    }
-  });
-  return {
-    type: GET_USER_ITEMS,
-    payload: { userItems }
-  };
+  firebase.database().ref(`users/${uid}/items`)
+    .on('value', snapshot => {
+      const itemIds = Object.keys(snapshot.val());
+      const userItems = [];
+      itemIds.forEach(itemId => {
+        firebase.database().ref(`items/${itemId}`)
+          .on('value', itemSnap => { // = item
+            const imagesArray = Object.values(itemSnap.val().images); // convert images object to array
+            userItems.push({ ...itemSnap.val(), images: imagesArray, key: itemSnap.key });
+            if (itemIds.length === userItems.length) {
+              dispatch({
+                type: GET_USER_ITEMS,
+                payload: { userItems }
+              });
+            }
+          });
+      });
+    });
 };
 
-export const getOfferItems = (items) => {
+// gets offerItems from users/{userId}/offers/{foreignOfferIds}
+export const getOfferItems = () => dispatch => {
   const { uid } = firebase.auth().currentUser;
-  const offerItems = items.filter(({ offers }) => offers && offers.some(({ user }) => user === uid))
-    .map(item => {
-      return { ...item, offers: item.offers.filter(({ user }) => user === uid) };
+  firebase.database().ref(`users/${uid}/offers`)
+    .on('value', snapshot => {
+      const offerIds = Object.keys(snapshot.val()); // this works (getting all keys)
+      const offerItems = [];
+      offerIds.forEach(offerId => {
+        firebase.database().ref(`offers/${offerId}`)
+          .on('value', offerSnap => { // = single offer
+            const itemId = offerSnap.val().item; // bad database naming (offer.item should be offer.itemId)
+            const userOffer = offerSnap.val().amount;
+            firebase.database().ref(`items/${itemId}`)
+              .on('value', itemSnap => { // = item
+                const imagesArray = Object.values(itemSnap.val().images); // convert images object to array
+                offerItems.push({ ...itemSnap.val(), images: imagesArray, key: itemSnap.key, userOffer }); // push item and user's offer
+                /* !!! MAJOR ASSUMPTION !!! you can only make 1 offer per item !!! */
+                if (offerIds.length === offerItems.length) {
+                  dispatch({
+                    type: GET_OFFER_ITEMS,
+                    payload: { offerItems }
+                  });
+                }
+              });
+          });
+      });
     });
-  return {
-    type: GET_OFFER_ITEMS,
-    payload: { offerItems }
-  };
 };

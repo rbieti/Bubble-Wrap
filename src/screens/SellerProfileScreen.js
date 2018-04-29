@@ -40,7 +40,7 @@ class SellerProfileScreen extends Component {
     if (prevProps.reviewsFetched !== this.props.reviewsFetched) {
       console.log("REFETCH");
       const userReviewerKeys = this.props.reviews.map(({ reviewerId }) => reviewerId);
-      this.props.fetchUsers({userKeys: userReviewerKeys});
+      this.props.fetchUsers({ userKeys: userReviewerKeys, reducerPlacement: 'reviews' });
     }
   }
 

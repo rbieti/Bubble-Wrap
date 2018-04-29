@@ -16,6 +16,7 @@ const INITIAL_STATE = {
     profileURL: 'https://www.aisd.net/adams-elementary/wp-content/files/sites/44/2017/07/generic-profile-picture.png',
     userId: '',
     reviews: [],
+    users: [], // this is just a default thing, not used yet
     username: '',
     reviewsFetched: false
 };
@@ -31,30 +32,32 @@ export default function (state = INITIAL_STATE, action) {
                 numTransactions: action.payload.numTransactions,
                 profileURL: action.payload.profileURL,
                 email: action.payload.email
-            }
-        case FETCH_USERS:
-            const reviews = state.reviews.slice(); //copy
-            const newReviews = reviews.map((review) => {
-                // find user.key with reviewerId
-                const user = action.payload.users.find(user => user.key === review.reviewerId);
-                return { ...review, name: user.name, profileURL: user.profileURL }; //THIS IS NOT THE FINAL RETURN
-            });
-            return {
-                ...state,
-                reviews: newReviews
             };
+        case FETCH_USERS:
+            if (action.payload.reducerPlacement === 'reviews') {
+                const reviews = state.reviews.slice(); //copy
+                const newReviews = reviews.map((review) => {
+                    const user = action.payload.users.find(user => user.key === review.reviewerId);
+                    return { ...review, name: user.name, profileURL: user.profileURL }; //THIS IS NOT THE FINAL RETURN
+                });
+                return {
+                    ...state,
+                    reviews: newReviews
+                };
+            } else { // default
+                return { ...state, users: action.payload.users };
+            }
         case FETCH_USER_REVIEWS:
-            console.log(action.payload.reviewsArray);
             return {
                 ...state,
                 reviews: action.payload.reviewsArray,
                 reviewsFetched: true
-            }
+            };
         case FIND_USER_NAME:
             return {
                 ...state,
                 username: action.payload.username
-            }
+            };
         case LOAD_SELLER:
             console.log("returning new guy");
             return {
@@ -67,7 +70,7 @@ export default function (state = INITIAL_STATE, action) {
                 email: action.payload.email,
                 userId: action.payload.userId,
                 reviewsFetched: false
-            }
+            };
         default:
             return state;
     }

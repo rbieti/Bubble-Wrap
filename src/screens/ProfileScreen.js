@@ -47,7 +47,7 @@ class ProfileScreen extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.reviewsFetched !== this.props.reviewsFetched) {
       const userReviewerKeys = this.props.reviews.map(({ reviewerId }) => reviewerId);
-      this.props.fetchUsers({userKeys: userReviewerKeys});
+      this.props.fetchUsers({ userKeys: userReviewerKeys, reducerPlacement: 'reviews' });
     }
   }
 

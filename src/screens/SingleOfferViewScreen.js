@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { View, StyleSheet, Text, Button, TouchableOpacity, Image, ScrollView } from "react-native";
 import { PRIMARY_COLOR } from '../constants/style';
+import { fetchOffers } from '../actions/user_items_actions';
+import { fetchUsers } from '../actions/user_profile_actions';
 
 class SingleOfferViewScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -14,18 +16,28 @@ class SingleOfferViewScreen extends Component {
     },
   });
 
+  componentDidMount() {
+    this.props.fetchOffers({ itemId: this.props.item.key });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.offersFetched !== this.props.offersFetched) {
+      const userIds = this.props.offers.map(({ user }) => user);
+      this.props.fetchUsers({ userKeys: userIds, reducerPlacement: 'offers' });
+    }
+  }
+
   renderOffers() {
-    const { users } = this.props;
-    const { offers } = this.props.item;
-    if (offers !== undefined) {
-      return offers.map(({ amount, user, key }) => (
-        <View 
+    const { offers } = this.props;
+    if (offers.length > 0) {
+      return offers.map(({ amount, name, key }) => (
+        <View
           style={styles.cardView}
           key={key}
         >
           <View style={styles.sections}>
             <View style={styles.cardSection}>
-              <Text style={styles.cardText}> {users[user]} offered: ${amount} </Text>
+              <Text style={styles.cardText}> {name} offered: ${amount} </Text>
             </View>
           </View>
         </View>
@@ -61,7 +73,7 @@ class SingleOfferViewScreen extends Component {
 
         <ScrollView style={styles.scrollView}>
 
-              {this.renderOffers()}
+          {this.renderOffers()}
 
         </ScrollView>
       </View>
@@ -142,8 +154,8 @@ const styles = {
 
 const mapStateToProps = (state) => {
   const { item } = state.buyItems;
-  const { users } = state.users;
-  return { item, users };
+  const { offers, offersFetched } = state.userItems;
+  return { item, offers, offersFetched };
 };
 
-export default connect(mapStateToProps)(SingleOfferViewScreen);
+export default connect(mapStateToProps, { fetchOffers, fetchUsers })(SingleOfferViewScreen);

@@ -4,7 +4,7 @@ import {
   FETCH_USER,
   FETCH_USER_REVIEWS,
   LOAD_SELLER,
-  FETCH_USERS
+  FETCH_USERS,
 } from './types';
 
 export const loadSeller = (sellerID) => dispatch => {
@@ -17,18 +17,18 @@ export const loadSeller = (sellerID) => dispatch => {
     });
 };
 
-export const fetchUsers = ({ userKeys }) => dispatch => {
+export const fetchUsers = ({ userKeys, reducerPlacement }) => dispatch => {
   const users = [];
   userKeys.forEach(userKey => {
     firebase.database().ref(`/users/${userKey}`)
       .on('value', snapshot => {
-        const { 
-          bubbleCommunity, 
-          email, 
-          name, 
-          numTransactions, 
-          overallRating, 
-          profileURL, 
+        const {
+          bubbleCommunity,
+          email,
+          name,
+          numTransactions,
+          overallRating,
+          profileURL,
           reviews } = snapshot.val();
 
         users.push({
@@ -40,12 +40,13 @@ export const fetchUsers = ({ userKeys }) => dispatch => {
           profileURL,
           reviews,
           key: userKey
-        })
-        if (userKeys.length === users.length)
+        });
+        if (userKeys.length === users.length) {
           dispatch({
             type: FETCH_USERS,
-            payload: { users }
+            payload: { users, reducerPlacement }
           });
+        }
       });
   });
 };
@@ -69,7 +70,6 @@ export const fetchUser = () => dispatch => {
 
 export const fetchUserReviews = (uid = firebase.auth().currentUser.uid) => dispatch => {
   //get the review keys of the current user
-  console.log(uid);
   firebase.database().ref(`/users/${uid}/reviews`)
     .on('value', snapshot => {
       const userReviews = [];
@@ -78,7 +78,6 @@ export const fetchUserReviews = (uid = firebase.auth().currentUser.uid) => dispa
         userReviews.push(review.key);
       });
       const reviewsArray = [];
-      console.log(userReviews);
       //iterate through each review key to get each review
       userReviews.forEach(reviewKey => {
         firebase.database().ref(`/reviews/${reviewKey}`)
