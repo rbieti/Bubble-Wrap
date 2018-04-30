@@ -29,6 +29,7 @@ import CampusSafetyScreen from './src/screens/CampusSafety';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
 import EditItemScreen from './src/screens/EditItemScreen';
+import RateTransactionScreen from './src/screens/RateTransactionScreen';
 
 export default class App extends Component {
 	constructor() {
@@ -197,7 +198,8 @@ export default class App extends Component {
 				trans: { screen: TransactionScreen },
 				mos: { screen: MakeOfferScreen },
 				search: { screen: SearchScreen },
-				campusSafety: { screen: CampusSafetyScreen }
+				campusSafety: { screen: CampusSafetyScreen },
+				ratetrans: { screen: RateTransactionScreen }
 			},
 			{
 				navigationOptions: {
@@ -251,7 +253,7 @@ export default class App extends Component {
 		// Top Level Navigator with slide functionality
 		const MainNavigator = TabNavigator(
 			{
-				// navigate: { screen: ScaffoldingScene },
+				navigate: { screen: ScaffoldingScene },
 				auth: { screen: AuthScreen },
 				main: { screen: MainDrawer }
 			},
