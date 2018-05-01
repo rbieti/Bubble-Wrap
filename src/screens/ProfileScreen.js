@@ -63,16 +63,13 @@ class ProfileScreen extends Component {
           this.props.navigation.navigate('seller'); 
         }}
         key={key}
+        style={styles.card}
       >
-        <View style={styles.reviewCell} >
-          <Image
-            source={{url: 'https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/12669716_1237006402982393_3217046914981297038_n.jpg?_nc_cat=0&oh=b05a93c391dc723f390016b5eef6122b&oe=5B65D228'}}
-            style={styles.reviewerImg}
-            resizeMode="cover"
-          />
-          <Text style={styles.h1Lbl}>{`${sellerName}`}</Text>
-          <Text style={styles.h1Lbl}>{`${rating}/5`}</Text>
-          <Text style={styles.h1Lbl}>{`${comment}`}</Text>
+        <Image source={{url: 'https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/12669716_1237006402982393_3217046914981297038_n.jpg?_nc_cat=0&oh=b05a93c391dc723f390016b5eef6122b&oe=5B65D228'}} style={styles.cardImg} />
+        <View style={styles.textBackground}>
+          <Text style={styles.cardText}>{`${sellerName}`}</Text>
+          <Text style={styles.cardText}>{`${rating}/5`}</Text>
+          <Text style={styles.cardText}>{`${comment}`}</Text>
         </View>
       </TouchableOpacity>
     ));
@@ -89,14 +86,11 @@ class ProfileScreen extends Component {
           this.props.loadItem(item);
           this.props.navigation.navigate('editItem'); 
         }}
+        style={styles.card}
       >
-        <View style={styles.reviewCell}>
-          <Image
-            source={{ uri: item.images[0].url }}
-            style={styles.reviewerImg}
-            resizeMode="cover"
-          />
-          <Text style={styles.h1Lbl}>{`${item.name} | $${item.price}`}</Text>
+        <Image source={{ uri: item.images[0].url }} style={styles.cardImg} />
+        <View style={styles.textBackground}>
+          <Text style={styles.cardText}>{`${item.name}\n$${item.price}`}</Text>
         </View>
       </TouchableOpacity>
     ));
@@ -119,18 +113,12 @@ class ProfileScreen extends Component {
             style = {styles.signOutBtn}
           >
             <Text style={{color: "black", fontWeight: "bold"}}>Sign out</Text>
-
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => { console.log(this.props.profileURL)}}
-          >
-            <Image
-              source={{ uri: profileURL }}
-              style={styles.profileImg}
-              resizeMode="cover"
+
+          <TouchableOpacity onPress={() => { console.log(this.props.profileURL)}}>
+            <Image source={{ uri: profileURL }} style={styles.profileImg} resizeMode="cover"
             />
           </TouchableOpacity>
-
           {this.loadUsername()}
           <Text style={styles.userUniversityLbl}>Your bubble: {bubbleCommunity}</Text>
           <Text style={styles.userUniversityLbl}>{email}</Text>
@@ -143,13 +131,12 @@ class ProfileScreen extends Component {
               style={styles.reviewsScroll}
               automaticallyAdjustInsets={true}
               horizontal={true}
-              pagingEnabled={true}
+              pagingEnabled={false}
               scrollEnabled={true}
-              decelerationRate={0.5}
+              decelerationRate={1.0}
               scrollEventThrottle={16}
             >
-            {this.loadReviews()}
-              
+              {this.loadReviews()}
             </ScrollView>
           </View>
 
@@ -159,9 +146,9 @@ class ProfileScreen extends Component {
               style={styles.horizontalScrollView}
               automaticallyAdjustInsets={true}
               horizontal={true}
-              pagingEnabled={true}
+              pagingEnabled={false}
               scrollEnabled={true}
-              decelerationRate={0.5}
+              decelerationRate={1.0}
               scrollEventThrottle={16}
             >
               {this.renderItems()}
@@ -176,6 +163,9 @@ class ProfileScreen extends Component {
 const profileImgWidth = 100;
 const reviewerImgWidth = 60;
 
+const cardHeight = 145;
+const cardWidth = cardHeight;
+
 const styles = StyleSheet.create({
   root: {
     backgroundColor: "#EFEFF4",
@@ -184,6 +174,7 @@ const styles = StyleSheet.create({
 
   h1Lbl: {
     fontWeight: 'bold',
+    fontSize: 20,
     color: '#000',
   },
 
@@ -254,31 +245,47 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
-  reviewCell: {
-    height: 150,
-    width: 180,
-    flex: 1,
+  card: {
+    flex: 1, 
+    width: cardWidth,
+    height: cardHeight,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f8f8f8',
-    borderRadius: 10,
-    margin: 15,
-    padding: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 12, 
+    borderRadius: 15,
+    backgroundColor: "#fff",
+    overflow: 'hidden',
+    marginTop: 15,
+    marginRight: 40,
   },
 
-  reviewerImg: {
-    width: reviewerImgWidth,
-    height: reviewerImgWidth,
-    borderRadius: reviewerImgWidth / 2,
-    marginBottom: 5,
+  cardImg: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
   },
 
-  reviewerTxt: {
-    marginTop: 5,
+  textBackground: {
+    height: 60,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "#00000050",
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+
+  cardText: {
+    fontSize: 16,
+    fontWeight: 'normal',
     textAlign: 'center',
-    fontStyle: 'italic',
+    color: '#fff',
   }
-
 });
 
 const mapStateToProps = (state) => {
