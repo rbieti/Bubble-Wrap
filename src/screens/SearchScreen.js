@@ -26,14 +26,14 @@ class SearchScreen extends Component {
   renderItems() {
     const { all_items } = this.props;
     return all_items.map((item) => (
-      <TouchableOpacity key={item.key} onPress={() => { this.props.loadItem(item); this.props.navigation.navigate('buyItem'); }}>
-        <View style={styles.itemCell}>
-          <Image
-            source={{ uri: item.images[0].url }}
-            style={styles.itemImg}
-            resizeMode="cover"
-          />
-          <Text style={styles.itemLbl}>{`${item.name} | $${item.price}`}</Text>
+      <TouchableOpacity 
+        style={styles.card}
+        key={item.key} 
+        onPress={() => { this.props.loadItem(item); this.props.navigation.navigate('buyItem'); }}
+      >
+        <Image source={{ uri: item.images[0].url }} style={styles.cardImg} />
+        <View style={styles.textBackground}>
+          <Text style={styles.cardText}>{`${item.name} | $${item.price}`}</Text>
         </View>
       </TouchableOpacity>
     ));
@@ -43,7 +43,7 @@ class SearchScreen extends Component {
     return (
       <View style={styles.root}>
         <FormLabel>Item Search</FormLabel>
-        <FormInput itemholder="What are you looking for?"/>
+        <FormInput itemHolder="What are you looking for?"/>
         <Button
           title="Search"
           icon={{ name: 'search' }}
@@ -66,6 +66,9 @@ class SearchScreen extends Component {
   }
 }
 
+const cardWidth = 250;
+const cardHeight = cardWidth;
+
 const styles = StyleSheet.create({
   root: { 
     backgroundColor: "#EFEFF4", 
@@ -85,31 +88,45 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 
-  items: {
-    height: "100%",
-    width: "100%",
-    backgroundColor: '#fff',
+  card: {
+    flex: 1, 
+    width: cardWidth,
+    height: cardHeight,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 12, 
+    borderRadius: 15,
+    backgroundColor: "#fff",
+    overflow: 'hidden',
+    marginBottom: 40,
   },
 
-  itemCell: {
+  cardImg: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  },
+
+  textBackground: {
+    height: 60,
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    padding: 12,
-    backgroundColor: "#fafafa",
-    width: 300,
-    height: 250,
-    marginBottom: 30,
-    shadowColor: '#000',
-    shadowOffset: { width: 2, height: 3 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3,
+    backgroundColor: "#00000050",
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
-  itemImg: {
-    width: "80%",
-    height: "80%",
-  },
-  itemLbl: {
-    marginTop: 12,
-    fontSize: 20
+
+  cardText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#fff',
   }
 });
 
