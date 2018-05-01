@@ -38,3 +38,6 @@ export const FETCH_USER_REVIEWS = 'fetch_user_reviews';
 export const FETCH_USERS = 'fetch_users';
 
 export const LOAD_SELLER = 'load_seller';
+
+export const MAKE_OFFER = 'make_offer';
+export const OFFER_UPDATE = 'offer_update';

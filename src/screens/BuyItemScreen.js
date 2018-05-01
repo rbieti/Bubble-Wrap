@@ -1,7 +1,9 @@
+import { NavigationActions } from 'react-navigation';
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
 import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import { loadItem } from '../actions/buy_items_actions';
 
 class BuyItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -27,6 +29,8 @@ class BuyItemScreen extends Component {
 
   render() {
     const { name, description, price, images } = this.props.item;
+    const { item } = this.props;
+    console.log(item);
     return (
       <View style={styles.root}>
         <View style={styles.imageContainer}>
@@ -51,7 +55,7 @@ class BuyItemScreen extends Component {
         <View style={styles.btnContainer}>
           <TouchableOpacity
             style={styles.btnOpacity}
-            onPress={() => { console.log("Button pressed") }}
+            onPress={() => { this.props.loadItem(item); this.props.navigation.navigate('mos'); }}
           >
             <Text style={styles.btnText}>
               Make an offer
@@ -166,4 +170,4 @@ const mapStateToProps = (state) => {
   return { item };
 };
 
-export default connect(mapStateToProps)(BuyItemScreen);
+export default connect(mapStateToProps, { loadItem })(BuyItemScreen);
