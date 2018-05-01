@@ -7,7 +7,9 @@ import {
   FETCH_OFFERS,
   GET_USER_ITEMS,
   GET_OFFER_ITEMS,
-  LOAD_ITEM
+  LOAD_ITEM,
+  LOAD_EDIT_ITEM,
+  EDIT_ITEM
 } from '../actions/types';
 
 const INITIAL_STATE = {
