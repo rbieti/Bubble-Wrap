@@ -40,17 +40,19 @@ class BuyItemScreen extends Component {
             resizeMode="cover"
           />
 
-          <Text style={styles.priceTxt}>${price}</Text>
+          <View style={styles.bigPriceView}>
+            <Text style={styles.bigPriceTxt}>${price}</Text>
+          </View>
 
           <View style={styles.thumbnailContainer}>
             {this.renderImgThumbnails()}
           </View>
         </View>
 
-        <View style={styles.textContainer}>
+        <ScrollView style={styles.textContainer}>
           <Text style={styles.itemTitleTxt}>{name}</Text>
           <Text style={styles.descriptionTxt}>{description}</Text>
-        </View>
+        </ScrollView>
 
         <View style={styles.btnContainer}>
           <TouchableOpacity
@@ -86,18 +88,23 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  priceTxt: {
+
+  bigPriceView: {
+    backgroundColor: "#FFFFFF40",
+    padding: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
+    position: "absolute",
+    top: 25,
+    left: 0,
+    borderBottomRightRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  bigPriceTxt: {
     fontWeight: 'bold',
     fontSize: 50,
-    backgroundColor: "#00000030",
-    padding: 15,
-    paddingLeft: 50,
-    width: "66%",
     textAlign: "left",
     color: "#fff",
-    position: "absolute",
-    top: 30,
-    left: 0,
   },
 
   thumbnailContainer: {
@@ -117,8 +124,7 @@ const styles = StyleSheet.create({
   thumbnailView: {
     width: 80,
     height: 80,
-    // padding: 20,
-    backgroundColor: "#FFFFFF30", // 30% oppacity
+    backgroundColor: "#FFFFFF25", // 30% oppacity
     borderStyle: "dashed",
     borderWidth: 2,
     borderColor: "#ddd",
@@ -133,7 +139,7 @@ const styles = StyleSheet.create({
   textContainer: {
     padding: 15,
     backgroundColor: "#fff",
-    height: 150,
+    maxHeight: 170,
   },
   itemTitleTxt: {
     fontWeight: 'bold',
