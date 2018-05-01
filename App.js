@@ -95,6 +95,7 @@ export default class App extends Component {
 				soview: { screen: SingleOfferViewScreen },
 				profile: { screen: ProfileScreen },
 				seller: { screen: SellerScreen },
+				buyItem: { screen: BuyItemScreen },
 				settings: { screen: SettingsScreen },
 				messenger: { screen: ChatMessengerScreen },
 				trans: { screen: TransactionScreen },
