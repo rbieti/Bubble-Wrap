@@ -70,15 +70,15 @@ class ProfileScreen extends Component {
         key={key}
         style={styles.card}
       >
-        <View style={styles.reviewCell} >
-          <Image
-            source={{ uri: profileURL }}
-            style={styles.reviewerImg}
-            resizeMode="cover"
-          />
-          <Text style={styles.h1Lbl}>{name}</Text>
-          <Text style={styles.h1Lbl}>{rating}/5</Text>
-          <Text style={styles.h1Lbl}>{comment}</Text>
+        <Image
+          source={{ uri: profileURL }}
+          style={styles.cardImg}
+          resizeMode="cover"
+        />
+        <View style={styles.textBackgroundTop}>
+          <Text style={styles.cardTextTitle}>{name}</Text>
+          <Text style={styles.cardText}>{rating}/5</Text>
+          <Text style={styles.cardText}>"{comment}"</Text>
         </View>
       </TouchableOpacity>
     ));
@@ -277,6 +277,18 @@ const styles = StyleSheet.create({
     left: 0,
   },
 
+  textBackgroundTop: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "#00000050",
+    position: 'absolute',
+    top: "60%",
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+
   textBackground: {
     height: 60,
     flex: 1,
@@ -287,6 +299,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+  },
+
+  cardTextTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#fff',
   },
 
   cardText: {
