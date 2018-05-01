@@ -25,8 +25,7 @@ import {
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 import { fetchItems, loadItem } from '../actions/user_items_actions';
-import { fetchUser, fetchUserReviews, findUserName, loadSeller } from '../actions/user_profile_actions';
-import { fetchUsers } from '../actions/users_actions';
+import { fetchUser, fetchUserReviews, findUserName, loadSeller, fetchUsers } from '../actions/user_profile_actions';
 
 class ProfileScreen extends Component {
 
@@ -43,7 +42,13 @@ class ProfileScreen extends Component {
     this.props.fetchItems();
     this.props.fetchUser();
     this.props.fetchUserReviews();
-    this.props.fetchUsers();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.reviewsFetched !== this.props.reviewsFetched) {
+      const userReviewerKeys = this.props.reviews.map(({ reviewerId }) => reviewerId);
+      this.props.fetchUsers({ userKeys: userReviewerKeys, reducerPlacement: 'reviews' });
+    }
   }
 
   loadUsername() {
@@ -55,21 +60,25 @@ class ProfileScreen extends Component {
 
   loadReviews() {
     const { reviews } = this.props;
-    let sellerName = '';
-    return reviews.map(({ key, comment, rating, userId }) => (
+    
+    return reviews.map(({ key, comment, rating, userId, reviewerId, name, profileURL }) => (
       <TouchableOpacity
         onPress={() => {
-          this.props.loadSeller(userId);
+          this.props.loadSeller(reviewerId);
           this.props.navigation.navigate('seller'); 
         }}
         key={key}
         style={styles.card}
       >
-        <Image source={{url: 'https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/12669716_1237006402982393_3217046914981297038_n.jpg?_nc_cat=0&oh=b05a93c391dc723f390016b5eef6122b&oe=5B65D228'}} style={styles.cardImg} />
-        <View style={styles.textBackground}>
-          <Text style={styles.cardText}>{`${sellerName}`}</Text>
-          <Text style={styles.cardText}>{`${rating}/5`}</Text>
-          <Text style={styles.cardText}>{`${comment}`}</Text>
+        <View style={styles.reviewCell} >
+          <Image
+            source={{ uri: profileURL }}
+            style={styles.reviewerImg}
+            resizeMode="cover"
+          />
+          <Text style={styles.h1Lbl}>{name}</Text>
+          <Text style={styles.h1Lbl}>{rating}/5</Text>
+          <Text style={styles.h1Lbl}>{comment}</Text>
         </View>
       </TouchableOpacity>
     ));
@@ -291,10 +300,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   const { items } = state.userItems;
   const { name, overallRating, 
-    bubbleCommunity, numTransactions, profileURL, email } = state.user;
-  const { reviews } = state.user;
-  const { username } = state.user;
-  const { users } = state.users;
+    bubbleCommunity, numTransactions, 
+    profileURL, email, reviewsFetched, 
+    reviews, username } = state.user;
   return { 
     items, 
     name,
@@ -305,7 +313,7 @@ const mapStateToProps = (state) => {
     reviews,
     username,
     email,
-    users,
+    reviewsFetched
    };
 };
 

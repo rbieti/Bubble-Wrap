@@ -17,7 +17,7 @@ import {
 import { Cell, Section, TableView } from 'react-native-tableview-simple';
 import { connect } from 'react-redux';
 import { loadItem, fetchItems } from '../actions/buy_items_actions';
-import { loadSeller } from '../actions/user_profile_actions';
+import { loadSeller, fetchUsers, fetchUserReviews } from '../actions/user_profile_actions';
 
 class SellerProfileScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -29,37 +29,47 @@ class SellerProfileScreen extends Component {
     }
   });
 
+  async componentDidMount() {
+    console.log(this.props.userId);
+    this.props.fetchUserReviews(this.props.userId);
+  }
   componentDidUpdate(prevProps) {
-    if (prevProps.seller !== this.props.seller) {
-      this.props.fetchItems({ uid: this.props.seller.key });
+    if (prevProps.userId !== this.props.userId) {
+      this.props.fetchItems({ uid: this.props.userId });
+    }
+    if (prevProps.reviewsFetched !== this.props.reviewsFetched) {
+      console.log("REFETCH");
+      const userReviewerKeys = this.props.reviews.map(({ reviewerId }) => reviewerId);
+      this.props.fetchUsers({ userKeys: userReviewerKeys, reducerPlacement: 'reviews' });
     }
   }
 
   loadReviews() {
-    const { seller } = this.props;
-    const { reviews } = seller;
-    let sellerName = '';
-    return Object.values(reviews).map(({ key, comment, rating, userId }) => (
+    const { reviews } = this.props;
+    console.log(reviews);
+    
+    return reviews.map(({ key, comment, rating, userId, reviewerId, name, profileURL }) => (
       <TouchableOpacity
         onPress={() => {
-          this.props.loadSeller(userId);
-          this.props.navigation.navigate('seller');
+          this.props.loadSeller(reviewerId);
+          this.props.navigation.navigate('seller'); 
         }}
         key={key}
       >
         <View style={styles.reviewCell} >
           <Image
-            source={{url: 'https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/12669716_1237006402982393_3217046914981297038_n.jpg?_nc_cat=0&oh=b05a93c391dc723f390016b5eef6122b&oe=5B65D228'}}
+            source={{ uri: profileURL }}
             style={styles.reviewerImg}
             resizeMode="cover"
           />
-          <Text style={styles.h1Lbl}>{`${sellerName}`}</Text>
-          <Text style={styles.h1Lbl}>{`${rating}/5`}</Text>
-          <Text style={styles.h1Lbl}>{`${comment}`}</Text>
+          <Text style={styles.h1Lbl}>{name}</Text>
+          <Text style={styles.h1Lbl}>{rating}/5</Text>
+          <Text style={styles.h1Lbl}>{comment}</Text>
         </View>
       </TouchableOpacity>
     ));
   }
+
 
   renderItems() {
     return this.props.items.map((item) => (
@@ -85,8 +95,7 @@ class SellerProfileScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation; // THIS IS NECESSARY FOR NAVIGATION
-    const { seller } = this.props;
-    const { name, bubbleCommunity, overallRating, profileURL, reviews, email, numTransactions, strikeCount } = seller;
+    const { name, bubbleCommunity, overallRating, profileURL, reviews, email, numTransactions, strikeCount } = this.props;
     return (
       <View style={styles.root}>
         <View style={styles.headerView}>
@@ -227,12 +236,29 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { items } = state.buyItems;
-  const { seller } = state.user;
-  return { items, seller };
+  const { name, overallRating, 
+    bubbleCommunity, numTransactions, 
+    profileURL, email, reviewsFetched, 
+    reviews, username, userId } = state.user;
+  return { 
+    items, 
+    name,
+    overallRating,
+    bubbleCommunity,
+    numTransactions,
+    profileURL,
+    reviews,
+    username,
+    email,
+    reviewsFetched,
+    userId
+   };
 };
 
 export default connect(mapStateToProps, {
   loadItem,
   fetchItems,
   loadSeller,
+  fetchUsers,
+  fetchUserReviews
 })(SellerProfileScreen);

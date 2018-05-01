@@ -4,7 +4,7 @@ import { View, StyleSheet, Text, TouchableOpacity, Image, ScrollView, ActivityIn
 import { Cell, Section, TableView, } from 'react-native-tableview-simple';
 import Carousel from 'react-native-snap-carousel';
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/style';
-import { fetchAllItems, fetchOffers, getUserItems, getOfferItems } from '../actions/user_items_actions';
+import { fetchAllItems, fetchOffersOLD, getUserItems, getOfferItems } from '../actions/user_items_actions';
 import { loadItem } from '../actions/buy_items_actions';
 
 class ListOfOffers extends Component {
@@ -18,15 +18,8 @@ class ListOfOffers extends Component {
   });
 
   componentDidMount() {
-    // this.props.fetchAllItems();
-    this.props.getUserItems(this.props.all_items);
-    this.props.fetchOffers(this.props.all_items);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.offersFetched !== this.props.offersFetched) {
-      this.props.getOfferItems(this.props.all_items);
-    }
+    this.props.getUserItems();
+    this.props.getOfferItems();
   }
 
   _renderUserItem({ item, index }) {
@@ -51,9 +44,11 @@ class ListOfOffers extends Component {
         onPress={() => { this.props.loadItem(item); this.props.navigation.navigate('buyItem'); }}
         key={index}
       >
+      {!!item.images[0].url &&
         <Image style={styles.cardImg} source={{ uri: item.images[0].url }} />
+      }
         <View style={styles.textBackground}>
-          <Text style={styles.cardText}>{`${item.name} \n You Offered: $${item.offers[0].amount}`}</Text>
+          <Text style={styles.cardText}>{`${item.name} \n You Offered: $${item.userOffer}`}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -141,9 +136,9 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const { items, all_items, userItems, offerItems, offersFetched } = state.userItems;
+  const { items, all_items, userItems, offerItems } = state.userItems;
   const { item } = state.buyItems;
-  return { items, item, all_items, userItems, offerItems, offersFetched };
+  return { items, item, all_items, userItems, offerItems };
 };
 
-export default connect(mapStateToProps, { fetchAllItems, fetchOffers, loadItem, getUserItems, getOfferItems })(ListOfOffers);
+export default connect(mapStateToProps, { loadItem, getUserItems, getOfferItems })(ListOfOffers);
