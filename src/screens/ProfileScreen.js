@@ -84,8 +84,6 @@ class ProfileScreen extends Component {
     ));
   }
 
-
-
   renderItems() {
     const { items } = this.props;
     return items.map((item) => (

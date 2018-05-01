@@ -91,7 +91,15 @@ const cardHeight = cardWidth;
 
 const styles = {
   horizontalCarousel: {
-    marginTop: 40,
+    marginTop: 12,
+  },
+
+  carouselTitle: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: '#000',
+    marginTop: 20,
+    marginLeft: 20,
   },
 
   card: {
@@ -100,7 +108,7 @@ const styles = {
     height: cardHeight,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 20,
+    paddingVertical: 10,
     paddingHorizontal: 12, 
     borderRadius: 15,
     backgroundColor: "#fff",
