@@ -23,11 +23,22 @@ class SingleOfferViewScreen extends Component {
           style={styles.cardView}
           key={key}
         >
-          <View style={styles.sections}>
-            <View style={styles.cardSection}>
-              <Text style={styles.cardText}> {users[user]} offered: ${amount} </Text>
+          <TouchableOpacity onPress={() => { 
+            Alert.alert(
+              `Accept ${users[user]}\'s offer for $${amount}?`,
+              '',
+              [
+                {text: 'Okay', onPress: () => console.log('Ask me later pressed')},
+                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              ],
+              { cancelable: false }
+            ) }}>
+            <View style={styles.sections}>
+              <View style={styles.cardSection}>
+                <Text style={styles.cardText}> {users[user]} offered: ${amount} </Text>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
       ));
     }
