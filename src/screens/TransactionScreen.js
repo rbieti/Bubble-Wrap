@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import { View, StyleSheet, Text, Button,TouchableOpacity, Image, ScrollView} from "react-native";
 import { PRIMARY_COLOR } from '../constants/style';
-export default class Untitled extends Component {
+
+class TransactionScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     //tabBarVisible: false,
     title: 'Transaction',
@@ -11,25 +13,31 @@ export default class Untitled extends Component {
       alignSelf: 'center'
     }
   });
+
+  onButtonPress() {
+    this.props.navigation.navigate('shakenbake');
+  }
     
   render() {
     const { navigate } = this.props.navigation;
+    const { name, images } = this.props.item;
+    const { name: sellerName, amount } = this.props.offer;
     return (
       <View style={styles.root}>
         <ScrollView style={styles.mainView}> 
           <View style={styles.headerView}>
             <View style={styles.horizontalText}>
               <Text style={styles.headerTxt}>Confirm payment to </Text>
-              <Text style={styles.sellerNameTxt}>Kyle Nakamura</Text> 
+              <Text style={styles.sellerNameTxt}>{sellerName}</Text> 
             </View>
-            <Text style={styles.priceTxt}>$50.00</Text>
-            <Text style={styles.itemTxt}>Canon T5i DSLR w/ 18-55 lens</Text> 
+            <Text style={styles.priceTxt}>${amount}</Text>
+            <Text style={styles.itemTxt}>{name}</Text> 
           </View>
 
-          <Image style={styles.itemImg} source={require("../../assets/item01.jpg")}/>
+          <Image style={styles.itemImg} source={{ uri: images[0].url }} />
 
           <View style={styles.buttonsView}>
-            <TouchableOpacity style={styles.btnOpacity} onPress={() => {console.log("Button pressed")}}>
+            <TouchableOpacity style={styles.btnOpacity} onPress={this.onButtonPress.bind(this)}>
               <Text style={styles.btnText}>Confirm Transaction</Text>
             </TouchableOpacity>
           </View>
@@ -112,3 +120,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   }
 });
+
+const mapStateToProps = (state) => {
+  const { item } = state.buyItems;
+  const { offer } = state.offers;
+  return { item, offer };
+};
+
+export default connect(mapStateToProps)(TransactionScreen);

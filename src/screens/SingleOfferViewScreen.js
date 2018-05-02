@@ -5,7 +5,7 @@ import { View, StyleSheet, Text, Button, TouchableOpacity, Image, ScrollView, Al
 import { PRIMARY_COLOR } from '../constants/style';
 import { fetchOffers } from '../actions/user_items_actions';
 import { fetchUsers } from '../actions/user_profile_actions';
-import { seeOffers } from '../actions/offer_actions';
+import { seeOffers, loadOffer } from '../actions/offer_actions';
 
 class SingleOfferViewScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -34,16 +34,17 @@ class SingleOfferViewScreen extends Component {
   acceptOffer(key) {
     firebase.database().ref(`offers/${key}/accepted`).set('true');  // Set value of 'accepted' to 'true'
 
-    alert("Thanks! We'll let the buyer know.");
+    Alert.alert("Thanks! We'll let the buyer know.");
     // TODO: Notify buyer that their offer was accepted
-
+    const offer = this.props.offers.find(o => o.key === key);
+    this.props.loadOffer(offer);
     this.props.navigation.navigate('trans');
   }
 
   renderOffers() {
     const { offers } = this.props;
     if (offers.length > 0) {
-      return offers.map(({ amount, name, key }) => (
+      return offers.sort((a, b) => (a.amount < b.amount ? 1 : -1)).map(({ amount, name, key }) => (
         <View
           style={styles.cardView}
           key={key}
@@ -185,4 +186,4 @@ const mapStateToProps = (state) => {
   return { item, offers, offersFetched };
 };
 
-export default connect(mapStateToProps, { fetchOffers, fetchUsers, seeOffers })(SingleOfferViewScreen);
+export default connect(mapStateToProps, { fetchOffers, fetchUsers, seeOffers, loadOffer })(SingleOfferViewScreen);

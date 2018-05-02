@@ -3,7 +3,8 @@ import {
   MAKE_OFFER,
   OFFER_UPDATE,
   UPDATE_SEEN_OFFER,
-  NEW_OFFER_NOTIFICATION
+  NEW_OFFER_NOTIFICATION,
+  LOAD_OFFER
 } from './types';
 
 
@@ -14,18 +15,18 @@ export const offerUpdate = ({ price }) => ({
 
 export const makeOffer = ({ price, key }) => dispatch => {
   const name = firebase.auth().currentUser.uid;
+  console.log({amount: price, item: key, user: name, accepted: false });
   const offerRef = firebase.database().ref('offers')
-    .push({ amount: price, item: key, user: name })
+    .push({ amount: price, item: key, user: name, accepted: false })
     .then((offerRef) => {
       //push the key of this offer to the user Profile
-      offerKey = firebase.database().ref(`users/${name}/offers`).update({ [offerRef.key]: true });
+      firebase.database().ref(`users/${name}/offers`).update({ [offerRef.key]: true });
+      firebase.database().ref(`items/${key}/offers`).update({ [offerRef.key]: true });
       dispatch({
         type: MAKE_OFFER,
-        payload: { amount: price, item: key, user: name }
+        payload: { amount: price, item: key, user: name, accepted: false }
       });
     });
-
-
 };
 
 // gets initial offer IDs
@@ -95,3 +96,8 @@ export const seeOffers = ({ itemId }) => dispatch => {
       }
     });
 };
+
+export const loadOffer = (offer) => ({
+  type: LOAD_OFFER,
+  payload: { offer }
+});

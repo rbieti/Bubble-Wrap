@@ -2,7 +2,8 @@ import {
   MAKE_OFFER,
   OFFER_UPDATE,
   UPDATE_SEEN_OFFER,
-  NEW_OFFER_NOTIFICATION
+  NEW_OFFER_NOTIFICATION,
+  LOAD_OFFER
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -10,7 +11,8 @@ const INITIAL_STATE = {
   item: '',
   newOffersCount: 0,
   seenOfferIds: {},
-  newOfferIds: {}
+  newOfferIds: {},
+  offer: {}
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -36,6 +38,8 @@ export default function (state = INITIAL_STATE, action) {
         };
       }
       return state;
+      case LOAD_OFFER:
+        return { ...state, offer: action.payload.offer };
     default:
       return state;
   }

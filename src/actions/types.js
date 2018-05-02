@@ -43,3 +43,4 @@ export const MAKE_OFFER = 'make_offer';
 export const OFFER_UPDATE = 'offer_update';
 export const UPDATE_SEEN_OFFER = 'update_seen_offers';
 export const NEW_OFFER_NOTIFICATION = 'new_offer_notification';
+export const LOAD_OFFER = 'load_offer';
