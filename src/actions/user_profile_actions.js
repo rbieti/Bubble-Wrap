@@ -19,9 +19,12 @@ export const loadSeller = (sellerID) => dispatch => {
 
 export const fetchUsers = ({ userKeys, reducerPlacement }) => dispatch => {
   const users = [];
+
   userKeys.forEach(userKey => {
     firebase.database().ref(`/users/${userKey}`)
       .on('value', snapshot => {
+
+
         const {
           bubbleCommunity,
           email,

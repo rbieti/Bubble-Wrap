@@ -9,7 +9,8 @@ import {
   FETCH_OFFERS,
   GET_USER_ITEMS,
   GET_OFFER_ITEMS,
-  LOAD_ITEM
+  LOAD_ITEM,
+  NEW_OFFER_NOTIFICATION
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -22,7 +23,8 @@ const INITIAL_STATE = {
   name: '',
   description: '',
   price: '',
-  offersFetched: false
+  offersFetched: false,
+  itemId: ''
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -43,7 +45,7 @@ export default function (state = INITIAL_STATE, action) {
       if (action.payload.reducerPlacement === 'offers') {
         const offers = state.offers.slice(); //copy
         const newOffers = offers.map((offer) => {
-          const user = action.payload.users.find(user => user.key === offer.user); // offer.user should be offer.userId later
+          const user = action.payload.users.find(u => u.key === offer.user); // offer.user should be offer.userId later
           return { ...offer, name: user.name, profileURL: user.profileURL }; //THIS IS NOT THE FINAL RETURN
         });
         return {
@@ -60,6 +62,8 @@ export default function (state = INITIAL_STATE, action) {
       return { ...state, userItems: action.payload.userItems };
     case GET_OFFER_ITEMS:
       return { ...state, offerItems: action.payload.offerItems };
+    case NEW_OFFER_NOTIFICATION:
+      return { ...state, itemId: action.payload.itemId };
     default:
       return state;
   }

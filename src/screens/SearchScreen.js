@@ -7,6 +7,7 @@ import { ActivityIndicator, AppRegistry, Dimensions, Image, ScrollView, StyleShe
 import { fetchAllItems } from '../actions/user_items_actions';
 import { loadItem } from '../actions/buy_items_actions';
 import { fetchUsers } from '../actions/user_profile_actions';
+import { createOfferNotificationListener } from '../actions/offer_actions';
 
 class SearchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,6 +21,7 @@ class SearchScreen extends Component {
 
   componentDidMount() {
     this.props.fetchAllItems();
+    this.props.createOfferNotificationListener();
   }
 
   renderItems() {
@@ -134,4 +136,6 @@ const mapStateToProps = (state) => {
   return { all_items };
 };
 
-export default connect(mapStateToProps, { fetchAllItems, loadItem, fetchUsers })(SearchScreen);
+export default connect(mapStateToProps, { 
+  fetchAllItems, loadItem, fetchUsers, createOfferNotificationListener 
+})(SearchScreen);
