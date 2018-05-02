@@ -221,7 +221,7 @@ export default class App extends Component {
 						alignContent: 'center'
 					}}
 				>
-					<Image style={{ width: 150, height: 150 }} source={require('./assets/logo.png')} />
+					<Image style={{ width: "100%", height: 150 }} source={require('./assets/logo.png')} />
 				</View>
 
 				<View>
