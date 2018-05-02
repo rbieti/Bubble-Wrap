@@ -5,7 +5,7 @@ import { View, StyleSheet, Text, Button, TouchableOpacity, Image, ScrollView, Al
 import { PRIMARY_COLOR } from '../constants/style';
 import { fetchOffers } from '../actions/user_items_actions';
 import { fetchUsers } from '../actions/user_profile_actions';
-import { offerUpdate } from '../actions/offer_actions';
+import { seeOffers } from '../actions/offer_actions';
 
 class SingleOfferViewScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,11 +20,13 @@ class SingleOfferViewScreen extends Component {
 
   componentDidMount() {
     this.props.fetchOffers({ itemId: this.props.item.key });
+    this.props.seeOffers({ itemId: this.props.item.key });
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.offersFetched !== this.props.offersFetched) {
-      const userIds = this.props.offers.map(({ user }) => user);
+      let userIds = this.props.offers.map(({ user }) => user);
+      userIds = userIds.filter(n => n !== undefined);
       this.props.fetchUsers({ userKeys: userIds, reducerPlacement: 'offers' });
     }
   }
@@ -183,4 +185,4 @@ const mapStateToProps = (state) => {
   return { item, offers, offersFetched };
 };
 
-export default connect(mapStateToProps, { fetchOffers, fetchUsers })(SingleOfferViewScreen);
+export default connect(mapStateToProps, { fetchOffers, fetchUsers, seeOffers })(SingleOfferViewScreen);

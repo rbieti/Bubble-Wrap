@@ -29,6 +29,7 @@ import CampusSafetyScreen from './src/screens/CampusSafety';
 import { GOOGLE_FIREBASE_CONFIG } from './src/constants/api_keys';
 import { PRIMARY_COLOR } from './src/constants/style';
 import EditItemScreen from './src/screens/EditItemScreen';
+import IconWithBadge from './src/components/IconWithBadge';
 
 export default class App extends Component {
 	constructor() {
@@ -158,7 +159,7 @@ export default class App extends Component {
 				Offers: {
 					screen: OfferScene,
 					navigationOptions: {
-						tabBarIcon: () => <Icon name="price-tag" style={icon} />
+						tabBarIcon: () => <IconWithBadge name="price-tag" style={icon} />
 					}
 				},
 				Profile: {
