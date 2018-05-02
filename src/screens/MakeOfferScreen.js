@@ -36,7 +36,7 @@ class MakeOfferScreen extends Component {
           <Image 
             style={styles.backgroundImage} 
             source={{ uri: images[0].url }}
-            blurRadius={15}
+            blurRadius={10}
             keyboardShouldPersistTaps={'never'}
             >
             <View style={styles.root}>
