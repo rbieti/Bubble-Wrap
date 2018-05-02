@@ -16,7 +16,7 @@ export default class Untitled extends Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.root}>
-        <View style={styles.mainView}> 
+        <ScrollView style={styles.mainView}> 
           <View style={styles.headerView}>
             <View style={styles.horizontalText}>
               <Text style={styles.headerTxt}>Confirm payment to </Text>
@@ -32,12 +32,8 @@ export default class Untitled extends Component {
             <TouchableOpacity style={styles.btnOpacity} onPress={() => {console.log("Button pressed")}}>
               <Text style={styles.btnText}>Confirm Transaction</Text>
             </TouchableOpacity>
-            <Text style={styles.orTxt}>or</Text> 
-            <TouchableOpacity style={styles.btnOpacity} onPress={() => {console.log("Button pressed")}}>
-              <Text style={styles.btnText}>Checkout with PayPal</Text>
-            </TouchableOpacity>
           </View>
-        </View>
+        </ScrollView>
       </View>
     );
   }
@@ -47,15 +43,10 @@ const Dimensions = require('Dimensions');
 const window = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  root: { 
-    
-  },
-
   mainView: {
     position: 'relative',
-    height: "100%",
     width: "100%",
-    flex: 1,
+    height: "100%",
   },
 
   /* Header Area */

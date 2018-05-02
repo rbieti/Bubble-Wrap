@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import firebase from 'firebase';
 import { connect } from 'react-redux';
-import { View, StyleSheet, Text, Button, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, StyleSheet, Text, Button, TouchableOpacity, Image, ScrollView, Alert } from "react-native";
 import { PRIMARY_COLOR } from '../constants/style';
 import { fetchOffers } from '../actions/user_items_actions';
 import { fetchUsers } from '../actions/user_profile_actions';
+import { offerUpdate } from '../actions/offer_actions';
 
 class SingleOfferViewScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -27,6 +29,15 @@ class SingleOfferViewScreen extends Component {
     }
   }
 
+  acceptOffer(key) {
+    firebase.database().ref(`offers/${key}/accepted`).set('true');  // Set value of 'accepted' to 'true'
+
+    alert("Thanks! We'll let the buyer know.");
+    // TODO: Notify buyer that their offer was accepted
+
+    this.props.navigation.navigate('trans');
+  }
+
   renderOffers() {
     const { offers } = this.props;
     if (offers.length > 0) {
@@ -40,11 +51,12 @@ class SingleOfferViewScreen extends Component {
               `Accept ${name}\'s offer for $${amount}?`,
               '',
               [
-                {text: 'Okay', onPress: () => console.log('Ask me later pressed')},
-                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: 'Cancel', onPress: () => console.log("Canceled accepting offer.")},
+                {text: 'Okay', onPress: () => this.acceptOffer(key)}
               ],
               { cancelable: false }
-            ) }}>
+            );
+          }}>
             <View style={styles.sections}>
               <View style={styles.cardSection}>
                 <Text style={styles.cardText}> {name} offered: ${amount} </Text>
@@ -110,6 +122,10 @@ const styles = {
     width: profileImgWidth,
     height: profileImgWidth,
     borderRadius: profileImgWidth / 8
+  },
+
+  titleArea: {
+    alignItems: 'center'
   },
 
   userNameLbl: {
